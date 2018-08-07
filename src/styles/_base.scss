@@ -1,0 +1,45 @@
+
+// Color Declaration
+$color__primary--light: rgba(142,178,241,1) !default;
+//$color__primary--medium: #2A2C3C !default;
+$color__primary: rgba(142,178,241,1) !default;
+//$color__primary--dark: #990000 !default;
+$color__primary--white: #FFFFFF !default;
+
+$color__blue: rgba(74,171,239,1);
+$color__light-blue: rgba(0,219,255,1);
+
+
+$base__font-size:14px !default;
+$base__line: 20 !default;
+
+// Font Family Declaration
+$font__primary: 'Open Sans', sans-serif;
+$font__secondary: "Helvetica";
+$font__lato : 'Lato', sans-serif;
+
+
+//Common Variables
+$padding__all: 10px;
+$padding__top-bottom: 10px 0px;
+$padding__left-right: 0px 10px;
+
+
+
+// Mixens
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+
+%common-font-color {  
+  color: $color__primary--light;
+}
+
+@function em($px, $base: $base__font-size){
+	@return ($px / $base * 1em)
+}
+ 
