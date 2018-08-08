@@ -39,6 +39,26 @@ $padding__left-right: 0px 10px;
   color: $color__primary--light;
 }
 
+//Placeholder stylize
+input::placeholder{
+  font-size: em(15px);
+  color: rgba(142,178,241,0.6);
+  font-weight: 300;
+}
+
+// Commin button
+%login-signup-button {
+  box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);  
+  border: none;
+  border-radius:27px;
+  color: $color__primary--white;
+  font-weight: 900;
+  font-size: em(15px);
+  padding: 10px 20px;  
+  text-align: center;
+  width: 100%;
+}
+
 @function em($px, $base: $base__font-size){
 	@return ($px / $base * 1em)
 }
