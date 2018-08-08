@@ -4,19 +4,33 @@
 }
 .form-group__control{
     border:none;
-    border-bottom: 1px solid rgba(189,210,247,1);
+    border-bottom: 2px solid rgba(189,210,247,0.6);
     background: none;
-    font-size: 15px;
-    font-weight: 300;
+    font-size: em(15px);
+    font-weight: 900;
     padding: 5px 10px;
     width: 93%;
+    color: $color__primary;    
 }
-.form-group__btn{
-    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
-    background: $color__blue;
+.form-group__control:focus{
     border: none;
-    border-radius:27px;
-    padding: 10px 20px;
-    color: $color__primary--white;
+    outline: none;
+}
+.form-group__login-btn{
+    @extend %login-signup-button;
+    background: $color__light-blue;
+}
+.signup-btn{
+    @extend %login-signup-button;
+    background: $color__blue;
+    margin-top: 20px;
+    display: block;
     width: 100%;
+    text-decoration: none;
+}
+.signup-btn--margin-top{
+    margin-top:65px;
+}
+i.fas{
+    color: rgba(142,178,241,0.6);
 }
