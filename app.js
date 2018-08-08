@@ -11,7 +11,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/connect19', { useNewUrlParser: true });
+mongoose.connect('mongodb://c19>:@#$fhan324@21@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
