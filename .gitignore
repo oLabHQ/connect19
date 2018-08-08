@@ -36,7 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 data/
-sass-cache/
+.sass-cache/
 log/
 
 # TypeScript v1 declaration files
