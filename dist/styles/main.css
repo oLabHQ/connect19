@@ -1,10 +1,10 @@
-html {
+* {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
 body {
-  background: url("../images/registration-waves.svg");
+  background: url("../images/waves.svg");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
@@ -17,6 +17,49 @@ body {
   margin: 0 auto;
 }
 
+input::-webkit-input-placeholder {
+  font-size: em(15px);
+  color: rgba(142, 178, 241, 0.6);
+  font-weight: 300;
+}
+
+input:-ms-input-placeholder {
+  font-size: em(15px);
+  color: rgba(142, 178, 241, 0.6);
+  font-weight: 300;
+}
+
+input::-ms-input-placeholder {
+  font-size: em(15px);
+  color: rgba(142, 178, 241, 0.6);
+  font-weight: 300;
+}
+
+input::placeholder {
+  font-size: em(15px);
+  color: rgba(142, 178, 241, 0.6);
+  font-weight: 300;
+}
+
+.form-group__login-btn, .signup-btn {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  border: none;
+  border-radius: 27px;
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: em(15px);
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-top: 2.1428571429em;
+  margin-bottom: 10.3571428571em;
+}
+
 .form-group {
   display: block;
   margin-bottom: 34px;
@@ -24,21 +67,36 @@ body {
 
 .form-group__control {
   border: none;
-  border-bottom: 1px solid #bdd2f7;
+  border-bottom: 2px solid rgba(189, 210, 247, 0.6);
   background: none;
-  font-size: 15px;
-  font-weight: 300;
+  font-size: 1.0714285714em;
+  font-weight: 900;
   padding: 5px 10px;
   width: 93%;
+  color: #8eb2f1;
 }
 
-.form-group__btn {
-  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-  background: #4aabef;
+.form-group__control:focus {
   border: none;
-  border-radius: 27px;
-  padding: 10px 20px;
-  color: #FFFFFF;
+  outline: none;
+}
+
+.form-group__login-btn {
+  background: #00dbff;
+}
+
+.signup-btn {
+  background: #4aabef;
+  margin-top: 20px;
+  display: block;
   width: 100%;
+  text-decoration: none;
+}
+
+.signup-btn--margin-top {
+  margin-top: 65px;
+}
+
+i.fas {
+  color: rgba(142, 178, 241, 0.6);
 }
