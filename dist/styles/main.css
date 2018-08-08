@@ -77,7 +77,6 @@ input::placeholder {
 }
 
 .form-group__control:focus {
-  border: none;
   outline: none;
 }
 
