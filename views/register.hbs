@@ -1,12 +1,12 @@
 {{#if user}}
-        <div class="alert alert-danger">Username has taken already try new</div> 
+        <div class="alert alert-error">Username has taken already try new</div> 
 {{/if}}
 {{#if mail}}
-        <div class="alert alert-danger">Email has taken already try new</div> 
+        <div class="alert alert-error">Email has taken already try new</div> 
 {{/if}} 
 {{#if errors}}
       {{#each errors}}
-        <div class="alert alert-danger">{{msg}}</div>
+        <div class="alert alert-error">{{msg}}</div>
       {{/each}}
 {{/if}}
 <form method="post" action="/users/register"> 
@@ -26,4 +26,4 @@
   <button type="submit" class="signup-btn signup-btn--margin-top">SIGN UP</button>
   </div>
 </form>
-<!-- <a href="login" class="login-btn">LOG IN</a>  -->
+<!--<a href="login" class="login-btn">LOG IN</a>  

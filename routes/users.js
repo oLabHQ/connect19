@@ -16,15 +16,13 @@ router.get('/login', function (req, res) {
 });
 
 // Register User
-router.post('/register', function (req, res) {
-	var name = req.body.name;
+router.post('/register', function (req, res) {	
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
 	var password2 = req.body.password2;
 
-	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
+	// Validation	
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
 	req.checkBody('username', 'Username is required').notEmpty();
