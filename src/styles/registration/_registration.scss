@@ -12,8 +12,7 @@
     width: 93%;
     color: $color__primary;    
 }
-.form-group__control:focus{
-    border: none;
+.form-group__control:focus{    
     outline: none;
 }
 .form-group__login-btn{
@@ -23,6 +22,14 @@
 .signup-btn{
     @extend %login-signup-button;
     background: $color__blue;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    text-decoration: none;
+}
+.login-btn{
+    @extend %login-signup-button;
+    background: $color__light-blue;
     margin-top: 20px;
     display: block;
     width: 100%;
