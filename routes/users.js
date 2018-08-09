@@ -5,9 +5,9 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
-// Register
+// Signup
 router.get('/signup', function (req, res) {
-	res.render('register');
+	res.render('signup');
 });
 
 // Login
@@ -15,8 +15,8 @@ router.get('/login', function (req, res) {
 	res.render('login');
 });
 
-// Register User
-router.post('/register', function (req, res) {	
+// Signup User
+router.post('/signup', function (req, res) {	
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -32,7 +32,7 @@ router.post('/register', function (req, res) {
 	var errors = req.validationErrors();
 
 	if (errors) {
-		res.render('register', {
+		res.render('signup', {
 			errors: errors
 		});
 	}
@@ -45,7 +45,7 @@ router.post('/register', function (req, res) {
 				"$regex": "^" + email + "\\b", "$options": "i"
 		}}, function (err, mail) {
 				if (user || mail) {
-					res.render('register', {
+					res.render('signup', {
 						user: user,
 						mail: mail
 					});
@@ -53,8 +53,7 @@ router.post('/register', function (req, res) {
 				}
 				else {
 					console.log('2');
-					var newUser = new User({
-						name: name,
+					var newUser = new User({						
 						email: email,
 						username: username,
 						password: password
