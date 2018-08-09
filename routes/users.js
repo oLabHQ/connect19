@@ -49,8 +49,10 @@ router.post('/register', function (req, res) {
 						user: user,
 						mail: mail
 					});
+					console.log('1');
 				}
 				else {
+					console.log('2');
 					var newUser = new User({
 						name: name,
 						email: email,
@@ -60,6 +62,7 @@ router.post('/register', function (req, res) {
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
 						console.log(user);
+						console.log('3');
 					});
          	req.flash('success_msg', 'You are registered and can now login');
 					res.redirect('/users/login');
