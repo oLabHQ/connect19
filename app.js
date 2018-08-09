@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb://connect19:C19@#$%@1245@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
+mongoose.connect('mongodb://connect19:C19@#$%@1245@ds215502.mlab.com:15502/connect19');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
