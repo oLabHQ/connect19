@@ -12,11 +12,19 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 // For Production
-mongoose.connect('mongodb://connect19:C19@#$%@1245@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
+mongoose.connect('mongodb://c19:connect19@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
 
 // For Development
 //mongoose.connect('mongodb://localhost:27017/connect19', { useNewUrlParser: true });
 var db = mongoose.connection;
+
+//MONGO_URL = "mongodb://connect19:connect19@ds215502.mlab.com:15502/connect19";
+//mongoose.connect(MONGO_URL, {
+//  auth: {
+//    user: c19,
+//    password: connect19
+//  }
+//})
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
