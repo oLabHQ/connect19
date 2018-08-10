@@ -10,9 +10,10 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var config = require('./config/database');
 
 // For Production
-mongoose.connect('mongodb://c19:connect19@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
+//mongoose.connect('mongodb://c19:connect19@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
 
 // For Development
 //mongoose.connect('mongodb://localhost:27017/connect19', { useNewUrlParser: true });
@@ -25,6 +26,17 @@ var db = mongoose.connection;
 //    password: connect19
 //  }
 //})
+
+// Connect To Database (OLD CODE)
+mongoose.connect(config.database, { useNewUrlParser: true });
+// On Connection
+mongoose.connection.on('connected', () => {
+  console.log('Connected to Database '+config.database);
+});
+// On Error
+mongoose.connection.on('error', (err) => {
+  console.log('Database error '+err);
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
