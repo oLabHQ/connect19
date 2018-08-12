@@ -1,2 +1,18 @@
  <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard</p>  
+<div>
+    
+{{#posts}}
+<div style="margin-bottom: 30px;">
+    <div><a href="post/{{this._id}}">{{this.title}}</a></div>
+    <div>{{this.description}}</div>
+    <div>{{this.author}}</div>    
+    <div></div>{{moment date format="DD-MM-YYYY"}}</div>    
+    <a href="post/{{this._id}}">Read more..</a>
+    </div>
+{{/posts}}
+<form method="POST" action="/posts/add" enctype="multipart/form-data">
+<input type="text" class="form-table" /><input type="file" class="file">
+<input name="submit" type="submit" value="send" />
+</form>
+</div>

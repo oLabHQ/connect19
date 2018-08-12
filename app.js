@@ -8,6 +8,9 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var Handlebars = require("handlebars");
+var MomentHandler = require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/database');
@@ -17,7 +20,7 @@ var config = require('./config/database');
 
 // For Development
 //mongoose.connect('mongodb://localhost:27017/connect19', { useNewUrlParser: true });
-var db = mongoose.connection;
+//var db = mongoose.connection;
 
 //MONGO_URL = "mongodb://connect19:connect19@ds215502.mlab.com:15502/connect19";
 //mongoose.connect(MONGO_URL, {
@@ -43,6 +46,8 @@ var users = require('./routes/users');
 
 // Init App
 var app = express();
+
+app.locals.moment = require('moment');
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));

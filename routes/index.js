@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+var Posts = require('../models/posts');
+
+
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
-	res.render('index');
+	Posts.find({},function(err, posts){
+		console.log(posts);
+		if(err) throw err;
+		res.render('index', {posts:posts});			
+	})
+		
+	
 });
 
 function ensureAuthenticated(req, res, next){
