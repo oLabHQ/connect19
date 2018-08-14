@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -8,6 +9,7 @@ body {
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
+  font-family: "Open Sans";
   margin: 0;
   padding: 0;
 }
@@ -88,11 +90,11 @@ input::placeholder {
   border: none;
   border-bottom: 2px solid rgba(189, 210, 247, 0.6);
   background: none;
+  color: #8eb2f1;
   font-size: 1.0714285714em;
   font-weight: 900;
   padding: 5px 10px;
   width: 93%;
-  color: #8eb2f1;
 }
 
 .form-group__control:focus {
@@ -125,4 +127,85 @@ input::placeholder {
 
 i.fas {
   color: rgba(142, 178, 241, 0.6);
+}
+
+.post-main-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+.img-block {
+  width: 35px;
+  height: 35px;
+}
+
+.img-block img {
+  width: 100%;
+  height: auto;
+}
+
+.post-rt-block {
+  width: 82%;
+  margin-left: 10px;
+}
+
+.author-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.author-block__name {
+  color: rgba(137, 0, 255, 0.5);
+  font-family: "Open Sans";
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+  text-transform: capitalize;
+}
+
+.author-block__date {
+  color: #89a9ff;
+  font-family: "Open Sans";
+  font-size: 12px;
+  line-height: 17px;
+  margin-left: 15px;
+}
+
+.post-block {
+  background: linear-gradient(159.45deg, rgba(97, 134, 240, 0.85) 0%, rgba(72, 75, 218, 0.85) 100%);
+  border-radius: 0 14px 14px 14px;
+  color: white;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 12px 16px;
+}
+
+.post-block__description {
+  margin-bottom: 10px;
+}
+
+.post-block__featured-image img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.post-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.post-form__description {
+  border: none;
+  outline: none;
+  border-top: 1px solid rgba(137, 169, 253, 0.35);
+  padding: 10px;
 }

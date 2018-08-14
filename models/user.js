@@ -12,7 +12,13 @@ var UserSchema = mongoose.Schema({
 	},
 	email: {
 		type: String
-	}	
+	},
+	description: {
+		type: String
+	},
+	profileimage: {
+		type: String
+	}
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

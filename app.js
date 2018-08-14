@@ -11,6 +11,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var Handlebars = require("handlebars");
 var MomentHandler = require("handlebars.moment");
 MomentHandler.registerHelpers(Handlebars);
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/database');
@@ -47,8 +49,6 @@ var users = require('./routes/users');
 // Init App
 var app = express();
 
-app.locals.moment = require('moment');
-
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:'layout'}));
@@ -60,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Express Session
@@ -109,9 +109,19 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 
+
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
+
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
+	}
+}

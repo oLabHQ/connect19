@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var multer  = require('multer');
+var upload = multer({ dest: './dist/images' });
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -71,6 +73,32 @@ router.post('/signup', function (req, res) {
 	}
 });
 
+// Get profile profile
+router.get('/profile', ensureAuthenticated, function(req, res){
+	res.render('editprofile',{username:req.user.username});
+});
+
+
+// Update profile
+router.post('/profile', ensureAuthenticated, upload.single('profileimage'), function(req, res){
+	var username = req.body.username;
+	var description = req.body.description;
+	
+	console.log(req.file);
+
+	if(req.file){
+		var profileimage = req.file.filename;
+	}else{
+		var profileimage = "dummy.jpg";
+	}
+
+	User.update({username:username}, {$set: {"username": "username", "description": "description"}},function(err, user){
+		res.render('editprofile');
+
+	});
+
+});
+
 passport.use(new LocalStrategy(
 	function (username, password, done) {
 		User.getUserByUsername(username, function (err, user) {
@@ -114,4 +142,12 @@ router.get('/logout', function (req, res) {
 	res.redirect('/users/login');
 });
 
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
+	}
+} 
 module.exports = router;
