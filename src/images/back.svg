@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="51px" viewBox="0 0 51 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="20.5" cy="20.5" r="20.5"></circle>
+        <filter x="-18.3%" y="-13.4%" width="136.6%" height="136.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.388235294   0 0 0 0 0.470588235   0 0 0 0 0.788235294  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Mock-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Contact-Profile-example" transform="translate(-7.000000, -28.000000)" fill-rule="nonzero">
+            <g id="Group-2" transform="translate(12.000000, 31.000000)">
+                <g id="Oval-3-Copy">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use stroke="#4E1AAF" stroke-width="1" xlink:href="#path-1"></use>
+                </g>
+                <g id="Group" transform="translate(12.000000, 8.000000)" fill="#4E1AAF">
+                    <g id="if_icons_menu_1564512-copy">
+                        <path d="M2,10 L14,10 C15.1,10 16,9.1 16,8 C16,6.9 15.1,6 14,6 L2,6 C0.9,6 0,6.9 0,8 C0,9.1 0.9,10 2,10 Z" id="Shape" transform="translate(8.000000, 8.000000) rotate(-45.000000) translate(-8.000000, -8.000000) "></path>
+                    </g>
+                    <g id="if_icons_menu_1564512-copy" transform="translate(8.000000, 17.000000) scale(1, -1) translate(-8.000000, -17.000000) translate(0.000000, 9.000000)">
+                        <path d="M2,10 L14,10 C15.1,10 16,9.1 16,8 C16,6.9 15.1,6 14,6 L2,6 C0.9,6 0,6.9 0,8 C0,9.1 0.9,10 2,10 Z" id="Shape" transform="translate(8.000000, 8.000000) rotate(-45.000000) translate(-8.000000, -8.000000) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

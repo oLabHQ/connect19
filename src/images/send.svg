@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="51px" viewBox="0 0 51 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="20.5" cy="20.5" r="20.5"></circle>
+        <filter x="-18.3%" y="-13.4%" width="136.6%" height="136.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.388235294   0 0 0 0 0.470588235   0 0 0 0 0.788235294  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Mock-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Connect-Wall" transform="translate(-265.000000, -504.000000)">
+            <g id="Group-4" transform="translate(270.000000, 507.000000)">
+                <g id="Oval-3" fill-rule="nonzero">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use stroke="#4E1AAF" stroke-width="1" xlink:href="#path-1"></use>
+                </g>
+                <path d="M15,27.4268377 L15,15.5731623 C15,15.0208776 15.4477153,14.5731623 16,14.5731623 C16.1466999,14.5731623 16.2916032,14.605439 16.4244339,14.6677034 L29.0683543,20.5945411 C29.5684254,20.8289494 29.7837877,21.4243627 29.5493793,21.9244339 C29.4501784,22.1360624 29.2799828,22.3062581 29.0683543,22.4054589 L16.4244339,28.3322966 C15.9243627,28.566705 15.3289494,28.3513427 15.0945411,27.8512716 C15.0322767,27.7184408 15,27.5735376 15,27.4268377 Z" id="Path-3" fill="#4E1AAF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
