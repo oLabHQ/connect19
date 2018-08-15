@@ -24,7 +24,8 @@
 {{/posts}}
 <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
     <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-    <input type="file" name="postimage" class="post-form__file">
+    <img src="images/attachment.svg" id="img"/>
+    <input type="file" name="postimage" class="post-form__file" id="file">
     <input name="submit" type="submit" value="send" class="post-form__button"/>
 </form>
 </div>

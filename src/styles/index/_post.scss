@@ -47,23 +47,29 @@
     margin-bottom: 10px;
 }
 .post-block__featured-image img{
-    max-width: 100%;
     border-radius: 5px;
+    max-width: 100%;
 }
 .post-form{
     display: flex;    
 }
 .post-form__description{
+    background-color: transparent;
     border: none;
     border-top: 1px solid rgba(137,169,253,0.35);
     outline: none;    
     padding: 10px;
 }
 .post-form__file{
-
+    display: none;
 }
 .post-form__button{
-
+    background: url(../images/send.svg);    
+    border: none;
+    text-indent: -99999;
+    font-size: 0px;
+    height: 50px;
+    width: 50px;    
 }
 
 .wall-header{
