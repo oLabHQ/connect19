@@ -55,8 +55,8 @@
 }
 .post-form__description{
     border: none;
-    outline: none;
     border-top: 1px solid rgba(137,169,253,0.35);
+    outline: none;    
     padding: 10px;
 }
 .post-form__file{
@@ -64,5 +64,29 @@
 }
 .post-form__button{
 
+}
+
+.wall-header{
+    display: flex;
+    justify-content: space-between;
+}
+.wall-header__connect-tab{
+    background-color: rgba(114,226,255,1);
+    color: $color__primary--white;
+    padding: 5px 10px;
+    border-radius: 0px 5px 5px 0px;
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
+}
+.wall-header__chat-tab{
+    background-color: rgba(74,171,239,1);
+    color: $color__primary--white;
+    padding: 5px 10px;
+    border-radius: 5px 0px 0px 5px;
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
+}
+.drop-menu{
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 5px 0px;
 }
 

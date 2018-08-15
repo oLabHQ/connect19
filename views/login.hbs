@@ -1,3 +1,20 @@
+<div class="image-background">
+<div class="container">
+        <div class="header">        
+        <img src="../images/logo.svg" alt="" />
+      </div>      
+          {{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-error">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+
 <form method="post" action="/users/login">
   <div class="form-group">
    <i class="fas fa-user"></i> <input type="text" class="form-group__control" name="username" placeholder="Username">
@@ -8,3 +25,5 @@
   <button type="submit" class="form-group__login-btn">LOG IN</button>  
 </form>
 <a href="signup" class="signup-btn">SIGN UP</a>
+</div>
+</div>
