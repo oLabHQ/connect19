@@ -58,7 +58,8 @@ router.post('/signup', function (req, res) {
 					var newUser = new User({						
 						email: email,
 						username: username,
-						password: password
+						password: password,
+						user_profile:{}
 					});
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
@@ -74,8 +75,43 @@ router.post('/signup', function (req, res) {
 });
 
 // Get profile profile
+//router.get('/profile', ensureAuthenticated, function(req, res){
+//	User.findOne({username:req.user.username}, function(err, user){
+//		console.log(user.user_profile.description)
+//		if(err) throw err;
+//		res.render('profile', {user:user});		
+//	});	
+//});
+
 router.get('/profile', ensureAuthenticated, function(req, res){
-	res.render('editprofile',{username:req.user.username});
+	User.findOne({username:req.user.username}, function(err, user){
+		console.log(user.user_profile[0].profilepic)
+		if(err) throw err;
+		res.render('profile', {user:user});		
+	});
+});
+
+// Get profile profile
+router.get('/editprofile', ensureAuthenticated, function(req, res){
+	User.find({username:req.user.username}, function(err, user){				
+		console.log(user);
+		res.render('editprofile',{user:user});
+	});
+});
+
+
+// Post profile profile
+router.post('/editprofile', ensureAuthenticated, function(req, res){
+	var profiledata = {				
+		description: req.body.description,
+		profilepic: req.file
+	}
+
+	console.log(profiledata);
+
+	//User.update({"_id:req.user._id"})
+	
+	res.render('profile',{profile:profiledata});
 });
 
 
@@ -94,9 +130,7 @@ router.post('/profile', ensureAuthenticated, upload.single('profileimage'), func
 
 	User.update({username:username}, {$set: {"username": "username", "description": "description"}},function(err, user){
 		res.render('editprofile');
-
 	});
-
 });
 
 passport.use(new LocalStrategy(

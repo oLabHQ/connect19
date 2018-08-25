@@ -9,10 +9,11 @@ var PostSchema = mongoose.Schema({
         type: String
 	},
 	author: {
-		type: String
+		type: String,		
 	},
 	date: {
-		type: Date
+		type: Date,
+		default: Date.now
 	}
 });
 

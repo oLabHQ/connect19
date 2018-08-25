@@ -9,6 +9,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Handlebars = require("handlebars");
+var hbsHelpers = require('handlebars-helpers');
 var MomentHandler = require("handlebars.moment");
 MomentHandler.registerHelpers(Handlebars);
 var multer  = require('multer')
@@ -16,6 +17,17 @@ var upload = multer({ dest: 'uploads/' })
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/database');
+
+
+
+//Handlebars.registerHelper('with', function(context, options) {
+//  console.log('hi')
+//  return options.fn(context);
+//});
+
+
+
+// hbsHelpers.register(hbs.handlebars, {});
 
 // For Production
 //mongoose.connect('mongodb://c19:connect19@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
@@ -52,7 +64,18 @@ var app = express();
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:'layout'}));
-app.set('view engine', '.hbs');
+app.set('view engine', 'hbs');
+
+var hbs = exphbs.create({
+  helpers: {
+    user_profile: function(something) {
+      console.log(something);
+      return ''+something;
+    }
+  },
+  defaultLayout: 'layout'
+})
+
 
 // BodyParser Middleware
 app.use(bodyParser.json());

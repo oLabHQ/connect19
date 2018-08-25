@@ -1,5 +1,24 @@
 var mongoose = require('mongoose');
+var shortid = require('shortid');
 var bcrypt = require('bcryptjs');
+var Handlebars = require("handlebars");
+var hbsHelpers = require('handlebars-helpers');
+// Userprofile Schema
+
+var userProfileSchema = mongoose.Schema({
+	description:{
+		type: String,
+		default: "None"
+	},
+	interests: {
+		type: String,
+		default: "None"
+	},
+	profilepic: {
+		type: String,
+		default: '../images/prof-img.png'
+	}
+})
 
 // User Schema
 var UserSchema = mongoose.Schema({
@@ -7,21 +26,40 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		index:true
 	},
-	password: {
-		type: String
-	},
 	email: {
 		type: String
 	},
-	description: {
+	password: {
 		type: String
 	},
-	profileimage: {
-		type: String
-	}
+	member_id:{
+		type: String,
+		default: shortid.generate
+	},
+	friends:[
+		{
+			"member_id": String,
+			"friend_name": String,
+			"Profile_pic": String
+		}
+	],
+	friend_requests: [
+		{
+			"member_id": String,
+			"friend_name": String,
+			"profile_pic": String
+		}
+	],
+	user_profile: [userProfileSchema]
 });
 
+Handlebars.registerHelper('fullName', function(person) {
+	console.log('hi')
+	return person;
+  });
+
 var User = module.exports = mongoose.model('User', UserSchema);
+
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {

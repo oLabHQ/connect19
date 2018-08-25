@@ -28,5 +28,35 @@
     <input type="file" name="postimage" class="post-form__file" id="file">
     <input name="submit" type="submit" value="send" class="post-form__button"/>
 </form>
+
+<!--
+<form id="post" enctype="multipart/form-data" class="post-form">
+    <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+    <img src="images/attachment.svg" id="img"/>
+    <input type="file" name="postimage" class="post-form__file" id="file">
+    <input id="register_post" name="submit" type="submit" value="send" class="post-form__button"/>
+</form>
+-->
+
 </div>
 </div>
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $("#register_post").on("click", function(){
+        $.ajax({
+            method: "POST",
+            url: "/add",
+            data: $("#post").serialize(),
+            success: function(){
+                alert('hi');
+                console.log("success")
+            },
+            fail:function() {
+                console.log('fail');
+            }
+        })
+    })
+</script>
+
+-->

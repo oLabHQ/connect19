@@ -20,6 +20,19 @@ body {
 .gradient-background {
   background: -webkit-gradient(linear, left bottom, left top, from(rgba(229, 249, 255, 0.24)), to(rgba(97, 134, 240, 0.28)));
   background: linear-gradient(0deg, rgba(229, 249, 255, 0.24) 0%, rgba(97, 134, 240, 0.28) 100%);
+  height: 100%;
+  overflow-y: scroll;
+  position: fixed;
+  width: 100%;
+}
+
+.profile-background {
+  background: -webkit-gradient(linear, left top, left bottom, from(#d0e9f9), to(#6288f0));
+  background: linear-gradient(180deg, #d0e9f9 0%, #6288f0 100%);
+  height: 100%;
+  overflow-y: scroll;
+  position: fixed;
+  width: 100%;
 }
 
 .container {
@@ -217,6 +230,7 @@ i.fas {
   border-top: 1px solid rgba(137, 169, 253, 0.35);
   outline: none;
   padding: 10px;
+  width: 70%;
 }
 
 .post-form__file {
@@ -267,4 +281,35 @@ i.fas {
       -ms-flex-pack: end;
           justify-content: flex-end;
   margin: 10px 5px 0px;
+}
+
+.profile-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-top: 60px;
+}
+
+.profile-detail {
+  padding: 0 30px;
+}
+
+.profile-detail__title {
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 27px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.profile-detail__description {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+  font-weight: 300;
+  line-height: 21px;
+  text-align: center;
+  padding-bottom: 5px;
 }

@@ -40,6 +40,7 @@
     "express-validator": "*",
     "git-flow": "^0.2.0",
     "gulp": "^3.9.1",
+    "handlebars-helpers": "^0.10.0",
     "handlebars.moment": "^1.0.4",
     "mongodb": "*",
     "mongoose": "*",
@@ -47,6 +48,7 @@
     "nodemon": "^1.18.3",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "shortid": "^2.2.13"
   }
 }
