@@ -85,9 +85,9 @@ router.post('/signup', function (req, res) {
 
 router.get('/profile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){
-		console.log(user.user_profile[0].profilepic)
+		console.log(user.user_profile[0].profilepic)		
 		if(err) throw err;
-		res.render('profile', {user:user});		
+		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_profile: user.user_profile[0].profilepic});		
 	});
 });
 

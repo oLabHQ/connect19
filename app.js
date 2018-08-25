@@ -66,6 +66,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:'layout'}));
 app.set('view engine', 'hbs');
 
+
+//hbs.registerPartials(__dirname+"/views/partials")
 //var hbs = exphbs.create({
 //  helpers: {
 //    user_profile: function(something) {
