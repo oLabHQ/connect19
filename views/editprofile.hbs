@@ -1,0 +1,16 @@
+<div class="profile-background">
+<div class="drop-menu">
+        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div>
+
+  <div class="profile-image">
+        <img src="../images/{{user.user_profile.profilepic}}" alt="" />
+    </div>  
+<form method="post" action="/users/profile" enctype="multipart/form-data">
+<img src="" />
+<input type="file" name="profileimage"/>
+<input type="text" name ="username" value="{{username}}" />
+<input type="text" name="description" />
+<input type="submit" value="save changes" />
+</form>
+</div>

@@ -1,0 +1,20 @@
+<div class="profile-background">
+    <div class="drop-menu">
+        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div>
+    <div class="profile-image">
+        {{#with user_profile}}
+        <img src="{{{profilepic}}}" alt="" />
+        {{/with}}
+    </div>
+    {{{fullName user.user_profile}}}
+    {{fullName user.username}}
+    {{{email}}} 
+    <div class="profile-detail">
+        <h2 class="profile-detail__title">{{user.username}} {{user.email}}</h2>   
+        {{#with user_profile}}         
+        <p class="profile-detail__description">{{user.user_profile}}</p>                        
+        {{/with}}
+    </div>
+</div>
+
