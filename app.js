@@ -66,15 +66,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:'layout'}));
 app.set('view engine', 'hbs');
 
-var hbs = exphbs.create({
-  helpers: {
-    user_profile: function(something) {
-      console.log(something);
-      return ''+something;
-    }
-  },
-  defaultLayout: 'layout'
-})
+//var hbs = exphbs.create({
+//  helpers: {
+//    user_profile: function(something) {
+//      console.log(something);
+//      return ''+something;
+//    }
+ // },
+//  defaultLayout: 'layout'
+//})
 
 
 // BodyParser Middleware
