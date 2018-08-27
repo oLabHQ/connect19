@@ -1,18 +1,13 @@
 <div class="profile-background">
     <div class="drop-menu">
         <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div>
-    <div class="profile-image">        
-        <img src="{{{user_profile}}}" alt="" />
     </div>    
-   <!-- {{{fullName user.user_profile}}}
-    {{fullName user.username}} -->
-    
+    <div class="profile-image">        
+        <img src="../images/{{{user_pic}}}" alt="" />
+    </div>    
     <div class="profile-detail">
-        <h2 class="profile-detail__title">{{user.username}} {{user.email}}</h2>   
-               
+        <h2 class="profile-detail__title">{{user.username}}</h2>   
         <p class="profile-detail__description">{{{user_description}}} </p>                        
-        
     </div>
 </div>
 

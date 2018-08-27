@@ -1,0 +1,7 @@
+{{#each user_friends}}
+    {{this.username}}
+    {{this.user_profile}}
+    {{#with user_profile}}
+  <h2>By {{description}} </h2>
+  {{/with}}
+{{/each}}

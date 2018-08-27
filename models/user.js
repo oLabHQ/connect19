@@ -6,9 +6,9 @@ var hbsHelpers = require('handlebars-helpers');
 // Userprofile Schema
 
 var userProfileSchema = mongoose.Schema({
-	description:{
+	description: {
 		type: String,
-		default: "None"
+		default: "Please enter some description.."
 	},
 	interests: {
 		type: String,
@@ -16,7 +16,7 @@ var userProfileSchema = mongoose.Schema({
 	},
 	profilepic: {
 		type: String,
-		default: '../images/prof-img.png'
+		default: 'prof-img.png'
 	}
 })
 
@@ -53,10 +53,6 @@ var UserSchema = mongoose.Schema({
 	user_profile: [userProfileSchema]
 });
 
-Handlebars.registerHelper('fullName', function(person) {
-	console.log('hi')
-	return person;
-  });
 
 var User = module.exports = mongoose.model('User', UserSchema);
 

@@ -15,6 +15,7 @@ MomentHandler.registerHelpers(Handlebars);
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var mongo = require('mongodb');
+var objectId = require('mongodb').ObjectID;
 var mongoose = require('mongoose');
 var config = require('./config/database');
 
@@ -57,6 +58,15 @@ mongoose.connection.on('error', (err) => {
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var friends = require('./routes/friends');
+
+
+Handlebars.registerHelper('user_profile', function() {
+  console.log('this istest')
+  var emotion = Handlebars.escapeExpression(this.emotion),
+      name = Handlebars.escapeExpression(this.name);
+
+    });
 
 // Init App
 var app = express();
@@ -133,6 +143,8 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/friends', friends);
+
 
 
 // Set Port

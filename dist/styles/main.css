@@ -313,3 +313,55 @@ i.fas {
   text-align: center;
   padding-bottom: 5px;
 }
+
+.edit-profile-form__username, .edit-profile-form__description {
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+  background: none;
+  color: #FFFFFF;
+  font-size: 1em;
+  padding: 5px 10px 10px 0;
+  width: 100%;
+}
+
+.edit-profile-form__save-button, .edit-profile-form__change-password {
+  background-color: #4aabef;
+  border: none;
+  border-radius: 27px;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(8, 113, 117, 0.34);
+          box-shadow: 0 4px 5px 0 rgba(8, 113, 117, 0.34);
+  color: #FFFFFF;
+  display: block;
+  font-size: 1em;
+  margin-top: 55px;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.edit-profile {
+  padding: 0 45px;
+}
+
+.edit-profile__profile-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-top: 60px;
+}
+
+.edit-profile-form__description {
+  margin-top: 30px;
+}
+
+.edit-profile-form__save-button {
+  background-color: #72e2ff;
+}
+
+.edit-profile-form__change-password {
+  text-decoration: none;
+  margin-top: 22px;
+  text-align: center;
+}

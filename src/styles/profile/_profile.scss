@@ -1,0 +1,24 @@
+.profile-image{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+}
+.profile-detail{
+    padding: 0 30px;
+}
+.profile-detail__title{
+    color: $color__primary--white;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 27px;
+    text-align: center;
+    text-transform: capitalize;
+}
+.profile-detail__description{
+    border-bottom: 1px solid rgba(255,255,255,0.35);
+    color: $color__primary--white;
+    font-weight: 300;
+    line-height: 21px;
+    text-align: center;
+    padding-bottom: 5px;
+}

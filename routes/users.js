@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb');
+var objectId = require('mongodb').ObjectID;
 var multer  = require('multer');
 var upload = multer({ dest: './dist/images' });
 var passport = require('passport');
@@ -84,54 +86,51 @@ router.post('/signup', function (req, res) {
 //});
 
 router.get('/profile', ensureAuthenticated, function(req, res){
-	User.findOne({username:req.user.username}, function(err, user){
+	User.findOne({username:req.user.username}, function(err, user){		
 		console.log(user.user_profile[0].profilepic)		
 		if(err) throw err;
-		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_profile: user.user_profile[0].profilepic});		
+		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic});
 	});
 });
 
 // Get profile profile
 router.get('/editprofile', ensureAuthenticated, function(req, res){
-	User.find({username:req.user.username}, function(err, user){				
-		console.log(user);
-		res.render('editprofile',{user:user});
+	User.findOne({username:req.user.username}, function(err, user){				
+		//console.log(user);
+		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic});		
 	});
 });
 
 
-// Post profile profile
 router.post('/editprofile', ensureAuthenticated, function(req, res){
-	var profiledata = {				
-		description: req.body.description,
-		profilepic: req.file
-	}
+	var username = req.body.username;
 
-	console.log(profiledata);
-
-	//User.update({"_id:req.user._id"})
-	
-	res.render('profile',{profile:profiledata});
-});
-
+	console.log(username);
+})
 
 // Update profile
-router.post('/profile', ensureAuthenticated, upload.single('profileimage'), function(req, res){
-	var username = req.body.username;
-	var description = req.body.description;
+//router.post('/editprofile', ensureAuthenticated, function(req, res){
+//	console.log('hi');
 	
-	console.log(req.file);
+		//var username = req.body.user.username;
+		//var description = req.body.description;
+	
+	//var id = req.body.id;
+	//console.log(username);
+	
+	//if(req.file){
+	//	var profileimage = req.file.filename;
+	//}else{
+	//	var profileimage = "dummy.jpg";
+	//}
 
-	if(req.file){
-		var profileimage = req.file.filename;
-	}else{
-		var profileimage = "dummy.jpg";
-	}
-
-	User.update({username:username}, {$set: {"username": "username", "description": "description"}},function(err, user){
-		res.render('editprofile');
-	});
-});
+//	User.updateOne({member_id: id},{$set: items},function(err, user){
+//		console.log(user);
+//		if (err) throw err;		
+//		res.render('profile');
+		
+//	});
+//});
 
 passport.use(new LocalStrategy(
 	function (username, password, done) {

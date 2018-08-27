@@ -1,0 +1,48 @@
+%input-edit-profile {
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255,0.7);
+    background: none;
+    color: $color__primary--white;
+    font-size: em(14px);
+    padding:5px 10px 10px 0;
+    width: 100%;
+}
+%edit-form-button{
+    background-color: rgba(74,171,239,1);
+    border: none;
+    border-radius: 27px;    
+    box-shadow: 0 4px 5px 0 rgba(8,113,117,0.34);    
+    color: $color__primary--white;
+    display: block;
+    font-size: em(14px);
+    margin-top: 55px;      
+    padding: 10px 20px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.edit-profile{
+    padding: 0 45px;
+}
+.edit-profile__profile-image{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+}
+.edit-profile-form__username{
+    @extend %input-edit-profile;
+}
+.edit-profile-form__description{
+    @extend %input-edit-profile;
+    margin-top: 30px;
+}
+.edit-profile-form__save-button{
+    background-color: rgba(114,226,255,1);
+    @extend %edit-form-button;    
+}
+.edit-profile-form__change-password{
+    @extend %edit-form-button;
+    text-decoration: none;
+    margin-top: 22px;
+    text-align: center;
+}
