@@ -314,6 +314,16 @@ i.fas {
   padding-bottom: 5px;
 }
 
+.edit-ico {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+}
+
+.edit-ico i {
+  color: #ffffff;
+}
+
 .edit-profile-form__username, .edit-profile-form__description {
   border: none;
   border-bottom: 2px solid rgba(255, 255, 255, 0.7);
