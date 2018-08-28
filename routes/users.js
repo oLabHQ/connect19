@@ -87,7 +87,7 @@ router.post('/signup', function (req, res) {
 
 router.get('/profile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){		
-		console.log(user.user_profile[0].profilepic)		
+		//console.log(user.user_profile[0].profilepic)		
 		if(err) throw err;
 		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic});
 	});
@@ -97,7 +97,7 @@ router.get('/profile', ensureAuthenticated, function(req, res){
 router.get('/editprofile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){				
 		//console.log(user);
-		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic});		
+		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic});
 	});
 });
 
