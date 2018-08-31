@@ -118,7 +118,7 @@ router.post('/editprofile', ensureAuthenticated, function(req, res){
 	//	var profileimage = "dummy.jpg";
 	//}
 
-	User.updateOne({username: req.user.username},{$set: {"username":username, "description": req.user.user_profile.description}},function(err, user){
+	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description}]}},function(err, user){
 		//console.log(user);
 		if (err) throw err;		
 		res.redirect('profile');
