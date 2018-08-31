@@ -7,10 +7,10 @@
   <div class="edit-profile__profile-image">
         <img src="../images/{{{user_pic}}}" alt="" />
     </div>  
-<form method="post" action="/users/editprofile" enctype="multipart/form-data" class="edit-profile-form">
+<form method="post" action="/users/editprofile" class="edit-profile-form">
 <img src="" />
 <!-- <input type="file" name="profileimage"/> -->
-<input type="text" name ="username" value="{{user.username}}" class="edit-profile-form__username" />
+<input type="text" name ="mata" value="{{user.username}}" class="edit-profile-form__username" />
 <input type="text" name="description" value="{{{user_description}}}" class="edit-profile-form__description" />
 <input type="submit" value="save changes" class="edit-profile-form__save-button" />
 </form>

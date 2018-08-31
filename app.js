@@ -20,11 +20,14 @@ var mongoose = require('mongoose');
 var config = require('./config/database');
 
 
+Handlebars.registerHelper('with', function(context, options) {
+  return options.fn(context);
+});
 
-//Handlebars.registerHelper('with', function(context, options) {
-//  console.log('hi')
-//  return options.fn(context);
-//});
+Handlebars.registerHelper('formatName', function(property) {
+  console.log('hi')
+  return property;
+});
 
 
 
@@ -63,9 +66,8 @@ var friends = require('./routes/friends');
 
 Handlebars.registerHelper('user_profile', function() {
   console.log('this istest')
-  var emotion = Handlebars.escapeExpression(this.emotion),
-      name = Handlebars.escapeExpression(this.name);
-
+  //var emotion = Handlebars.escapeExpression(this.emotion),
+  //   name = Handlebars.escapeExpression(this.name);
     });
 
 // Init App
@@ -91,7 +93,7 @@ app.set('view engine', 'hbs');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Set Static Folder

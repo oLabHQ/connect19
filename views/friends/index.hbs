@@ -1,7 +1,27 @@
+<div class="gradient-background">
+    <div class="wall-header">
+    <div class="wall-header__connect-tab">Connect Wall</div>
+    <div class="wall-header__chat-tab">Chat</div>
+</div>  <!-- wall-header -->
+<div class="drop-menu">
+        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div>
 {{#each user_friends}}
-    {{this.username}}
-    {{this.user_profile}}
-    {{#with user_profile}}
-  <h2>By {{description}} </h2>
-  {{/with}}
+<div class="friend-list">
+<div class="friend-list__profile-pic">
+{{#each user_profile}}
+<img src="../images/{{profilepic}}" />
 {{/each}}
+</div>
+<div class="friend-list__detail">
+<h2 class="friend-list__username">{{this.username}}</h2>
+{{#each user_profile}}
+<p class="friend-list__description">{{{description}}}</p>
+{{/each}}
+</div>
+<i class="fa fa-plus-circle" aria-hidden="true"></i>
+</div>
+{{/each}}
+</div>
+
+

@@ -65,7 +65,7 @@ router.post('/signup', function (req, res) {
 					});
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
-						console.log(user);
+						//console.log(user);
 						console.log('3');
 					});
          	req.flash('success_msg', 'You are registered and can now login');
@@ -102,21 +102,15 @@ router.get('/editprofile', ensureAuthenticated, function(req, res){
 });
 
 
-router.post('/editprofile', ensureAuthenticated, function(req, res){
-	var username = req.body.username;
-
-	console.log(username);
-})
-
 // Update profile
-//router.post('/editprofile', ensureAuthenticated, function(req, res){
-//	console.log('hi');
+router.post('/editprofile', ensureAuthenticated, function(req, res){
+		var username = req.body.mata;
+		var description = req.body.description;
 	
-		//var username = req.body.user.username;
-		//var description = req.body.description;
-	
-	//var id = req.body.id;
-	//console.log(username);
+	var id = req.body.id;
+	console.log(username);
+	console.log(description);
+	//console.log(description);
 	
 	//if(req.file){
 	//	var profileimage = req.file.filename;
@@ -124,13 +118,12 @@ router.post('/editprofile', ensureAuthenticated, function(req, res){
 	//	var profileimage = "dummy.jpg";
 	//}
 
-//	User.updateOne({member_id: id},{$set: items},function(err, user){
-//		console.log(user);
-//		if (err) throw err;		
-//		res.render('profile');
-		
-//	});
-//});
+	User.updateOne({username: req.user.username},{$set: {"username":username, "description": req.user.user_profile.description}},function(err, user){
+		//console.log(user);
+		if (err) throw err;		
+		res.redirect('profile');
+	});
+});
 
 passport.use(new LocalStrategy(
 	function (username, password, done) {
