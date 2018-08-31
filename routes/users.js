@@ -89,7 +89,7 @@ router.get('/profile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){		
 		//console.log(user.user_profile[0].profilepic)		
 		if(err) throw err;
-		res.render('profile', {user:user, user_pic: user.user_profile[0].profilepic});
+		res.render('profile', {user:user});
 	});
 });
 
