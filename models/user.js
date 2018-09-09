@@ -40,7 +40,7 @@ var UserSchema = mongoose.Schema({
 		{
 			"member_id": String,
 			"friend_name": String,
-			"Profile_pic": String
+			"profile_pic": String
 		}
 	],
 	friend_requests: [

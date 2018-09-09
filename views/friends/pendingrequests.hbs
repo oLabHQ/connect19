@@ -1,0 +1,17 @@
+<div class="gradient-background">
+    <div class="wall-header">
+        <div class="wall-header__connect-tab">Connect Wall</div>
+        <div class="wall-header__chat-tab">Chat</div>
+    </div>  <!-- wall-header -->
+    <div class="drop-menu">
+        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div>
+    <h1>Pending Requests</h1>
+    {{#each friendrequests}}
+    <div class="pending-request" id="{{member_id}}">
+        <img src="/images/{{this.profile_pic}}" class="pending-request__profile-pic" alt="" />
+        <h2 class="pending-request__title">{{this.friend_name}}</h2> 
+        <button class="pending-request__accept-btn" id ="accept_friend_request">Accept</button>       
+    </div>
+    {{/each}}
+</div>    

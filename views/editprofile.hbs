@@ -1,15 +1,13 @@
 <div class="profile-background">
-<div class="drop-menu">
+    <div class="drop-menu">
         <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
     </div>
-
-<div class="edit-profile">
-  <div class="edit-profile__profile-image">
+<div class="edit-profile">      
+<form method="post" action="/users/editprofile" enctype="multipart/form-data" class="edit-profile-form">
+    <div class="edit-profile__profile-image">
         <img src="../images/{{{user_pic}}}" alt="" />
-    </div>  
-<form method="post" action="/users/editprofile" class="edit-profile-form">
-<img src="" />
-<!-- <input type="file" name="profileimage"/> -->
+    </div>
+ <input type="file" name="profilepic"/> 
 <input type="text" name ="mata" value="{{user.username}}" class="edit-profile-form__username" />
 <input type="text" name="description" value="{{{user_description}}}" class="edit-profile-form__description" />
 <input type="submit" value="save changes" class="edit-profile-form__save-button" />

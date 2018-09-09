@@ -103,27 +103,32 @@ router.get('/editprofile', ensureAuthenticated, function(req, res){
 
 
 // Update profile
-router.post('/editprofile', ensureAuthenticated, function(req, res){
+router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), function(req, res){
 		var username = req.body.mata;
 		var description = req.body.description;
+		var file = req.body.profilepic;
 	
 	var id = req.body.id;
 	console.log(username);
 	console.log(description);
-	//console.log(description);
+	if(req.file.filename){
+		var profilepic = req.file.filename;
+	}
+	console.log(profilepic);
 	
 	//if(req.file){
 	//	var profileimage = req.file.filename;
 	//}else{
 	//	var profileimage = "dummy.jpg";
 	//}
-
-	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description}]}},function(err, user){
+ 
+	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description, "profilepic": profilepic}]}},function(err, user){
 		//console.log(user);
 		if (err) throw err;		
 		res.redirect('profile');
 	});
 });
+
 
 passport.use(new LocalStrategy(
 	function (username, password, done) {

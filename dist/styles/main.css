@@ -376,7 +376,7 @@ i.fas {
   text-align: center;
 }
 
-.friend-list__username, .friend-list__description {
+.friend-list__username, .friend-list__description, .pending-request__title {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
@@ -423,4 +423,43 @@ i.fas {
 
 .friend-list i {
   color: #4e1aaf;
+}
+
+.friend-list__username, .friend-list__description, .pending-request__title {
+  color: #89A9FF;
+  font-size: 1.1428571429em;
+  margin: 0;
+}
+
+.pending-request {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid rgba(137, 169, 253, 0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 10px;
+  padding-bottom: 10px;
+}
+
+.pending-request__profile-pic {
+  -webkit-box-shadow: 0 3px 9px 0 rgba(99, 120, 201, 0.45);
+          box-shadow: 0 3px 9px 0 rgba(99, 120, 201, 0.45);
+  border-radius: 100px;
+  height: 50px;
+  margin-right: 15px;
+  width: 50px;
+}
+
+.pending-request__profile-pic img {
+  max-width: 100%;
+}
+
+.pending-request__title {
+  font-weight: 900;
+  text-transform: capitalize;
 }
