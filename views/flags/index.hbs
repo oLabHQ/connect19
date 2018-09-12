@@ -1,0 +1,25 @@
+<div class="gradient-background">
+    <div class="wall-header">
+        <div class="wall-header__connect-tab">Connect Wall</div>
+        <div class="wall-header__chat-tab">Chat</div>
+    </div>  <!-- wall-header -->
+    <div class="drop-menu">
+        <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
+    </div> 
+        {{#each posts}}        
+            <div class="flag-block" id="{{post_id}}">
+                {{#each flag}}
+                    <div class="flag-block__author"> 
+                        {{this.author}}
+                    </div>
+                        {{#if postimage}}
+                            <div class="flag-block__featured-image">
+                                <img src="/images/{{this.postimage}}" />
+                            </div>
+                        {{/if}}
+                    <div class="flag-block__description">{{this.description}}</div>        
+                    <a href="javascript:void(0);" class="trash-post">Trash</a>
+                {{/each}}        
+            </div>
+        {{/each}}
+</div>

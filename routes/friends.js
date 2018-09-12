@@ -58,7 +58,7 @@ router.post('/friend-requests', ensureAuthenticated, function(req, res){
 		//console.log(user);
 		User.find({"member_id": req.body.member_id}, function(err, accepted_friend_user){
 			//console.log(accepted_friend_user);			
-			user[0].update({$push: {friends: {"member_id": accepted_friend_user[0].member_id, "friend_name": accepted_friend_user[0].username, "profile_pic": accepted_friend_user[0].user_profile[0].profilepic}}, $pull: {"friend_requests": {member_id: req.body.member_id}}}, function(err){								 
+			user[0].update({$push: {friends: {"member_id": accepted_friend_user[0].member_id, "friend_name": accepted_friend_user[0].username, "profile_pic": accepted_friend_user[0].user_profile[0].profilepic}}, $pull: {"friend_requests": {member_id: req.body.member_id}}}, function(err){
 				accepted_friend_user[0].update({$push: {friends: {"member_id": user[0].member_id, "friend_name": user[0].username, "profile_pic": user[0].user_profile[0].profilepic}}}, function(err){
 					if(err) throw err;    				
 					res.send(req.body); 
@@ -67,21 +67,7 @@ router.post('/friend-requests', ensureAuthenticated, function(req, res){
 		});
 	});
 });
-/*
-router.post('/friend-requests', ensureAuthenticated, function(req, res){
-	User.find({"email": req.user.email}, function(err, user){
-		console.log(user);
-		User.find({"member_id": req.body.member_id}, function(err, accepted_friend_user){
-			console.log(accepted_friend_user);
-			user[0].update({$push: {"friends": {"member_id": accepted_friend_user[0].member_id, "friend_name": accepted_friend_user[0].friend_name, "profile_pic": accepted_friend_user[0].profile_pic}}, $pull: {"friend_request": {member_id: req.body.member_id}}}).exec(function(err){
-				accepted_friend_user[0].update({$push: {"friends": {"member_id": user[0].member_id, "friend_name": user[0].friend_name, "profile_pic": user[0].profile_pic}}}).exec(function(err){
-					res.send(); 
-				}); 
-			});
-		});  
-	});
-});
-*/
+
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();

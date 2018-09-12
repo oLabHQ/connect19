@@ -24,7 +24,7 @@
 
     $(".pending-request__accept-btn").on("click", function(){
         var friend_member_id = $(this).parent().attr("id");
-        console.log(friend_member_id);
+        //console.log(friend_member_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({"member_id": friend_member_id}),
@@ -35,7 +35,88 @@
             },
             complete: function (data) {
                 $("#accept_friend_request").html('Friend request accepted').attr("disabled", "disabled");
+               }  
+        });
+    });
+
+    // flag-post
+    $(".flag-post").on("click", function(){
+        var flag_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(flag_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"flag_post_id": flag_post_id}),
+            contentType: 'application/json',
+            url: "/",            
+            success: function(){
+                console.log('This post has been flagged');
+            },
+            complete: function (data) {
+                clicked_button.html('This post has been flagged').attr("disabled", "disabled");
                }
         });
     });
+
+
+    // Trash-post
+    $(".trash-post").on("click", function(){
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trash_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/flags",            
+            success: function(){
+                console.log('This post has been trashed');
+            },
+            complete: function (data) {
+                clicked_button.html('This post has been trashed').attr("disabled", "disabled");
+            }
+        });
+    });
+
+    // Undo-Trash-post
+    $(".trash-block__undo-btn").on("click", function(){
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trash_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/trash",            
+            success: function(){
+                console.log('This post has been untrashed');
+            },
+            complete: function (data) {
+                clicked_button.html('This post has been untrashed').attr("disabled", "disabled");
+            }
+        });
+    });
+
+    // Delete-Trash-post
+
+    $(".trash-block__delete-btn").on("click", function(){
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trashed_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/trash/delete",            
+            success: function(){
+                console.log('This post has been Deleted');
+                $('.trash-block').hide();
+            },
+            complete: function () {
+                clicked_button.html('This post has been Deleted').attr("disabled", "disabled");
+            }
+        });
+    });
+    
+
 }());

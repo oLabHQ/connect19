@@ -3,8 +3,8 @@ var shortid = require('shortid');
 var bcrypt = require('bcryptjs');
 var Handlebars = require("handlebars");
 var hbsHelpers = require('handlebars-helpers');
-// Userprofile Schema
 
+// Userprofile Schema
 var userProfileSchema = mongoose.Schema({
 	description: {
 		type: String,

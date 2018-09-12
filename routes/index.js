@@ -8,10 +8,10 @@ var Post = require('../models/post');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
-	Post.find({},function(err, posts){
-		//console.log(posts);
+	Post.find({trashed:"N"},function(err, posts){
+		//console.log(req.user.user_profile[0].profilepic);
 		if(err) throw err;
-		res.render('index', {posts:posts, username: req.user.username });			
+		res.render('index', {posts:posts, profilepic: req.user.user_profile[0].profilepic});					
 	})
 });
 
@@ -27,7 +27,8 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 		description: description,
 		date: date,
 		postimage: postimage,
-		author: req.user.username
+		author: req.user.username,
+		authorpic: req.user.user_profile[0].profilepic
 	});
 
 	Post.createPost(newPost, function(err, post){
@@ -38,6 +39,65 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 	 
 });
 
+
+// Post flags
+router.post('/', function(req, res){
+	Post.findOne({'post_id': req.body.flag_post_id}, function(err, post){
+		//console.log(post);
+		post.update({$push: {"flag": {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}}, function(err){
+			res.send();
+		})
+	});
+});
+
+
+// Get flags
+router.get('/flags', ensureAuthenticated, function(req, res){
+	Post.find({},function(err, posts){
+		//console.log(req.user.user_profile[0].profilepic);
+		if(err) throw err;
+		res.render('flags/index', {posts:posts});					
+	})
+});
+
+
+// Post Trash
+router.post('/flags', function(req, res){
+	Post.findOne({'post_id': req.body.trash_post_id}, function(err, post){
+		//console.log(post);
+		post.update({$set:{trashed: 'Y'},$push: {"trash": {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}, $pull: {"flag": {post_id: req.body.trash_post_id}}}, function(err){
+			res.send();
+		})
+	});
+});
+
+
+// Get Trash
+router.get('/trash', ensureAuthenticated, function(req, res){
+	Post.find({},function(err, posts){
+		//console.log(req.user.user_profile[0].profilepic);
+		if(err) throw err;
+		res.render('trash/index', {posts:posts});					
+	})
+});
+
+// Post Undo-Trash
+
+router.post('/trash', function(req, res){
+	Post.findOne({'post_id': req.body.trash_post_id}, function(err, post){
+		//console.log(post);
+		post.update({$set:{trashed: 'N'},$pull: {"trash": {post_id: req.body.trash_post_id}}}, function(err){
+			res.send();
+		})
+	});
+});
+
+// Delete-Trash Post
+router.post('/trash/delete', function(req, res){
+	console.log(req.body.trashed_post_id);
+	Post.remove({'post_id': req.body.trashed_post_id}, function(err, post){
+	});
+});
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){

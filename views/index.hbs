@@ -5,12 +5,11 @@
     </div>  <!-- wall-header -->
     <div class="drop-menu">
         <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
-    </div> 
-    <div class="container">
+    </div>                 
         {{#posts}}
-            <div class="post-main-block">
+            <div class="post-main-block" id="{{post_id}}"> 
                 <div class="img-block">
-                    <img src="images/dummy.png" alt="" />
+                    <img src="images/{{{this.authorpic}}}" alt="" />
                 </div>
                 <div class="post-rt-block">
                     <div class="author-block">
@@ -21,7 +20,8 @@
                         <div class="post-block__description">{{this.description}}</div>    
                         {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
                     </div>
-                </div>
+                </div>            
+                <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
             </div>
          {{/posts}}
         <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
