@@ -62,6 +62,7 @@ mongoose.connection.on('error', (err) => {
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var friends = require('./routes/friends');
+var admin = require('./routes/admin');
 
 
 Handlebars.registerHelper('user_profile', function() {
@@ -146,6 +147,7 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/friends', friends);
+app.use('/admin', admin);
 
 
 

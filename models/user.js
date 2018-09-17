@@ -36,6 +36,10 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		default: shortid.generate
 	},
+	admin: {
+		type: Boolean,
+		default: "false"
+	},
 	friends:[
 		{
 			"member_id": String,

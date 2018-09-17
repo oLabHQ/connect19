@@ -4,6 +4,7 @@ var multer  = require('multer');
 var upload = multer({ dest: './dist/images' });
 
 var Post = require('../models/post');
+var User = require('../models/user');
 
 
 // Get Homepage
@@ -49,15 +50,18 @@ router.post('/', function(req, res){
 		})
 	});
 });
-
+  
 
 // Get flags
-router.get('/flags', ensureAuthenticated, function(req, res){
-	Post.find({},function(err, posts){
-		//console.log(req.user.user_profile[0].profilepic);
-		if(err) throw err;
-		res.render('flags/index', {posts:posts});					
-	})
+router.get('/flags', ensureAuthenticated, function(req, res){				
+	User.find({username: req.user.username}, function(err, user){
+		//console.log(user[0].admin);   
+		Post.find({},function(err, posts){ 
+			//console.log(req.user.user_profile[0].profilepic);
+			if(err) throw err;
+			res.render('flags/index', {posts:posts, user: user[0].admin});					
+		});
+	});
 });
 
 
@@ -74,11 +78,13 @@ router.post('/flags', function(req, res){
 
 // Get Trash
 router.get('/trash', ensureAuthenticated, function(req, res){
-	Post.find({},function(err, posts){
-		//console.log(req.user.user_profile[0].profilepic);
-		if(err) throw err;
-		res.render('trash/index', {posts:posts});					
-	})
+	User.find({username: req.user.username}, function(err, user){
+		Post.find({},function(err, posts){
+			//console.log(req.user.user_profile[0].profilepic);
+			if(err) throw err;
+			res.render('trash/index', {posts:posts, user: user[0].admin});
+		});
+	});
 });
 
 // Post Undo-Trash
@@ -96,6 +102,7 @@ router.post('/trash', function(req, res){
 router.post('/trash/delete', function(req, res){
 	console.log(req.body.trashed_post_id);
 	Post.remove({'post_id': req.body.trashed_post_id}, function(err, post){
+		res.send();
 	});
 });
 

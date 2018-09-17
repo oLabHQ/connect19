@@ -6,6 +6,7 @@
     <div class="drop-menu">
         <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
     </div>     
+    {{#if user}}
         {{#each posts}}
             <div class="trash-block" id="{{post_id}}">
                 {{#each trash}}
@@ -20,5 +21,8 @@
                     <button class="trash-block__delete-btn">Delete</button>
                 {{/each}}
             </div>        
-        {{/each}}    
+        {{/each}}   
+        {{else}}
+        <h2>You are not authorised to see this page</h2>
+    {{/if}}   
 </div>

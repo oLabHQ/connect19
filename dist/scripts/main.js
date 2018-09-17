@@ -97,8 +97,8 @@
         });
     });
 
-    // Delete-Trash-post
 
+    // Delete-Trash-post
     $(".trash-block__delete-btn").on("click", function(){
         var trash_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
@@ -114,6 +114,27 @@
             },
             complete: function () {
                 clicked_button.html('This post has been Deleted').attr("disabled", "disabled");
+            }
+        });
+    });
+
+
+    // Delete-Trash-post
+    $(".friend-list__select-btn").on("change", function(){
+        var admin_value = $(this).is(":checked");
+        var admin_user_id = $(this).attr("id"); 
+        //console.log(admin_value);
+        //console.log(admin_user_id);        
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"admin_user_id": admin_user_id, "admin_value": admin_value}),
+            contentType: 'application/json',
+            url: "/admin",            
+            success: function(){
+                console.log('This user has been added as admin');                
+            },
+            complete: function () {
+                
             }
         });
     });

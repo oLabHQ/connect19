@@ -23,7 +23,7 @@ router.get('/', ensureAuthenticated, function(req,res){
 // Post friend Request
 router.post('/', ensureAuthenticated, function(req, res){
 	//console.log(req.payload);
-	User.find({"email": req.user.email}, function(err, sending_user){
+	User.find({"email": req.user.email}, function(err, sending_user){ 
 		if(err) throw err;
 		//console.log(sending_user[0].member_id);
 		//console.log(sending_user[0].username);

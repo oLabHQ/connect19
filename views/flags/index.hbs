@@ -6,7 +6,8 @@
     <div class="drop-menu">
         <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
     </div> 
-        {{#each posts}}        
+    {{#if user}}
+        {{#each posts}}              
             <div class="flag-block" id="{{post_id}}">
                 {{#each flag}}
                     <div class="flag-block__author"> 
@@ -20,6 +21,9 @@
                     <div class="flag-block__description">{{this.description}}</div>        
                     <a href="javascript:void(0);" class="trash-post">Trash</a>
                 {{/each}}        
-            </div>
+            </div>          
         {{/each}}
+    {{else}}
+        <h2>You are not authorised to see this page</h2>
+    {{/if}}
 </div>
