@@ -131,9 +131,10 @@
             contentType: 'application/json',
             url: "/admin",            
             success: function(){
+                $('#notify').show().html("User has been added as admin");
                 console.log('This user has been added as admin');                
             },
-            complete: function () {
+            complete: function () { 
                 
             }
         });

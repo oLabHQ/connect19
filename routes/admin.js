@@ -7,23 +7,26 @@ var User = require('../models/user');
 
 // Get Users
 router.get('/', ensureAuthenticated, function(req,res){    
-	User.find({"email": {$ne: req.user.email}}, function(err, users){	 
-		 if(err) throw err;	
-		 //console.log(users[0].friend_requests[0].member_id)
-		 //var friend_request_sent = users[0].friend_requests[0].member_id;
-		 //console.log(friend_request_sent);
-		 //res.render('friends/index', {user_friends: users, friend_request_sent : friend_request_sent});	
-		 res.render('admin/index', {user_friends: users});	
- });
+	User.find({username: req.user.username}, function(err, user){
+		User.find({"email": {$ne: req.user.email}}, function(err, users){	 
+			if(err) throw err;	
+			console.log(user[0].admin);
+			//console.log(users[0].friend_requests[0].member_id)
+			//var friend_request_sent = users[0].friend_requests[0].member_id;
+			//console.log(friend_request_sent);
+			//res.render('friends/index', {user_friends: users, friend_request_sent : friend_request_sent});	
+			res.render('admin/index', {user_friends: users, user: user[0].admin});	
+		});
+	});
  });
  
 
  // Make admin
 router.post('/', function(req, res){
 	User.findOne({'member_id': req.body.admin_user_id}, function(err, user){		
-		console.log(req.body.admin_user_id);
+		//console.log(req.body.admin_user_id);
 		var admin_value = req.body.admin_value;
-		console.log(admin_value);
+		//console.log(admin_value);
 			user.update({$set:{admin: admin_value}}, function(err){
 			res.send();
 		});  

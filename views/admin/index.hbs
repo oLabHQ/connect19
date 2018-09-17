@@ -17,29 +17,33 @@
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
-          
-{{#each user_friends}}
-<div class="friend-list">
-<div class="friend-list__profile-pic">
-{{#each user_profile}}
-<img src="../images/{{profilepic}}" />
-{{/each}}
-</div>
-<div class="friend-list__detail">
-<h2 class="friend-list__username">{{this.username}}</h2>
-{{#each user_profile}}
-<p class="friend-list__description">{{{description}}}</p>
-{{/each}}
-</div>
-<label> Make admin: 
-  {{#if admin}}
-<input type="checkbox" id="{{member_id}}" class="friend-list__select-btn" checked>
-{{else}}
-<input type="checkbox" id="{{member_id}}" class="friend-list__select-btn">
-{{/if}}
-</label>
 
 
-</div>
-{{/each}}
+  {{#if user}}
+      {{#each user_friends}}
+      <div class="friend-list">
+        <div class="friend-list__profile-pic">
+            {{#each user_profile}}
+            <img src="../images/{{profilepic}}" />
+            {{/each}}
+        </div>
+      <div class="friend-list__detail">
+        <h2 class="friend-list__username">{{this.username}}</h2>
+        {{#each user_profile}}
+        <p class="friend-list__description">{{{description}}}</p>
+        {{/each}}
+      </div>
+      <label> Make admin: 
+          {{#if admin}}
+        <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn" checked>
+        {{else}}
+        <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn">
+        {{/if}}
+      </label>
+      </div>
+      {{/each}}
+    {{else}}
+          <h2>You are not authorised to see this page</h2>
+    {{/if}}
+    <div id="notify"></div>
 </div>
