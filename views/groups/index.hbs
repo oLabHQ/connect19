@@ -1,0 +1,51 @@
+<div class="gradient-background">
+    <div class="wall-header">
+        <div class="wall-header__connect-tab">Connect Wall</div>
+        <div class="wall-header__chat-tab">Chat</div>
+    </div>  <!-- wall-header -->
+    <div class="drop-menu">
+        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div>
+   <!-- List down all groups-->
+
+    {{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-error">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+
+   
+{{#if groupname}}
+        <div class="alert alert-error">Groupname has taken already try new</div> 
+{{/if}}
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-error">{{msg}}</div>
+      {{/each}}
+{{/if}}
+    {{#each group}}
+        <div class="group-block">
+            <div class="group-block__left">
+                <div class="group-block__name"><a href="/groups/{{group_id}}">{{this.groupname}}</a></div>
+                <div class="group-block__description">{{this.description}}</div>
+            </div>
+            <div class="group-block__right">
+                <button id="join-group">Join</button>
+            </div>
+        </div>
+    {{/each}}
+    
+    <!-- Create groups -->
+    <h1>Create Groups</h1>    
+    <form method="POST" action="/groups" class="group-form">        
+    <input type="text" name ="title" class="group-form__title" />
+    <input type="text" name="description" class="group-form__description" />
+    <button id="create_group" class="group-form__btn">Create Group</button>    
+    </form>
+</div>

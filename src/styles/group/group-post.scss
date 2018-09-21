@@ -1,0 +1,41 @@
+%common-title{
+    color: #89A9FF;
+    font-size: em(16px);
+    margin: 0;
+}
+.group-post-block{
+    border-bottom: 1px solid rgba(137,169,253,0.2);
+    margin: 10px;
+    padding-bottom: 10px;    
+}
+.group-post-block__name{
+    @extend %common-title;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+.group-post-block__description{
+    @extend %common-title;
+    font-size: em(15px);
+    font-weight: 300;
+    margin-top: 2px;
+}
+.group-form{
+    position: fixed;
+    bottom: 0;
+}
+.post-author-block{
+    align-items: center;
+    display: flex;    
+}
+.post-author-block__name{
+    color: rgba(137,0,255,.5);
+    font-family: $font__primary;
+    font-size: 12px;    
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.post-author-block__date{
+    color: #89a9ff;
+    font-size: 12px;
+    margin-left: 15px;
+}

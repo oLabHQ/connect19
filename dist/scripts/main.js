@@ -119,7 +119,7 @@
     });
 
 
-    // Delete-Trash-post
+    // Add user as admin
     $(".friend-list__select-btn").on("change", function(){
         var admin_value = $(this).is(":checked");
         var admin_user_id = $(this).attr("id"); 
@@ -134,14 +134,35 @@
                 $('#notify').show().html("User has been added as admin");
                 console.log('This user has been added as admin');                
             },
-            setTimeout(function() {
-                $("#notify").hide('blind', {}, 500)
-            }, 5000),
             complete: function () { 
-               
+                
+            }
+        });
+    });
+
+
+    // Undo-Trash-post
+    /*
+    $("#create_group").on("click", function(){
+        var title = $("#title").val(); 
+        var description = $("#description").val();
+        console.log(title);
+        console.log(description);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"title": title, "description": description}),
+            contentType: 'application/json',
+            url: "/groups",            
+            success: function(){
+                $("#title").val("");
+                $("#description").val("");
+                console.log('The group has been created');
+            },
+            complete: function (data) {
+                
             }
         });
     });
     
-
+*/
 }());

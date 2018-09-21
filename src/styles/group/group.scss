@@ -1,0 +1,28 @@
+%common-title{
+    color: #89A9FF;
+    font-size: em(16px);
+    margin: 0;
+}
+.group-block{
+    align-items: center;
+    border-bottom: 1px solid rgba(137,169,253,0.2);
+    display: flex;
+    justify-content: space-between;     
+    margin: 10px;
+    padding-bottom: 10px;    
+}
+.group-block__name{
+    @extend %common-title;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+.group-block__description{
+    @extend %common-title;
+    font-size: em(15px);
+    font-weight: 300;    
+    margin-top: 2px;
+}
+.group-form{
+    position: fixed;
+    bottom: 0;
+}
