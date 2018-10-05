@@ -39,7 +39,7 @@ var UserSchema = mongoose.Schema({
 	admin: {
 		type: Boolean,
 		default: "false"
-	},
+	},	
 	friends:[
 		{
 			"member_id": String,
@@ -52,6 +52,16 @@ var UserSchema = mongoose.Schema({
 			"member_id": String,
 			"friend_name": String,
 			"profile_pic": String
+		}
+	],
+	group_invitation:[
+		{
+			type: String			
+		}
+	],
+	group_joined:[
+		{
+			type: String
 		}
 	],
 	user_profile: [userProfileSchema]

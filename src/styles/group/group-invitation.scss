@@ -1,0 +1,20 @@
+%common-title{
+    color: #89A9FF;
+    font-size: em(16px);
+    margin: 0;
+}
+.group-invitation-block{
+    align-items: center;
+    border-bottom: 1px solid rgba(137,169,253,0.2);
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding-bottom: 10px;
+}
+.group-invitation-block__group-text{
+    @extend %common-title;
+}
+.group-invitation-block__group-name{
+    color: $color__dark-blue;
+    text-transform: capitalize;
+}

@@ -7,34 +7,57 @@
         <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
     </div>
     
-    {{#each posts}}
-    <h1>{{this.groupname}}</h1>
-    {{/each}}
+    {{#group}}
+    <h1 class="group-title">{{groupname}} Group</h1>    
+    {{/group}}
+    
+  
+ 
+    
    <!-- List down all Posts-->
-    {{#each posts}}
-      {{#each group_posts}}
-        <div class="group-post-block">                            
-            <div class="group-post-block__description">{{this.description}}</div>   
-            {{#if postimage}}
-               <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
-            {{/if}}   
-            <div class="post-author-block">
-                        <div class="post-author-block__name">{{this.author}}</div>
-                        <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
-            </div>            
+    {{#group}}
+    
+    {{#comparegroup users_joined ../user}}    
+       {{#each ../groupposts}}  
+                           
+     <div id="group-id" data-id="{{this.group_id}}">
+       
+        <div class="group-post-block" id="{{this.post_id}}">    
+            <div class="group-post-block__left">
+
+                <img src="/images/{{../authorpic}}" alt="" /></div>
+            <div class="group-post-block__right">
+                <div class="group-post-block__description">{{this.description}}</div>   
+                {{#if postimage}}
+                <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
+                {{/if}}   
+                <div class="post-author-block">
+                            <div class="post-author-block__name">{{this.author}}</div>
+                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
+                </div>                    
+            </div>
+            <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
+        </div>
+        
         </div>
         {{/each}}
-    {{/each}}
-    
+
+      
     <!-- Create Posts -->
     <h1>Create Posts</h1>  
     <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
-    {{#each posts}}
+    
             <input name="groupid" type="hidden" value="{{this.group_id}}" />
-            {{/each}}
+    
             <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-            <img src="../images/attachment.svg" id="img"/>
+            <img src="/images/attachment.svg" id="img"/>
             <input type="file" name="postimage" class="post-form__file" id="file">            
             <input name="submit" type="submit" value="send" class="post-form__button"/>
         </form> 
 </div>
+
+   {{else}}
+    <h1>You are not authorised to view this page</h1>
+    {{/comparegroup}}
+    
+ {{/group}}

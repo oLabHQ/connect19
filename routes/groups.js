@@ -8,27 +8,33 @@ var upload = multer({ dest: './dist/images' });
 
 var User = require('../models/user');
 var Group = require('../models/group');
+var Groupposts = require('../models/groupposts');
 
 
 // Get Groups
-router.get('/', ensureAuthenticated, function(req,res){    
+router.get('/', ensureAuthenticated, function(req,res){
+    User.findOne({member_id:req.user.member_id}, function(err, user){
+        console.log(user.member_id)
     Group.find({}, function(err, group){
-        //console.log(group);
+        console.log(group[0].createdby);
         if(err) throw err;
-        res.render('groups/index', {group: group});
-    });    
+        res.render('groups/index', {group: group, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id});
+    });
+});
 });
 
 
 // Create Group
 router.post('/', ensureAuthenticated, function(req, res){	
     var title = req.body.title;
-    var description = req.body.description;	
+    var description = req.body.description;
+    var groupstatus = req.body.private;
     var date = new Date();
     
-    console.log(title);
-    console.log(description);
-    console.log(date);
+    // console.log(title);
+    // console.log(description);
+    // console.log(date);
+    console.log(groupstatus);
     
     // validation
     req.checkBody('title', 'Title is required').notEmpty();
@@ -55,8 +61,9 @@ router.post('/', ensureAuthenticated, function(req, res){
                 var newGroup = new Group({
                     groupname: title,					
                     description: description,
+                    isprivate: groupstatus,
                     date: date,		
-                    createdby: req.user.username,
+                    createdby: req.user.member_id,
                 });
         
                 Group.createGroup(newGroup, function(err, group){
@@ -72,18 +79,94 @@ router.post('/', ensureAuthenticated, function(req, res){
 
 
 
-router.get('/:id', ensureAuthenticated, function(req, res){    
+
+// Get Group posts
+/*
+router.get('/:id', ensureAuthenticated, function(req, res){        
     Group.find({group_id: req.params.id}, function(err, posts){
         console.log(posts);
         res.render("groups/posts", {posts: posts});
     })
 });
+*/
 
 
+// Get private Group join invitaion page
+router.get('/:id/join',ensureAuthenticated, function(req, res){    
+    res.render('groups/join');
+});
+
+// Send Group join invitation
+router.post('/:id/join', ensureAuthenticated, function(req, res){
+        var user = req.body.user;
+        Group.find({group_id:req.params.id}, function(err, group){
+        //console.log(group[0].group_id);
+        User.findOne({username:user}, function(err, usernew){
+            //console.log(usernew);
+        usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){
+           // console.log(user);
+           // console.log('user updated');
+            res.redirect('/groups/'+req.params.id+'/join');
+        });       
+    });
+    });
+});
+
+
+// View invitaions
+router.get('/invitations', ensureAuthenticated, function(req, res){
+    //console.log(req.user.member_id);
+    User.findOne({member_id:req.user.member_id}, function(err, user){
+        Group.find({group_id:user.group_invitation}, function(err, group){
+            //console.log(user.group_invitation);
+           // console.log(group);
+        res.render('groups/invitations', {group_invitaions:user.group_invitation, group: group});
+        });
+    });
+});
+
+
+// Accept Group Invitation
+router.post('/invitations', function(req, res){
+   // console.log('Group invitation accepted');
+   User.findOne({member_id:req.user.member_id}, function(err, user){
+       console.log(user);
+       //console.log(user.member_id);
+        Group.findOne({group_id:user.group_invitation}, function(err, group){
+            console.log(group);
+            //console.log(group.group_id);       
+            user.update({ $push: {"group_joined": group.group_id}, $pull: {"group_invitation": group.group_id}}, function(err){
+                if(err) throw err;
+                //console.log('user updated');
+                group.update({ $push: {"users_joined": user.member_id}}, function(err){
+                    if(err) throw err;
+                    console.log("userid added to group schema");
+                    res.send()
+                });            
+            }); 
+        });
+    });
+});
+ 
+
+// Get specific group posts
+router.get('/:id', ensureAuthenticated, function(req, res){        
+    Group.findOne({group_id: req.params.id}, function(err, group){
+        //console.log(req.user.member_id);
+        //console.log(group);
+        User.find({member_id:req.user.member_id}, function(err, user){
+           // console.log(user[0].member_id);
+        Groupposts.find({group_id:req.params.id}, function(err, groupposts){    
+            console.log(user[0].member_id);
+            res.render("groups/posts", {groupposts: groupposts, group: group, user: user[0].member_id});
+        });
+    });
+    }); 
+});
 
 
 router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
-    console.log("hi");
+    //console.log("hi");
 	
 	if(req.file){
 		var postimage = req.file.filename;
@@ -95,15 +178,99 @@ router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), funct
 	var postimage = postimage;
     var	author = req.user.username;
     var groupid = req.body.groupid;
-	var authorpic = req.user.user_profile[0].profilepic;
-	
+    var authorpic = req.user.user_profile[0].profilepic;
+    //console.log(groupid);	
 
-	Group.update({group_id:groupid },{$push: {"group_posts": {"description": description, "postimage": postimage, "author": author, "authorpic": authorpic}}}, function(err){
+    var newGroupPosts = new Groupposts({
+        group_id: groupid,        
+        description: description,
+        postimage: postimage,
+        date: date,        
+    });
+
+    Groupposts.createGroupPosts(newGroupPosts, function(err, groupposts){
         if(err) throw err;
-        console.log('updated the data')
-    res.redirect("/groups/"+groupid); 
+       // console.log('grouppost created');
+        res.redirect("/groups/"+groupid);
     });
 });
+
+
+
+// Get Group Post flags
+router.get('/:id/flags',ensureAuthenticated, function(req, res){
+    User.findOne({member_id:req.user.member_id}, function(err, user){
+        console.log(user.member_id);
+    Group.find({group_id: req.params.id},{createdby:1}, function(err, createdby){
+        console.log(createdby[0].createdby); 
+        Groupposts.find({group_id: req.params.id}, function(err, posts){
+        // console.log(posts);
+            res.render("groups/flags", {posts: posts, createdby:createdby[0].createdby, user:user.member_id});
+        });    
+    });
+    });
+});
+
+
+
+// Group Post flags 
+router.post('/:id', function(req, res){    
+    var groupid = req.params.id;    
+    //console.log(req.body.flag_post_id);
+    Groupposts.findOne({'post_id': req.body.flag_post_id}, function(err, post){
+        //console.log(post);
+       post.update({$push: {"flag":  {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}}, function(err){
+            if(err) throw err;
+            //console.log('updated the data')
+        res.redirect("/groups/"+groupid); 
+        });
+    });	
+});
+
+
+// Get Group Post Trash
+router.get('/:id/trash', function(req, res){
+    Groupposts.find({group_id: req.params.id}, function(err, posts){
+        //console.log(posts);
+        res.render("groups/trash", {posts: posts});
+    });    
+});
+
+
+// Group Post Trash
+router.post('/:id/flags', function(req, res){
+    
+    var groupid  = req.params.id;
+	Groupposts.findOne({'post_id': req.body.trash_post_id}, function(err, post){
+        //console.log(post);
+       post.update({$set: {"trashed":"Y"}, $push: {"trash":  {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}, $pull: {"flag": {post_id: req.body.trash_post_id}}}, function(err){
+            if(err) throw err;
+            //console.log('updated the data')
+        res.send(); 
+        });
+    });	
+});
+
+// Group Post Undo-Trash
+router.post('/:id/trash', function(req, res){
+	Groupposts.findOne({'post_id': req.body.trash_post_id}, function(err, post){
+		console.log(post);
+		post.update({$set:{trashed: 'N'},$pull: {"trash": {post_id: req.body.trash_post_id}}}, function(err){
+			res.send();
+		});
+	});
+});
+
+
+
+// Delete Group Trash Post
+router.post('/:id/trash/delete', function(req, res){
+	console.log(req.body.trashed_post_id);
+	Groupposts.remove({'post_id': req.body.trashed_post_id}, function(err, post){
+		res.send();
+	});
+});
+
 
 
 function ensureAuthenticated(req, res, next){

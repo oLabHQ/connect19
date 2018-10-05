@@ -23,12 +23,58 @@ var config = require('./config/database');
 Handlebars.registerHelper('with', function(context, options) {
   return options.fn(context);
 });
-
+/*
 Handlebars.registerHelper('formatName', function(property) {
-  console.log('hi')
+  //console.log('hi')
   return property;
 });
+*/
+ 
 
+Handlebars.registerHelper('comparegroup', function(array1, gvalue, options){ 
+
+  var resultnew =  array1.indexOf(gvalue) > -1;
+
+  //console.log(resultnew);
+    if( resultnew ) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+    
+});
+
+// Handlebar compare helper
+Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
+
+  if (arguments.length < 3)
+      throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+  var operator = options.hash.operator || "==";
+
+  var operators = {
+      '==':       function(l,r) { return l == r; },
+      '===':      function(l,r) { return l === r; },
+      '!=':       function(l,r) { return l != r; },
+      '<':        function(l,r) { return l < r; },
+      '>':        function(l,r) { return l > r; },
+      '<=':       function(l,r) { return l <= r; },
+      '>=':       function(l,r) { return l >= r; },
+      'typeof':   function(l,r) { return typeof l == r; }
+  }
+
+  if (!operators[operator])
+      throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+  var result = operators[operator](lvalue,rvalue);
+
+  if( result ) {
+      return options.fn(this);
+  } else {
+      return options.inverse(this);
+  }
+
+});
 
 
 // hbsHelpers.register(hbs.handlebars, {});

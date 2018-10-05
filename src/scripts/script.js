@@ -141,28 +141,113 @@
     });
 
 
-    // Undo-Trash-post
-    /*
-    $("#create_group").on("click", function(){
-        var title = $("#title").val(); 
-        var description = $("#description").val();
-        console.log(title);
-        console.log(description);
+    // Flag Group-post
+    $(".flag-group-post").on("click", function(){      
+        var group_id = $("#group-id").attr("data-id");
+        var flag_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(flag_post_id);
+        console.log(group_id);
         $.ajax({
             method: "POST",
-            data: JSON.stringify({"title": title, "description": description}),
+            data: JSON.stringify({"flag_post_id": flag_post_id}),
             contentType: 'application/json',
-            url: "/groups",            
+            url: "/groups/"+group_id,
             success: function(){
-                $("#title").val("");
-                $("#description").val("");
-                console.log('The group has been created');
+                console.log('This group post has been flagged');
             },
             complete: function (data) {
-                
+                clicked_button.html('This post has been flagged').attr("disabled", "disabled");
+               }
+        });
+    });
+
+
+     // Trash Group-post
+     $(".group-flag-block__trash-post").on("click", function(){      
+        var group_id = $("#group-id").attr("data-id");
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        console.log(trash_post_id);
+        console.log(group_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trash_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/groups/"+group_id+"/flags",
+            success: function(){
+                console.log('This post has been trashed');
+            },
+            complete: function (data) {
+                clicked_button.html('This post has been trashed').attr("disabled", "disabled");
+               }
+        });
+    });
+
+
+    // Undo-Group-Trash-post
+    $(".group-trash-block__undo-btn").on("click", function(){
+        var group_id = $("#group-id").attr("data-id");
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trash_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/groups/"+group_id+"/trash",            
+            success: function(){
+                console.log('This Group post has been untrashed');
+            },
+            complete: function (data) {
+                clicked_button.html('This post has been untrashed').attr("disabled", "disabled");
             }
         });
     });
-    
-*/
+
+
+    // Delete-Group-Trash-post
+    $(".group-trash-block__delete-btn").on("click", function(){
+        var group_id = $("#group-id").attr("data-id");
+        var trash_post_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"trashed_post_id": trash_post_id}),
+            contentType: 'application/json',
+            url: "/groups/"+group_id+"/trash/delete",            
+            success: function(){
+                console.log('This group post has been Deleted');
+                $('.trash-block').hide();
+            },
+            complete: function () {
+                clicked_button.html('This post has been Deleted').attr("disabled", "disabled");
+            }
+        });
+    });
+
+
+    // Accept Group Invitation
+    $(".group-invitation-block__accept-invitation").on("click", function(){
+        //var group_id = $("#group-id").attr("data-id");
+        var group_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"group_id": group_id}),
+            contentType: 'application/json',
+            url: "/groups/invitations",            
+            success: function(){
+                console.log('You have accepted Group invitation');               
+            },
+            complete: function () {
+                clicked_button.html('You have accepted Group invitation').attr("disabled", "disabled");
+            }
+        });
+    });
+
+
+  
 }());

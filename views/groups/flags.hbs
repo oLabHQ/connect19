@@ -1,0 +1,37 @@
+<div class="gradient-background">
+    <div class="wall-header">
+        <div class="wall-header__connect-tab">Connect Wall</div>
+        <div class="wall-header__chat-tab">Chat</div>
+    </div>  <!-- wall-header -->
+    <div class="drop-menu">
+        <a href="/users/profile"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    </div> 
+<h1 class="group-title">{{this.groupname}} Group flag posts</h1>
+
+{{#compare createdby user operator="=="}}
+    {{#each posts}}        
+        <div id="group-id" data-id="{{this.group_id}}">                        
+                {{#each flag}}
+                    <div class="group-flag-block" id="{{post_id}}">
+                        <div class="group-flag-block__left">
+                            <img src="/images/{{this.authorpic}}" alt="" />
+                        </div>
+                        <div class="group-flag-block__right">
+                            {{#if postimage}}
+                                <img class="group-flag-block__image" src="/images/{{this.postimage}}" alt="" />
+                            {{/if}}  
+                            <div class="group-flag-block__description">{{this.description}}</div>
+                            <div class="group-flag-author-block">
+                                <div class="group-flag-author-block__name">{{this.author}}</div>
+                                <div class="group-flag-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
+                            </div>                           
+                        </div>
+                        <a href="javascript:void(0);" class="group-flag-block__trash-post">Trash</a>
+                    </div>
+                {{/each}}                                     
+        </div>
+    {{/each}}
+   {{else}}
+   <h1>You are not authorised to see this page</h1>
+   {{/compare}}
+</div>
