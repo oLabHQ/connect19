@@ -14,9 +14,9 @@ var Groupposts = require('../models/groupposts');
 // Get Groups
 router.get('/', ensureAuthenticated, function(req,res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
-        console.log(user.member_id)
+        //console.log(user.member_id)
     Group.find({}, function(err, group){
-        console.log(group[0].createdby);
+        //console.log(group[0].createdby);
         if(err) throw err;
         res.render('groups/index', {group: group, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id});
     });
@@ -64,6 +64,7 @@ router.post('/', ensureAuthenticated, function(req, res){
                     isprivate: groupstatus,
                     date: date,		
                     createdby: req.user.member_id,
+                    users_joined: req.user.member_id
                 });
         
                 Group.createGroup(newGroup, function(err, group){
@@ -98,17 +99,17 @@ router.get('/:id/join',ensureAuthenticated, function(req, res){
 
 // Send Group join invitation
 router.post('/:id/join', ensureAuthenticated, function(req, res){
-        var user = req.body.user;
-        Group.find({group_id:req.params.id}, function(err, group){
+    var user = req.body.user;
+    Group.find({group_id:req.params.id}, function(err, group){
         //console.log(group[0].group_id);
         User.findOne({username:user}, function(err, usernew){
-            //console.log(usernew);
-        usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){
-           // console.log(user);
-           // console.log('user updated');
-            res.redirect('/groups/'+req.params.id+'/join');
-        });       
-    });
+                //console.log(usernew);
+            usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){
+                // console.log(user);
+                // console.log('user updated');
+                res.redirect('/groups/'+req.params.id+'/join');
+            });
+        });
     });
 });
 
@@ -120,7 +121,7 @@ router.get('/invitations', ensureAuthenticated, function(req, res){
         Group.find({group_id:user.group_invitation}, function(err, group){
             //console.log(user.group_invitation);
            // console.log(group);
-        res.render('groups/invitations', {group_invitaions:user.group_invitation, group: group});
+            res.render('groups/invitations', {group_invitaions:user.group_invitation, group: group});
         });
     });
 });
@@ -153,7 +154,7 @@ router.post('/invitations', function(req, res){
 router.get('/:id', ensureAuthenticated, function(req, res){        
     Group.findOne({group_id: req.params.id}, function(err, group){
         //console.log(req.user.member_id);
-        //console.log(group);
+        console.log(group);
         User.find({member_id:req.user.member_id}, function(err, user){
            // console.log(user[0].member_id);
         Groupposts.find({group_id:req.params.id}, function(err, groupposts){    
@@ -200,9 +201,9 @@ router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), funct
 // Get Group Post flags
 router.get('/:id/flags',ensureAuthenticated, function(req, res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
-        console.log(user.member_id);
+       // console.log(user.member_id);
     Group.find({group_id: req.params.id},{createdby:1}, function(err, createdby){
-        console.log(createdby[0].createdby); 
+        //console.log(createdby[0].createdby); 
         Groupposts.find({group_id: req.params.id}, function(err, posts){
         // console.log(posts);
             res.render("groups/flags", {posts: posts, createdby:createdby[0].createdby, user:user.member_id});
@@ -254,7 +255,7 @@ router.post('/:id/flags', function(req, res){
 // Group Post Undo-Trash
 router.post('/:id/trash', function(req, res){
 	Groupposts.findOne({'post_id': req.body.trash_post_id}, function(err, post){
-		console.log(post);
+		//console.log(post);
 		post.update({$set:{trashed: 'N'},$pull: {"trash": {post_id: req.body.trash_post_id}}}, function(err){
 			res.send();
 		});
@@ -265,7 +266,7 @@ router.post('/:id/trash', function(req, res){
 
 // Delete Group Trash Post
 router.post('/:id/trash/delete', function(req, res){
-	console.log(req.body.trashed_post_id);
+	//console.log(req.body.trashed_post_id);
 	Groupposts.remove({'post_id': req.body.trashed_post_id}, function(err, post){
 		res.send();
 	});
