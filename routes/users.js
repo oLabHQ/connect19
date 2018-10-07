@@ -44,15 +44,16 @@ router.post('/signup', function (req, res) {
 		//checking for email and username are already taken
 		User.findOne({ username: { "$regex": "^" + username + "\\b", "$options": "i"}}, function (err, user) {
 			User.findOne({ email: { "$regex": "^" + email + "\\b", "$options": "i"}}, function (err, mail) {
+				//console.log(user);
 				if (user || mail) {
 					res.render('signup', {
 						user: user,
 						mail: mail
 					});
-					console.log('1');
+					//console.log('1');
 				}
 				else {
-					console.log('2');
+					//console.log('2');
 					var newUser = new User({						
 						email: email,
 						username: username,
@@ -62,7 +63,7 @@ router.post('/signup', function (req, res) {
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
 						//console.log(user);
-						console.log('3');
+						//console.log('3');
 					});
          	req.flash('success_msg', 'You are registered and can now login');
 					res.redirect('/users/login');

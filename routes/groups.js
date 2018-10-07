@@ -100,15 +100,18 @@ router.get('/:id/join',ensureAuthenticated, function(req, res){
 // Send Group join invitation
 router.post('/:id/join', ensureAuthenticated, function(req, res){
     var user = req.body.user;
+    
     Group.find({group_id:req.params.id}, function(err, group){
-        //console.log(group[0].group_id);
-        User.findOne({username:user}, function(err, usernew){
-                //console.log(usernew);
-            usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){
-                // console.log(user);
-                // console.log('user updated');
+        User.findOne({username:user}, function(err, usernew){            
+            if(usernew==null){               
+                req.flash('error_msg','No user with this name found');
+                res.redirect('/groups/'+req.params.id+'/join');
+            }else{
+            usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){                
+                req.flash('success_msg','Invitation has been sent to '+usernew.username);
                 res.redirect('/groups/'+req.params.id+'/join');
             });
+        }
         });
     });
 });
@@ -141,7 +144,7 @@ router.post('/invitations', function(req, res){
                 //console.log('user updated');
                 group.update({ $push: {"users_joined": user.member_id}}, function(err){
                     if(err) throw err;
-                    console.log("userid added to group schema");
+                    //console.log("userid added to group schema");
                     res.send()
                 });            
             }); 
@@ -158,7 +161,7 @@ router.get('/:id', ensureAuthenticated, function(req, res){
         User.find({member_id:req.user.member_id}, function(err, user){
            // console.log(user[0].member_id);
         Groupposts.find({group_id:req.params.id}, function(err, groupposts){    
-            console.log(user[0].member_id);
+            //console.log(user[0].member_id);
             res.render("groups/posts", {groupposts: groupposts, group: group, user: user[0].member_id});
         });
     });

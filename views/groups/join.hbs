@@ -1,6 +1,19 @@
+{{#if test}}
+        <div class="alert alert-error">Username not found</div> 
+    {{/if}}
 <h1>Join Group</h1>
+{{title}}
+{{#if error_msg}}
+        <div class="alert alert-error">{{error_msg}}</div>
+    {{/if}}
+
+{{#if success_msg}}
+        <div class="alert alert-success">{{success_msg}}</div>
+    {{/if}}    
 
 <form method="POST" action="join">
     <input type="text" name="user"/>
-    <button type="submit">Send invitaion</button>
+    <button type="submit" id="tags">Send invitaion</button>
 </form>
+  
+  </script>
