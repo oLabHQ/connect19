@@ -248,6 +248,18 @@
         });
     });
 
+    // Find users input focus to send invitation 
+    $("#tags").on("focus", function(){
+        console.log('hello');
+        $.ajax({
+            method: "GET",
+            url: "/groups/_dmPkzzXE/join",
+            success: function(data){
+                console.log(data);
+            }
+        })
+    })
+
 
   
 }());

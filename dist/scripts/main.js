@@ -248,6 +248,11 @@
         });
     });
 
+    // Find users input focus to send invitation 
+    $("#tags").on("focus", function(){
+        console.log('hello');
+    })
+
 
   
 }());

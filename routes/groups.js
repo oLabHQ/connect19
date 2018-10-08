@@ -71,6 +71,7 @@ router.post('/', ensureAuthenticated, function(req, res){
                     if(err) throw err;
                 });
                     req.flash('success', 'Your Group is published');
+                    res.location('/groups'); 
                     res.redirect('/groups');
 
             }
@@ -102,18 +103,18 @@ router.post('/:id/join', ensureAuthenticated, function(req, res){
     var user = req.body.user;
     
     Group.find({group_id:req.params.id}, function(err, group){
-        User.findOne({username:user}, function(err, usernew){            
-            if(usernew==null){               
+        User.findOne({username:user}, function(err, usernew){          
+            if(usernew==null || usernew == ''){      
                 req.flash('error_msg','No user with this name found');
                 res.redirect('/groups/'+req.params.id+'/join');
             }else{
-            usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){                
+            usernew.update({$addToSet:{group_invitation:group[0].group_id}}, function(err, user){
                 req.flash('success_msg','Invitation has been sent to '+usernew.username);
                 res.redirect('/groups/'+req.params.id+'/join');
             });
-        }
+            }
         });
-    });
+    });   
 });
 
 
@@ -161,7 +162,7 @@ router.get('/:id', ensureAuthenticated, function(req, res){
         User.find({member_id:req.user.member_id}, function(err, user){
            // console.log(user[0].member_id);
         Groupposts.find({group_id:req.params.id}, function(err, groupposts){    
-            //console.log(user[0].member_id);
+            console.log(groupposts);
             res.render("groups/posts", {groupposts: groupposts, group: group, user: user[0].member_id});
         });
     });
