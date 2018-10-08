@@ -35,7 +35,7 @@
         
         </div>
         {{/each}}
-
+{{#group}}
      <h1>Create Posts</h1>  
     <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
     
@@ -46,6 +46,7 @@
             <input type="file" name="postimage" class="post-form__file" id="file">            
             <input name="submit" type="submit" value="send" class="post-form__button"/>
         </form> 
+{{/group}}        
 </div>
 
   
