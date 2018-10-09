@@ -28,15 +28,24 @@
             <div class="alert alert-error">{{msg}}</div>
         {{/each}}
     {{/if}}    
+    
   
 <!-- List down all groups-->
-    {{#each group}}
-        <div class="group-block">
+    {{#each group}}    
+        <div class="group-block" id="{{this.group_id}}">
             <div class="group-block__left">
                 <div class="group-block__name"><a href="/groups/{{group_id}}">{{this.groupname}}</a></div>
                 <div class="group-block__description">{{this.description}}</div>
                 <div class="group-block__author">{{this.createdby}}</div>
-            </div>               
+            </div>
+            {{#if ../isadmin}}
+                {{#if ispinned}}
+                    <input type="checkbox" name="pinpost" class="pinpost" checked/>
+                {{else}}
+                    <input type="checkbox" name="pinpost" class="pinpost" />
+                {{/if}}
+            {{/if}}
+            
             {{#if isprivate}}
                 {{#compare createdby ../user operator="=="}}
                     <div class="group-block__right">                

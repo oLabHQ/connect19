@@ -15,11 +15,12 @@ var Groupposts = require('../models/groupposts');
 router.get('/', ensureAuthenticated, function(req,res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
         //console.log(user.member_id)
-    Group.find({}, function(err, group){
+    Group.find({}).sort({ispinned:-1}).exec(function(err, group){
         //console.log(group[0].createdby);
+        console.log(group[0].ispinned)
         if(err) throw err;
-        res.render('groups/index', {group: group, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id});
-    });
+        res.render('groups/index', {group: group, ispinned: group[0].ispinned, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id, isadmin: user.admin});
+    }); 
 });
 });
 
@@ -80,6 +81,19 @@ router.post('/', ensureAuthenticated, function(req, res){
 });
 
 
+// Pin Groups
+router.post('/pinpost', function(req, res){
+    var group_id = req.body.group_id;
+    var pin_value = req.body.pin_value;
+    // console.log(group_id);
+    //console.log(pin_value);    
+    Group.update({group_id:group_id},{$set:{ispinned:pin_value}}, function(err, group_pinned){
+      console.log(group_pinned);
+        res.render('groups', {group_pinned: group_pinned});    
+    });
+});
+
+
 
 
 // Get Group posts
@@ -118,7 +132,7 @@ router.post('/:id/join', ensureAuthenticated, function(req, res){
 });
 
 
-// View invitaions
+// View Group Invitaions
 router.get('/invitations', ensureAuthenticated, function(req, res){
     //console.log(req.user.member_id);
     User.findOne({member_id:req.user.member_id}, function(err, user){

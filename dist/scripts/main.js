@@ -248,9 +248,40 @@
         });
     });
 
+
+    // Pin Group
+    $(".pinpost").on("change", function(){
+        var pin_value = $(this).is(":checked");
+        //var admin_user_id = $(this).attr("id");
+        var group_id = $(this).parent().attr("id");
+        console.log(pin_value);
+        console.log(group_id);        
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"group_id": group_id, "pin_value": pin_value}),
+            contentType: 'application/json',
+            url: "/groups/pinpost",            
+            success: function(){
+                $('#notify').show().html("This group has pinned");
+                console.log('This group has pinned');                
+            },
+            complete: function () { 
+                
+            }
+        });
+    });
+
+
     // Find users input focus to send invitation 
     $("#tags").on("focus", function(){
         console.log('hello');
+        $.ajax({
+            method: "GET",
+            url: "/groups/_dmPkzzXE/join",
+            success: function(data){
+                console.log(data);
+            }
+        })
     })
 
 

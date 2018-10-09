@@ -32,7 +32,11 @@ var GroupSchema = mongoose.Schema({
 		{
 		type: String
 		}
-	]
+	],
+	ispinned:{
+		type: Boolean,
+		default: 'false'
+	}
 });
 
 
