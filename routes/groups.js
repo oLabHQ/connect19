@@ -82,13 +82,13 @@ router.post('/', ensureAuthenticated, function(req, res){
 
 
 // Pin Groups
-router.post('/pinpost', function(req, res){
+router.post('/pingroup', function(req, res){
     var group_id = req.body.group_id;
     var pin_value = req.body.pin_value;
     // console.log(group_id);
     //console.log(pin_value);    
     Group.update({group_id:group_id},{$set:{ispinned:pin_value}}, function(err, group_pinned){
-      console.log(group_pinned);
+     // console.log(group_pinned);
         res.render('groups', {group_pinned: group_pinned});    
     });
 });
@@ -166,24 +166,25 @@ router.post('/invitations', function(req, res){
         });
     });
 });
- 
+
 
 // Get specific group posts
 router.get('/:id', ensureAuthenticated, function(req, res){        
     Group.findOne({group_id: req.params.id}, function(err, group){
         //console.log(req.user.member_id);
-        console.log(group);
+        console.log(group.createdby);
         User.find({member_id:req.user.member_id}, function(err, user){
-           // console.log(user[0].member_id);
-        Groupposts.find({group_id:req.params.id}, function(err, groupposts){    
-            console.log(groupposts);
-            res.render("groups/posts", {groupposts: groupposts, group: group, user: user[0].member_id});
+            console.log(user[0].member_id);
+        Groupposts.find({group_id:req.params.id}).sort({ispinned:-1}).exec( function(err, groupposts){    
+            //console.log(groupposts);
+            res.render("groups/posts", {groupposts: groupposts,groupcreatedby:group.createdby, group: group, user: user[0].member_id});
         });
-    });
+        });
     }); 
 });
 
 
+// Add Groupo Post
 router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
     //console.log("hi");
 	
@@ -195,7 +196,7 @@ router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), funct
     var description = req.body.description;	
 	var date = new Date();		
 	var postimage = postimage;
-    var	author = req.user.username;
+    var	author = req.user.member_id;
     var groupid = req.body.groupid;
     var authorpic = req.user.user_profile[0].profilepic;
     //console.log(groupid);	
@@ -204,7 +205,8 @@ router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), funct
         group_id: groupid,        
         description: description,
         postimage: postimage,
-        date: date,        
+        date: date,
+        createdby: author     
     });
 
     Groupposts.createGroupPosts(newGroupPosts, function(err, groupposts){
@@ -214,6 +216,19 @@ router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), funct
     });
 });
 
+
+
+// Pin Groups Posts
+router.post('/pinpost', function(req, res){
+    var post_id = req.body.post_id;
+    var pin_value = req.body.pin_value;
+     console.log(post_id);
+    console.log(pin_value);    
+    Groupposts.update({post_id:post_id},{$set:{ispinned:pin_value}}, function(err, post_pinned){
+      console.log(post_pinned);
+        res.render('groups', {post_pinned: post_pinned});    
+    });
+});
 
 
 // Get Group Post flags

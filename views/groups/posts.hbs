@@ -10,7 +10,8 @@
     {{#group}}
     <h1 class="group-title">{{groupname}} Group</h1>    
     {{/group}}
-
+{{groupcreatedby}}
+{{user}}
 
     {{#each groupposts}}  
                            
@@ -30,6 +31,14 @@
                             <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
                 </div>                    
             </div>
+            {{#compare ../groupcreatedby ../user operator="=="}}
+                {{#if ispinned}}
+                    <input type="checkbox" name="pinpost" class="pinpost" checked/>
+                {{else}}
+                    <input type="checkbox" name="pinpost" class="pinpost" />
+                {{/if}}
+                {{/compare}}
+            
             <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
         </div>
         

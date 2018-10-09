@@ -18,13 +18,20 @@ var GroupPostSchema = mongoose.Schema({
 		type: Date,
 		default: Date.now
 	},
+	createdby: {
+		type: String
+	},
 	post_id:{
 		type: String,
 		default: shortid.generate
     },
     group_id: {
         type: String,        
-    },
+	},
+	ispinned:{
+		type: Boolean,
+		default: 'false'
+	},
 	flag:[
 		{
 			"post_id": String,

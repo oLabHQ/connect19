@@ -250,7 +250,7 @@
 
 
     // Pin Group
-    $(".pinpost").on("change", function(){
+    $(".pingroup").on("change", function(){
         var pin_value = $(this).is(":checked");
         //var admin_user_id = $(this).attr("id");
         var group_id = $(this).parent().attr("id");
@@ -259,6 +259,28 @@
         $.ajax({
             method: "POST",
             data: JSON.stringify({"group_id": group_id, "pin_value": pin_value}),
+            contentType: 'application/json',
+            url: "/groups/pingroup",            
+            success: function(){
+                $('#notify').show().html("This group has pinned");
+                console.log('This group has pinned');                
+            },
+            complete: function () { 
+                
+            }
+        });
+    });
+
+     // Pin Group
+     $(".pinpost").on("change", function(){
+        var pin_value = $(this).is(":checked");
+        //var admin_user_id = $(this).attr("id");
+        var post_id = $(this).parent().attr("id");
+        console.log(pin_value);
+        console.log(post_id);        
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"post_id": post_id, "pin_value": pin_value}),
             contentType: 'application/json',
             url: "/groups/pinpost",            
             success: function(){

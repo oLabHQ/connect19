@@ -31,7 +31,7 @@ Handlebars.registerHelper('formatName', function(property) {
 */
  
 
-Handlebars.registerHelper('comparegroup', function(array1, gvalue, options){ 
+Handlebars.registerHelper('comparegroup', function(array1, gvalue, options){   
 
   var resultnew =  array1.indexOf(gvalue) > -1;
 
