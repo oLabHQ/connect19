@@ -756,3 +756,30 @@ i.fas {
   color: rgba(137, 0, 255, 0.5);
   text-transform: capitalize;
 }
+
+.chat_section {
+  bottom: 0;
+  background-color: #ffffff;
+  height: 400px;
+  left: 0;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+}
+
+#send_message {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}
+
+#send_message_input {
+  width: 100%;
+}
+
+.chat_close {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 0px;
+}

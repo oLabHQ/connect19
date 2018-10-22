@@ -24,6 +24,7 @@
 
     $(".pending-request__accept-btn").on("click", function(){
         var friend_member_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
         //console.log(friend_member_id);
         $.ajax({
             method: "POST",
@@ -34,7 +35,7 @@
                 console.log('friend request has been accepted');
             },
             complete: function (data) {
-                $("#accept_friend_request").html('Friend request accepted').attr("disabled", "disabled");
+                clicked_button.html('Friend request accepted').attr("disabled", "disabled");
                }  
         });
     });
@@ -303,9 +304,31 @@
             success: function(data){
                 console.log(data);
             }
-        })
-    })
+        });
+    });
 
 
-  
+    // Chat between users
+    $('.chat_button').on("click", function(){
+        var user_id = $(this).attr("id");
+        console.log(user_id);
+        var chat_box = '<div class="chat_section" id="'+ user_id +'"><div id="chat_title_section"><span>Node Connect Chat</span><div class="chat_close"><i class="fa fa-times-circle" aria-hidden="true"></i></div></div><div class="all_Chat_messages"></div><div id="send_message"><input id="send_message_input" type="text" placeholder="Send message.."></div></div>';        
+        $("#chat_section_wrapper").append(chat_box);
+    });
+
+    $(document).on("click", ".chat_close", function(){        
+        $('.chat_section').remove();
+    });
+
+    $(document).on("keypress", "#send_message_input", function(e){
+        if(e.keyCode === 13){
+          var chat_message_content = $(this).val();
+          console.log(chat_message_content);
+          $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>You:</span>" + "<div class='usr_msg_box'><p>" + chat_message_content + "</p>" + "</div>" + "</div>");
+         socket.emit("message_from_client",{"msg":chat_message_content, "friend_member_id":$("#chat_section_wrapper").attr("data-id"), "socket_id":socket.id});
+          $(this).val("");
+        }
+    
+      });
+      
 }());

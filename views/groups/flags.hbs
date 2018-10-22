@@ -13,10 +13,17 @@
         <div id="group-id" data-id="{{this.group_id}}">                        
                 {{#each flag}}
                     <div class="group-flag-block" id="{{post_id}}">
-                        <div class="group-flag-block__left">
-                            <img src="/images/{{this.authorpic}}" alt="" />
+                        <div class="group-flag-block__left">                             
+                            {{#each ../user_details}}
+                                {{#each user_profile}}
+                                    <img src="/images/{{this.profilepic}}" alt="" />
+                                {{/each}}
+                            {{/each}}
                         </div>
                         <div class="group-flag-block__right">
+                            {{#each user_details}}
+                                {{this.username}}                                               
+                            {{/each}}
                             {{#if postimage}}
                                 <img class="group-flag-block__image" src="/images/{{this.postimage}}" alt="" />
                             {{/if}}  

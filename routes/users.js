@@ -171,6 +171,13 @@ router.get('/logout', function (req, res) {
 	res.redirect('/users/login');
 });
 
+//chat
+router.get('/chat/:id', ensureAuthenticated, function(req, res){
+	User.findOne({member_id:req.params.id},{member_id:1}, function(err, chat_friend){		
+		res.render('chat/chat', {chat_friend:chat_friend});
+	});
+});
+
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();

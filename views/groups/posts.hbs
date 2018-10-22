@@ -6,106 +6,103 @@
     <div class="drop-menu">
         <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
     </div>
-    
+ 
+{{#if isprivate}}
+   <!-- List down all Posts-->
+    {{#group}}
+        {{#comparegroup users_joined ../user}}
+            {{#each ../groupposts}}                           
+                <div id="group-id" data-id="{{this.group_id}}">
+                    <div class="group-post-block" id="{{this.post_id}}">    
+                        <div class="group-post-block__left">
+                                {{#each user_details}}
+                                    {{#each user_profile}}
+                                        <img src="/images/{{this.profilepic}}" alt="" />
+                                    {{/each}}
+                                {{/each}}
+                        </div>
+                        <div class="group-post-block__right">
+                            <div class="group-post-block__description">{{this.description}}</div>   
+                            {{#if postimage}}
+                            <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
+                            {{/if}}   
+                            <div class="post-author-block">
+                                <div class="post-author-block__name">{{this.author}}</div>
+                                <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
+                            </div>                    
+                        </div>
+                        <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
+                    </div>
+                </div>
+            {{/each}}
+
+            <!-- Create Posts -->    
+            <h1>Create Posts</h1>  
+            <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
+                <input name="groupid" type="hidden" value="{{this.group_id}}" />
+                <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+                <img src="/images/attachment.svg" id="img"/>
+                <input type="file" name="postimage" class="post-form__file" id="file">            
+                <input name="submit" type="submit" value="send" class="post-form__button"/>
+            </form> 
+        </div>
+
+            {{else}}
+            <h1>This is private Group. You need to join this page to see the content</h1>
+        {{/comparegroup}}
+    {{/group}}
+{{else}}
+ 
     {{#group}}
     <h1 class="group-title">{{groupname}} Group</h1>    
-    {{/group}}
+    {{/group}}    
+    
 
-    {{#each groupposts}}  
-                           
-     <div id="group-id" data-id="{{this.group_id}}">
-       
-        <div class="group-post-block" id="{{this.post_id}}">    
-            <div class="group-post-block__left">
-
-                <img src="/images/{{../authorpic}}" alt="" /></div>
-            <div class="group-post-block__right">
-                <div class="group-post-block__description">{{this.description}}</div>   
-                {{#if postimage}}
-                <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
-                {{/if}}   
-                <div class="post-author-block">
-                            <div class="post-author-block__name">{{this.author}}</div>
-                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
-                </div>                    
+    {{#each groupposts}}         
+        <div id="group-id" data-id="{{this.group_id}}">       
+            <div class="group-post-block" id="{{this.post_id}}">    
+                <div class="group-post-block__left">                    
+                    {{#each user_details}}
+                    {{#each user_profile}}
+                    <img src="/images/{{this.profilepic}}" alt="" />
+                    {{/each}}
+                    {{/each}}
+                </div>
+                <div class="group-post-block__right">
+                    {{#each user_details}}
+                        {{this.username}}                                               
+                    {{/each}}
+                    <div class="group-post-block__description">{{this.description}}</div>   
+                    {{#if postimage}}
+                    <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
+                    {{/if}}   
+                    <div class="post-author-block">
+                                <div class="post-author-block__name">{{this.author}}</div>
+                                <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
+                    </div>                    
+                </div>
+                {{#compare ../groupcreatedby ../user operator="=="}}
+                    {{#if ispinned}}
+                        <input type="checkbox" name="pinpost" class="pinpost" checked/>
+                    {{else}}
+                        <input type="checkbox" name="pinpost" class="pinpost" />
+                    {{/if}}
+                {{/compare}}            
+                <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
             </div>
-            {{#compare ../groupcreatedby ../user operator="=="}}
-                {{#if ispinned}}
-                    <input type="checkbox" name="pinpost" class="pinpost" checked/>
-                {{else}}
-                    <input type="checkbox" name="pinpost" class="pinpost" />
-                {{/if}}
-                {{/compare}}
             
-            <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
         </div>
-        
-        </div>
-        {{/each}}
-{{#group}}
-     <h1>Create Posts</h1>  
-    <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
-    
-            <input name="groupid" type="hidden" value="{{this.group_id}}" />
-    
-            <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-            <img src="/images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file">            
-            <input name="submit" type="submit" value="send" class="post-form__button"/>
-        </form> 
-{{/group}}        
-</div>
+    {{/each}}
 
-  
- 
-    
-   <!-- List down all Posts-->
-   <!--
     {{#group}}
-    
-    {{#comparegroup users_joined ../user}}
-       {{#each ../groupposts}}  
-                           
-     <div id="group-id" data-id="{{this.group_id}}">
-       
-        <div class="group-post-block" id="{{this.post_id}}">    
-            <div class="group-post-block__left">
-
-                <img src="/images/{{../authorpic}}" alt="" /></div>
-            <div class="group-post-block__right">
-                <div class="group-post-block__description">{{this.description}}</div>   
-                {{#if postimage}}
-                <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
-                {{/if}}   
-                <div class="post-author-block">
-                            <div class="post-author-block__name">{{this.author}}</div>
-                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
-                </div>                    
-            </div>
-            <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
-        </div>
-        
-        </div>
-        {{/each}}
--->
-      
-    <!-- Create Posts -->
-    <!--
-    <h1>Create Posts</h1>  
-    <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
-    
+        <h1>Create Posts</h1>  
+        <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
             <input name="groupid" type="hidden" value="{{this.group_id}}" />
-    
             <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
             <img src="/images/attachment.svg" id="img"/>
             <input type="file" name="postimage" class="post-form__file" id="file">            
             <input name="submit" type="submit" value="send" class="post-form__button"/>
         </form> 
+    {{/group}}        
 </div>
-
-   {{else}}
-    <h1>You are not authorised to view this page</h1>
-    {{/comparegroup}}
-    
- {{/group}}
- -->
+ {{/if}}

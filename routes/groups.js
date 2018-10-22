@@ -172,19 +172,21 @@ router.post('/invitations', function(req, res){
 router.get('/:id', ensureAuthenticated, function(req, res){        
     Group.findOne({group_id: req.params.id}, function(err, group){
         //console.log(req.user.member_id);
-        console.log(group.createdby);
+       // console.log(group.createdby);
         User.find({member_id:req.user.member_id}, function(err, user){
-            console.log(user[0].member_id);
-        Groupposts.find({group_id:req.params.id}).sort({ispinned:-1}).exec( function(err, groupposts){    
-            //console.log(groupposts);
-            res.render("groups/posts", {groupposts: groupposts,groupcreatedby:group.createdby, group: group, user: user[0].member_id});
+            //console.log(user[0].user_profile[0].profilepic);
+       // Groupposts.find({group_id:req.params.id}).sort({ispinned:-1}).exec( function(err, groupposts){        
+            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}]).sort({ispinned:-1}).exec(function(err, user_details){
+            //console.log(user_details);
+            //res.render("groups/posts", {groupposts: user_details});
+            res.render("groups/posts", {groupposts: user_details,groupcreatedby:group.createdby, group: group, user: user[0].member_id, isprivate: group.isprivate});
+            });        
         });
-        });
-    }); 
-});
+    });
+}); 
 
 
-// Add Groupo Post
+// Add Group Post
 router.post('/addposts', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
     //console.log("hi");
 	
@@ -237,8 +239,9 @@ router.get('/:id/flags',ensureAuthenticated, function(req, res){
        // console.log(user.member_id);
     Group.find({group_id: req.params.id},{createdby:1}, function(err, createdby){
         //console.log(createdby[0].createdby); 
-        Groupposts.find({group_id: req.params.id}, function(err, posts){
-        // console.log(posts);
+        //Groupposts.find({group_id: req.params.id}, function(err, posts){
+            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}, { $project : { flag : 1 , user_details : 1 } }]).exec(function(err, posts){
+                //console.log(posts);         
             res.render("groups/flags", {posts: posts, createdby:createdby[0].createdby, user:user.member_id});
         });    
     });
@@ -304,7 +307,6 @@ router.post('/:id/trash/delete', function(req, res){
 		res.send();
 	});
 });
-
 
 
 function ensureAuthenticated(req, res, next){

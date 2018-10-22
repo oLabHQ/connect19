@@ -42,16 +42,12 @@ var UserSchema = mongoose.Schema({
 	},	
 	friends:[
 		{
-			"member_id": String,
-			"friend_name": String,
-			"profile_pic": String
+			"member_id": String,		
 		}
 	],
 	friend_requests: [
 		{
-			"member_id": String,
-			"friend_name": String,
-			"profile_pic": String
+			"member_id": String,			
 		}
 	],
 	group_invitation:[

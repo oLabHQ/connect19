@@ -8,10 +8,19 @@
     </div>
     <h1>Pending Requests</h1>
     {{#each friendrequests}}
-    <div class="pending-request" id="{{member_id}}">
-        <img src="/images/{{this.profile_pic}}" class="pending-request__profile-pic" alt="" />
-        <h2 class="pending-request__title">{{this.friend_name}}</h2> 
-        <button class="pending-request__accept-btn" id ="accept_friend_request">Accept</button>       
-    </div>
+        {{#each user_details}}
+            <div class="pending-request" id="{{member_id}}">
+                <div class="friend-list__profile-pic">
+                {{#each user_profile}}
+                    <img src="../images/{{profilepic}}" />
+                {{/each}}
+                </div>
+                <h2 class="pending-request__title">{{username}}</h2> 
+                {{#each user_profile}}
+                    <p class="friend-list__description">{{{description}}}</p>
+                {{/each}}
+                <button class="pending-request__accept-btn" id ="accept_friend_request">Accept</button>       
+            </div>
+        {{/each}}
     {{/each}}
 </div>    

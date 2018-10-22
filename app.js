@@ -202,9 +202,46 @@ app.use('/groups', group);
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(app.get('port'), function(){
+
+
+var server = app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
+
+
+// Chat functonlity socket connection
+var io = require("socket.io").listen(server);
+
+  io.on('connection', function(socket){
+
+    socket.on("attach_user_info", function(user_info){    
+      socket.member_id = user_info.member_id;
+      socket.user_name = user_info.user_name;    
+      //console.log("socket", socket)
+    });
+
+    socket.on("message_from_client", function(usr_msg){    
+      //console.log(usr_msg);
+      var all_connected_clients = io.sockets.connected;  
+     // console.log(all_connected_clients);
+      for(var socket_id in all_connected_clients){      
+        if(all_connected_clients[socket_id].member_id === usr_msg.friend_member_id){
+          var message_object = {"msg": usr_msg.msg, "user_name":socket.user_name, "socket_id": socket_id}
+          all_connected_clients[socket_id].emit("message_from_server",message_object);
+          break;
+        }
+      }
+      console.log("usr_msg", usr_msg);
+    });
+   /*
+    socket.on("message_from_client", function(usr_msg){
+      console.log("usr_msg", usr_msg);
+    })
+    */
+  });
+
+ 
+
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
