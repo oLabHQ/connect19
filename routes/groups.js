@@ -252,7 +252,7 @@ router.get('/:id/flags',ensureAuthenticated, function(req, res){
 
 // Group Post flags 
 router.post('/:id', function(req, res){    
-    var groupid = req.params.id;    
+    var groupid = req.params.id;
     //console.log(req.body.flag_post_id);
     Groupposts.findOne({'post_id': req.body.flag_post_id}, function(err, post){
         //console.log(post);
