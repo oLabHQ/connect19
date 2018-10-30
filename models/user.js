@@ -3,6 +3,7 @@ var shortid = require('shortid');
 var bcrypt = require('bcryptjs');
 var Handlebars = require("handlebars");
 var hbsHelpers = require('handlebars-helpers');
+var passportLocalMongoose = require("passport-local-mongoose");
 
 // Userprofile Schema
 var userProfileSchema = mongoose.Schema({
@@ -36,6 +37,12 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		default: shortid.generate
 	},
+	resetPasswordToken: {
+		type: String
+	},
+    resetPasswordExpires: {
+		type: Date
+	},
 	admin: {
 		type: Boolean,
 		default: "false"
@@ -63,9 +70,20 @@ var UserSchema = mongoose.Schema({
 	user_profile: [userProfileSchema]
 });
 
+UserSchema.plugin(passportLocalMongoose)
 
 var User = module.exports = mongoose.model('User', UserSchema);
 
+
+module.exports.setpassword = function(newpassword, callback){
+	console.log('this istest');
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newpassword, salt, function(err, hash) {
+	        newpassword = hash;
+	        newpassword.save(callback);
+	    });
+	});
+}
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {

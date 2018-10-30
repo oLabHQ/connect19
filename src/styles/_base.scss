@@ -6,7 +6,7 @@ $color__primary: rgba(142,178,241,1) !default;
 //$color__primary--dark: #990000 !default;
 $color__primary--white: #FFFFFF !default;
 
-$color__dark-blue:rgba(137,0,255,.5);
+$color__dark-blue:rgba(78,26,175,1);
 $color__blue: rgba(74,171,239,1);
 $color__light-blue: rgba(0,219,255,1);
 
@@ -41,11 +41,27 @@ $padding__left-right: 0px 10px;
 }
 
 //Placeholder stylize
-input::placeholder{
-  font-size: em(15px);
-  color: rgba(142,178,241,0.6);
-  font-weight: 300;
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $color__primary--white;
+  font-size: em(12px);
+  opacity: 0.5;
 }
+::-moz-placeholder { /* Firefox 19+ */
+  color: $color__primary--white;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: $color__primary--white;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: $color__primary--white;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
 
 // Commin button
 %login-signup-button {

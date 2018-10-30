@@ -1,17 +1,20 @@
 .post-main-block{
+    background-color: rgba(255,255,255,1);
     display: flex;
-    justify-content: flex-start;
-    margin-bottom: 16px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    padding: 13px;
 }
 .img-block{
     width: 35px;
     height: 35px;
 }
 .img-block img{
-    width: 100%;
-    height: auto;
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
 }
 .post-rt-block{
     width: 82%;
@@ -36,15 +39,18 @@
     margin-left: 15px; 
 }
 .post-block{
-    background: linear-gradient(159.45deg, rgba(97,134,240,0.85) 0%, rgba(72,75,218,0.85) 100%);
-    border-radius: 0 14px 14px 14px;
+   /* background: linear-gradient(159.45deg, rgba(97,134,240,0.85) 0%, rgba(72,75,218,0.85) 100%);  
+    border-radius: 0 14px 14px 14px;*/
     color: rgba(255,255,255,1);
     font-size: 15px;
     line-height: 20px;
-    padding: 12px 16px;
+    padding: 20px 0px;
 }
 .post-block__description{
+    color: rgba(8,16,155,1);
+    font-weight: 400;
     margin-bottom: 10px;
+
 }
 .post-block__featured-image img{
     border-radius: 5px;
@@ -56,7 +62,7 @@
 .post-form__description{
     background-color: transparent;
     border: none;
-    border-top: 1px solid rgba(137,169,253,0.35);
+    border-top: 2px solid rgba(137,169,253, 1);
     outline: none;    
     padding: 10px;
     width: 70%;
@@ -78,21 +84,23 @@
     justify-content: space-between;
 }
 .wall-header__connect-tab{
-    background-color: rgba(114,226,255,1);
-    color: $color__primary--white;
-    padding: 5px 10px;
-    border-radius: 0px 5px 5px 0px;
-    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
+    background-color: rgba(229,234,252,1);
+    box-shadow: -2px -5px 5px 0 rgba(0,0,0,0.5);
+    color: $color__dark-blue;
+    font-weight: 800;
+    font-size: 10px;
+    padding: 5px 75px;        
 }
 .wall-header__chat-tab{
-    background-color: rgba(74,171,239,1);
-    color: $color__primary--white;
-    padding: 5px 10px;
-    border-radius: 5px 0px 0px 5px;
-    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
+    background-color: rgba(255,255,255,1);
+    color: rgba(74,171,239,1);
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 0.14px;
+    padding: 5px 70px;    
 }
 .drop-menu{
-    display: flex;
+    
     justify-content: flex-end;
     margin: 10px 5px 0px;
 }

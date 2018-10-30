@@ -1,43 +1,55 @@
 .form-group{
     display: block;
     margin-bottom: 34px;
+    position: relative;
 }
 .form-group__control{
     border:none;
-    border-bottom: 2px solid rgba(189,210,247,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.35);    
     background: none;
-    color: $color__primary;
-    font-size: em(15px);
-    font-weight: 900;
-    padding: 5px 10px;
-    width: 93%;   
+    color: $color__primary--white;
+    font-size: em(15px);    
+    padding: 5px 10px 5px 25px;
+    width: 98%;   
 }
 .form-group__control:focus{    
     outline: none;
 }
 .form-group__login-btn{
     @extend %login-signup-button;
-    background: $color__light-blue;
+    background-color: transparent;
+    border: $color__primary--white solid 1px;
+    box-shadow: none;
 }
 .signup-btn{
     @extend %login-signup-button;
-    background: $color__blue;
-    margin-top: 20px;
+    background: $color__dark-blue;    
     display: block;
-    width: 100%;
+    font-size: em(12px);
+    font-weight: normal;
+    margin-top: 20px;
     text-decoration: none;
+    width: 100%;
 }
 .login-btn{
     @extend %login-signup-button;
-    background: $color__light-blue;
+    background-color: transparent;    
     margin-top: 20px;
     display: block;
     width: 100%;
     text-decoration: none;
 }
 .signup-btn--margin-top{
-    margin-top:65px;
+    margin-top:20px;
 }
 i.fas{
-    color: rgba(142,178,241,0.6);
+    color: $color__primary--white;
+    position: absolute;
+    top: 5px;
 }
+i.fa-eye{
+    color: $color__primary--white;
+    position: absolute;
+    top: 5px;
+}
+

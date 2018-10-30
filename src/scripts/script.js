@@ -320,15 +320,73 @@
         $('.chat_section').remove();
     });
 
-    $(document).on("keypress", "#send_message_input", function(e){
-        if(e.keyCode === 13){
-          var chat_message_content = $(this).val();
-          console.log(chat_message_content);
-          $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>You:</span>" + "<div class='usr_msg_box'><p>" + chat_message_content + "</p>" + "</div>" + "</div>");
-         socket.emit("message_from_client",{"msg":chat_message_content, "friend_member_id":$("#chat_section_wrapper").attr("data-id"), "socket_id":socket.id});
-          $(this).val("");
-        }
     
+
+      $.deparam = $.deparam || function(uri){
+          if(uri === undefined){
+              uri = window.location.pathname;
+          }
+
+          var value1 = window.location.pathname;
+          var value2 = value1.split('/');
+          var value3 = value2.pop();
+
+          return value3;
+      };
+
+      $(document).ready(function(){
+          var socket = io();
+
+          var paramOne = $.deparam(window.location.pathname);
+          //console.log(paramOne);
+          var newParam = paramOne.split('.');
+          //console.log('1',newParam);
+          swap(newParam, 0, 1);
+          //console.log('2',newParam);
+          var paramTwo = newParam[0]+'.'+newParam[1];
+
+          socket.on('connect', function(){
+              var params = {
+                  room1: paramOne,
+                  room2: paramTwo
+              };
+
+              socket.emit('join PM', params, function(){
+                  //console.log('User Joined');
+              });
+
+              $(document).on("keypress", "#send_message_input", function(e){
+                if(e.keyCode === 13){
+                  var chat_message_content = $(this).val();
+                 // console.log(chat_message_content);
+
+                 if(chat_message_content.trim().length > 0){                     
+                  //  $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>You:</span>" + "<div class='usr_msg_box'><p>" + chat_message_content + "</p>" + "</div>" + "</div>");
+                 socket.emit("message_from_client",{"msg":chat_message_content, username:$("#chat_section_wrapper").attr("data-name"), "friend_member_id":$("#chat_section_wrapper").attr("data-id"), "socket_id":socket.id, "room": paramOne});
+                  $(this).val("");
+                 }else{
+                     alert('Please enter some text');
+                 }
+                  
+                }
+            
+            });
+            socket.on("attach_user_info", function(user_info){    
+                socket.member_id = user_info.member_id;
+                socket.user_name = user_info.user_name;    
+                console.log("socket", socket)
+              });
+            socket.on("message_from_server", function(received_msg){
+                console.log("received_msg", received_msg);
+                $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>"+received_msg.user_name+":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>")
+              });
+          });
       });
+
+      function swap(input, value_1, value_2){
+          var temp = input[value_1];
+          input[value_1] = input[value_2];
+          input[value_2] = temp;
+      }
       
 }());

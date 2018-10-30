@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var shortid = require('shortid');
+var mongoosePaginate = require('mongoose-paginate');
 
 // Posts Schema
-var PostSchema = mongoose.Schema({	
+var PostSchema = mongoose.Schema({
 	description: {
 		type: String
     },
@@ -47,6 +48,8 @@ var PostSchema = mongoose.Schema({
 		default: "N"
 	}
 });
+
+PostSchema.plugin(mongoosePaginate);
 
 var Post = module.exports = mongoose.model('Post', PostSchema);
 

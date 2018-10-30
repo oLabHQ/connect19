@@ -1,4 +1,45 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #FFFFFF;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #FFFFFF;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #FFFFFF;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #FFFFFF;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+.form-group__login-btn, .signup-btn, .login-btn {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  border: none;
+  border-radius: 27px;
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: em(15px);
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -11,10 +52,9 @@ body {
 }
 
 .image-background {
-  background: url("../images/waves.svg");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: contain;
+  background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
+  min-height: 561px;
+  width: 100%;
 }
 
 .gradient-background {
@@ -36,7 +76,7 @@ body {
 }
 
 .container {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -59,63 +99,31 @@ body {
   border-color: #d6e9c6;
 }
 
-input::-webkit-input-placeholder {
-  font-size: em(15px);
-  color: rgba(142, 178, 241, 0.6);
-  font-weight: 300;
-}
-
-input:-ms-input-placeholder {
-  font-size: em(15px);
-  color: rgba(142, 178, 241, 0.6);
-  font-weight: 300;
-}
-
-input::-ms-input-placeholder {
-  font-size: em(15px);
-  color: rgba(142, 178, 241, 0.6);
-  font-weight: 300;
-}
-
-input::placeholder {
-  font-size: em(15px);
-  color: rgba(142, 178, 241, 0.6);
-  font-weight: 300;
-}
-
-.form-group__login-btn, .signup-btn, .login-btn {
-  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-  border: none;
-  border-radius: 27px;
-  color: #FFFFFF;
-  font-weight: 900;
-  font-size: em(15px);
-  padding: 10px 20px;
-  text-align: center;
-  width: 100%;
+.flag-post {
+  font-size: 12px;
+  text-decoration: none;
 }
 
 .header {
   text-align: center;
   padding-top: 2.1428571429em;
-  margin-bottom: 5.3571428571em;
+  margin-bottom: 3.5714285714em;
 }
 
 .form-group {
   display: block;
   margin-bottom: 34px;
+  position: relative;
 }
 
 .form-group__control {
   border: none;
-  border-bottom: 2px solid rgba(189, 210, 247, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
   background: none;
-  color: #8eb2f1;
+  color: #FFFFFF;
   font-size: 1.0714285714em;
-  font-weight: 900;
-  padding: 5px 10px;
-  width: 93%;
+  padding: 5px 10px 5px 25px;
+  width: 98%;
 }
 
 .form-group__control:focus {
@@ -123,19 +131,24 @@ input::placeholder {
 }
 
 .form-group__login-btn {
-  background: #00dbff;
+  background-color: transparent;
+  border: #FFFFFF solid 1px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .signup-btn {
-  background: #4aabef;
-  margin-top: 20px;
+  background: #4e1aaf;
   display: block;
-  width: 100%;
+  font-size: 0.8571428571em;
+  font-weight: normal;
+  margin-top: 20px;
   text-decoration: none;
+  width: 100%;
 }
 
 .login-btn {
-  background: #00dbff;
+  background-color: transparent;
   margin-top: 20px;
   display: block;
   width: 100%;
@@ -143,23 +156,33 @@ input::placeholder {
 }
 
 .signup-btn--margin-top {
-  margin-top: 65px;
+  margin-top: 20px;
 }
 
 i.fas {
-  color: rgba(142, 178, 241, 0.6);
+  color: #FFFFFF;
+  position: absolute;
+  top: 5px;
+}
+
+i.fa-eye {
+  color: #FFFFFF;
+  position: absolute;
+  top: 5px;
 }
 
 .post-main-block {
+  background-color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
   margin-bottom: 16px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
+  padding: 13px;
 }
 
 .img-block {
@@ -168,8 +191,9 @@ i.fas {
 }
 
 .img-block img {
-  width: 100%;
-  height: auto;
+  width: 35px;
+  height: 35px;
+  border-radius: 100px;
 }
 
 .post-rt-block {
@@ -201,15 +225,17 @@ i.fas {
 }
 
 .post-block {
-  background: linear-gradient(159.45deg, rgba(97, 134, 240, 0.85) 0%, rgba(72, 75, 218, 0.85) 100%);
-  border-radius: 0 14px 14px 14px;
+  /* background: linear-gradient(159.45deg, rgba(97,134,240,0.85) 0%, rgba(72,75,218,0.85) 100%);  
+   border-radius: 0 14px 14px 14px;*/
   color: white;
   font-size: 15px;
   line-height: 20px;
-  padding: 12px 16px;
+  padding: 20px 0px;
 }
 
 .post-block__description {
+  color: #08109b;
+  font-weight: 400;
   margin-bottom: 10px;
 }
 
@@ -227,7 +253,7 @@ i.fas {
 .post-form__description {
   background-color: transparent;
   border: none;
-  border-top: 1px solid rgba(137, 169, 253, 0.35);
+  border-top: 2px solid #89a9fd;
   outline: none;
   padding: 10px;
   width: 70%;
@@ -256,27 +282,25 @@ i.fas {
 }
 
 .wall-header__connect-tab {
-  background-color: #72e2ff;
-  color: #FFFFFF;
-  padding: 5px 10px;
-  border-radius: 0px 5px 5px 0px;
-  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  background-color: #e5eafc;
+  -webkit-box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
+  color: #4e1aaf;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 5px 75px;
 }
 
 .wall-header__chat-tab {
-  background-color: #4aabef;
-  color: #FFFFFF;
-  padding: 5px 10px;
-  border-radius: 5px 0px 0px 5px;
-  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  background-color: white;
+  color: #4aabef;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.14px;
+  padding: 5px 70px;
 }
 
 .drop-menu {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -638,7 +662,7 @@ i.fas {
 }
 
 .group-flag-author-block__name {
-  color: rgba(137, 0, 255, 0.5);
+  color: #4e1aaf;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -753,7 +777,7 @@ i.fas {
 }
 
 .group-invitation-block__group-name {
-  color: rgba(137, 0, 255, 0.5);
+  color: #4e1aaf;
   text-transform: capitalize;
 }
 

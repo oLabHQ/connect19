@@ -1,11 +1,12 @@
 <div class="gradient-background">
     <div class="wall-header">
-        <div class="wall-header__connect-tab">Connect Wall</div>
+        <div class="wall-header__connect-tab">The Wall</div>
         <div class="wall-header__chat-tab">Chat</div>
+        <div class="drop-menu">
+            <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
+        </div>  
     </div>  <!-- wall-header -->
-    <div class="drop-menu">
-        <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
-    </div>                 
+      
         {{#posts}}
             <div class="post-main-block" id="{{post_id}}"> 
                 <div class="img-block">

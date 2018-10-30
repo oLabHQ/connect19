@@ -45,7 +45,7 @@ router.post('/', ensureAuthenticated, function(req, res){
 router.get('/friend-requests', ensureAuthenticated, function(req, res){
 	//User.findOne({username:req.user.username}, function(err, friendrequests){	
 	User.aggregate([{$unwind: "$friend_requests"},{$lookup:{from:"users",localField:"friend_requests.member_id", foreignField:"member_id", as:"user_details"}},{$match:{member_id:req.user.member_id}}]).exec(function(err, friendrequests){
-		console.log(friendrequests);
+		//console.log(friendrequests);
 		if(err) throw err;
 		//res.render('friends/pendingrequests', {friendrequests: friendrequests.friend_requests});
 		res.render('friends/pendingrequests', {friendrequests: friendrequests});
@@ -53,12 +53,11 @@ router.get('/friend-requests', ensureAuthenticated, function(req, res){
 });
 
 // Accept friends requests
-
 router.post('/friend-requests', ensureAuthenticated, function(req, res){
 	User.find({'email': req.user.email}, function(err, user){
 		//console.log(user);
 		User.find({"member_id": req.body.member_id}, function(err, accepted_friend_user){
-			console.log(accepted_friend_user);			
+			//console.log(accepted_friend_user);			
 			user[0].update({$push: {friends: {"member_id": accepted_friend_user[0].member_id}}, $pull: {"friend_requests": {member_id: req.body.member_id}}}, function(err){
 				accepted_friend_user[0].update({$push: {friends: {"member_id": user[0].member_id, "friend_name": user[0].username, "profile_pic": user[0].user_profile[0].profilepic}}}, function(err){
 					if(err) throw err;    				
@@ -75,12 +74,12 @@ router.get('/', ensureAuthenticated, function(req, res){
 	//User.findOne({member_id:req.user.member_id}, function(err, friends){
 		//console.log(friends);  
 		//User.find({member_id:friends.friend[0].member_id}, function(err, friend){
-//			console.log(friend);
-User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends.member_id", foreignField:"member_id", as:"user_details"}},{$match:{member_id:req.user.member_id}}]).exec(function(err, users){
-	//console.log(users);
-	res.render('friends/index',{users:users})
-//	});
-});
+		//console.log(friend);
+	User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends.member_id", foreignField:"member_id", as:"user_details"}},{$match:{member_id:req.user.member_id}}]).exec(function(err, users){
+		//console.log(users);
+		res.render('friends/index',{users:users})
+	//	});
+	});
 });
  
 function ensureAuthenticated(req, res, next){

@@ -127,6 +127,8 @@ app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:'layout'}));
 app.set('view engine', 'hbs');
 
 
+//Handlebars.registerPartial('layout', Handlebars.template['layout']);
+
 //hbs.registerPartials(__dirname+"/views/partials")
 //var hbs = exphbs.create({
 //  helpers: {
@@ -217,9 +219,11 @@ var io = require("socket.io").listen(server);
     socket.on("attach_user_info", function(user_info){    
       socket.member_id = user_info.member_id;
       socket.user_name = user_info.user_name;    
-      //console.log("socket", socket)
+      console.log("socket", socket)
     });
 
+
+/*
     socket.on("message_from_client", function(usr_msg){    
       //console.log(usr_msg);
       var all_connected_clients = io.sockets.connected;  
@@ -233,14 +237,32 @@ var io = require("socket.io").listen(server);
       }
       console.log("usr_msg", usr_msg);
     });
+
+    */
+
+
    /*
     socket.on("message_from_client", function(usr_msg){
       console.log("usr_msg", usr_msg);
     })
     */
+
+   socket.on("join PM", function(rooms){
+     socket.join(rooms.room1);
+     socket.join(rooms.room2);
+   // console.log(rooms.room1);
+   // console.log(rooms.room2);    
+    });
+  
+    socket.on("message_from_client", function(usr_msg){
+      //console.log(usr_msg);
+      var message_object = {"msg": usr_msg.msg, "user_name":usr_msg.username};
+          io.to(usr_msg.room).emit("message_from_server",message_object);                    
+        });        
+    
   });
 
- 
+   
 
 
 function ensureAuthenticated(req, res, next){
