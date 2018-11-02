@@ -2,6 +2,7 @@
 @import 'base';
 @import 'common';
 @import 'layout';
+@import 'header/header';
 @import 'signup/signup';
 @import 'login/login';
 @import 'index/post';
@@ -14,5 +15,7 @@
 @import 'group/group-flags';
 @import 'group/group-trash';
 @import 'group/group-invitation';
+@import 'forgot-password/forgot-password';
+@import 'conference/conference';
 @import 'chat/chat';
 

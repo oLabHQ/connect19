@@ -5,7 +5,6 @@
         });
     });
 
-
     $('.request-btn').on("click", function(){
         var clicked_button = $(this);
         $.ajax({
@@ -297,12 +296,12 @@
 
     // Find users input focus to send invitation 
     $("#tags").on("focus", function(){
-        console.log('hello');
+        //console.log('hello');
         $.ajax({
             method: "GET",
             url: "/groups/_dmPkzzXE/join",
             success: function(data){
-                console.log(data);
+               // console.log(data);
             }
         });
     });
@@ -311,9 +310,9 @@
     // Chat between users
     $('.chat_button').on("click", function(){
         var user_id = $(this).attr("id");
-        console.log(user_id);
-        var chat_box = '<div class="chat_section" id="'+ user_id +'"><div id="chat_title_section"><span>Node Connect Chat</span><div class="chat_close"><i class="fa fa-times-circle" aria-hidden="true"></i></div></div><div class="all_Chat_messages"></div><div id="send_message"><input id="send_message_input" type="text" placeholder="Send message.."></div></div>';        
-        $("#chat_section_wrapper").append(chat_box);
+        //console.log(user_id);
+      //  var chat_box = '<div class="chat_section" id="'+ user_id +'"><div id="chat_title_section"><span>Node Connect Chat</span><div class="chat_close"><i class="fa fa-times-circle" aria-hidden="true"></i></div></div><div class="all_Chat_messages"></div><div id="send_message"><input id="send_message_input" type="text" placeholder="Send message.."></div></div>';        
+        //$("#chat_section_wrapper").append(chat_box);
     });
 
     $(document).on("click", ".chat_close", function(){        

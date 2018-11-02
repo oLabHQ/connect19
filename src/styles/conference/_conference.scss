@@ -1,0 +1,64 @@
+.conference-schedule-title{
+    border-bottom: 1px solid rgba(137,169,253,1);
+    color: $color__dark-blue;
+    display: flex;
+    font-size: em(12px);
+    font-weight: 300;
+    justify-content: center;
+    padding-bottom: 20px;
+    margin: 30px auto 30px;
+    width: 80%;    
+}
+.accordion-block{
+    width: 80%;
+    margin: 0 auto;
+}
+.accordion-block__button {
+    background: transparent;        
+    border-radius: 17.5px;
+    color: $color__dark-blue;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    border: 1px solid $color__dark-blue;    
+    text-align: center;
+}
+
+.active, .accordion:hover {    
+}
+.accordion-block__panel--padding{
+    padding: 10px;
+}
+.accordion-block__panel {    
+    background-color: $color__dark-blue;
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);
+    border-radius: 17.5px;
+    color: $color__primary--white;
+    font-size: 12px;
+    max-height: 0;
+    margin-bottom: 15px;
+    overflow: hidden;
+    padding: 0 18px;
+    transition: max-height 0.2s ease-out;
+}
+.accordion-block__date{
+    border-bottom: 1px solid rgba(137,169,253,0.35);
+    padding-bottom: 10px;
+    text-align: center;
+    margin: 0 0 5px;
+}
+.accordion-block__description{
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+}
+i.fa-calendar{
+    color: $color__dark-blue;
+    position: relative;
+    margin-right: 10px;
+}

@@ -27,17 +27,32 @@
   opacity: 0.5;
 }
 
-.form-group__login-btn, .signup-btn, .login-btn {
-  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-  border: none;
-  border-radius: 27px;
-  color: #FFFFFF;
-  font-weight: 900;
-  font-size: em(15px);
-  padding: 10px 20px;
-  text-align: center;
-  width: 100%;
+.post-form__description::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #8eb2f1;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+.post-form__description::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #8eb2f1;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+.post-form__description:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #8eb2f1;
+  font-size: em(12px);
+  opacity: 0.5;
+}
+
+.post-form__description:-moz-placeholder {
+  /* Firefox 18- */
+  color: #8eb2f1;
+  font-size: em(12px);
+  opacity: 0.5;
 }
 
 * {
@@ -53,7 +68,8 @@ body {
 
 .image-background {
   background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
-  min-height: 561px;
+  min-height: 700px;
+  height: 100%;
   width: 100%;
 }
 
@@ -76,8 +92,9 @@ body {
 }
 
 .container {
-  width: 95%;
+  max-width: 750px;
   margin: 0 auto;
+  padding: 0 45px;
 }
 
 .alert {
@@ -106,24 +123,175 @@ body {
 
 .header {
   text-align: center;
-  padding-top: 2.1428571429em;
+  padding-top: 5.3571428571em;
   margin-bottom: 3.5714285714em;
+}
+
+.wall-header {
+  -webkit-box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
+          box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wall-header__connect-tab {
+  background-color: #FFFFFF;
+  -webkit-box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
+  color: #4e1aaf;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 25px;
+  text-align: center;
+  text-decoration: none;
+  width: 41%;
+}
+
+.wall-header__chat-tab {
+  background-color: #e5eafc;
+  color: #4aabef;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.14px;
+  padding: 25px;
+  text-align: center;
+  text-decoration: none;
+  width: 40%;
+}
+
+.drop-menu {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin: 10px 5px 0px;
+}
+
+.profile-block {
+  -ms-flex-line-pack: justify;
+      align-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile-block__profile-pic {
+  border-radius: 100px;
+  border: 2px solid #4e1aaf;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+
+.profile-block__right {
+  margin-left: 10px;
+}
+
+.profile-block__username {
+  color: #4e1aaf;
+  display: inline-block;
+  font-size: 0.8571428571em;
+  margin: 0;
+  text-transform: capitalize;
+  vertical-align: bottom;
+}
+
+a.profile-block__edit-profile-btn {
+  color: #c27bff;
+  display: block;
+  font-size: 0.7142857143em;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-link-block__link {
+  color: #c27bff;
+  border-bottom: 1.33px solid #89a9fd;
+  font-size: 0.9285714286em;
+  padding-bottom: 25px;
+  margin-top: 25px;
+}
+.menu-link-block__link:first-child {
+  margin-top: 60px;
+}
+.menu-link-block__link:last-child {
+  border-bottom: none;
+}
+
+.sidenav {
+  background-color: #FFFFFF;
+  -webkit-box-shadow: 4px 0 11px 0 #e5eafc;
+          box-shadow: 4px 0 11px 0 #e5eafc;
+  height: 100%;
+  overflow-x: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  width: 0;
+  z-index: 1;
+}
+
+.sidenav__in {
+  padding: 45px 35px;
+}
+
+.sidenav a {
+  text-decoration: none;
+  display: block;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+i.fa-volume-down, i.fa-search {
+  color: #4e1aaf !important;
+  margin-right: 10px;
+  position: relative !important;
+  top: 0 !important;
+}
+
+.form-group__login-btn, .signup-btn, .login-btn {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  border: none;
+  border-radius: 27px;
+  color: #FFFFFF;
+  font-size: 0.8571428571em;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .form-group {
   display: block;
-  margin-bottom: 34px;
+  margin-bottom: 25px;
   position: relative;
 }
 
 .form-group__control {
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
   background: none;
   color: #FFFFFF;
   font-size: 1.0714285714em;
-  padding: 5px 10px 5px 25px;
-  width: 98%;
+  padding: 5px 10px 7px 25px;
+  width: 100%;
 }
 
 .form-group__control:focus {
@@ -135,14 +303,14 @@ body {
   border: #FFFFFF solid 1px;
   -webkit-box-shadow: none;
           box-shadow: none;
+  margin-top: 25px;
 }
 
 .signup-btn {
   background: #4e1aaf;
   display: block;
-  font-size: 0.8571428571em;
   font-weight: normal;
-  margin-top: 20px;
+  margin-top: 10px;
   text-decoration: none;
   width: 100%;
 }
@@ -171,18 +339,30 @@ i.fa-eye {
   top: 5px;
 }
 
+.form-group__forgot-password {
+  color: white;
+  float: right;
+  font-size: 10px;
+  line-height: 11px;
+  margin-top: 5px;
+  text-decoration: none;
+}
+
 .post-main-block {
   background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  margin-bottom: 16px;
+  padding: 13px;
+}
+
+.post-top-blck {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin-bottom: 16px;
-  padding: 13px;
 }
 
 .img-block {
@@ -221,7 +401,6 @@ i.fa-eye {
   font-family: "Open Sans";
   font-size: 12px;
   line-height: 17px;
-  margin-left: 15px;
 }
 
 .post-block {
@@ -248,12 +427,17 @@ i.fa-eye {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 100%;
 }
 
 .post-form__description {
   background-color: transparent;
   border: none;
   border-top: 2px solid #89a9fd;
+  color: #8eb2f1;
   outline: none;
   padding: 10px;
   width: 70%;
@@ -270,41 +454,6 @@ i.fa-eye {
   font-size: 0px;
   height: 50px;
   width: 50px;
-}
-
-.wall-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.wall-header__connect-tab {
-  background-color: #e5eafc;
-  -webkit-box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
-  color: #4e1aaf;
-  font-weight: 800;
-  font-size: 10px;
-  padding: 5px 75px;
-}
-
-.wall-header__chat-tab {
-  background-color: white;
-  color: #4aabef;
-  font-weight: 800;
-  font-size: 10px;
-  letter-spacing: 0.14px;
-  padding: 5px 70px;
-}
-
-.drop-menu {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  margin: 10px 5px 0px;
 }
 
 .profile-image {
@@ -401,8 +550,9 @@ i.fa-eye {
 }
 
 .friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
-  color: #89A9FF;
-  font-size: 1.1428571429em;
+  color: #c27bff;
+  font-size: 1em;
+  font-weight: 900;
   margin: 0;
 }
 
@@ -410,15 +560,15 @@ i.fa-eye {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-bottom: 1px solid rgba(137, 169, 253, 0.2);
+  border-bottom: 1px solid rgba(137, 169, 253, 0.35);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 10px;
-  padding-bottom: 10px;
+  margin: 15px;
+  padding-bottom: 15px;
 }
 
 .friend-list__profile-pic {
@@ -431,7 +581,9 @@ i.fa-eye {
 }
 
 .friend-list__profile-pic img {
-  max-width: 100%;
+  border-radius: 100px;
+  width: 50px;
+  height: 50px;
 }
 
 .friend-list__username {
@@ -440,13 +592,19 @@ i.fa-eye {
 }
 
 .friend-list__description {
-  font-size: 1.0714285714em;
+  font-size: 0.8571428571em;
   font-weight: 300;
   margin-top: 2px;
 }
 
 .friend-list i {
   color: #4e1aaf;
+  font-size: 20px;
+}
+
+.request-btn {
+  background: transparent;
+  border: none;
 }
 
 .friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
@@ -781,6 +939,118 @@ i.fa-eye {
   text-transform: capitalize;
 }
 
+.forgot-password {
+  margin-top: 5.7142857143em;
+}
+
+.forgot-password__title {
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.forgot-password__description {
+  color: white;
+  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.forgot-submit-btn {
+  background: #4e1aaf;
+  border: none;
+  border-radius: 27px;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  color: #FFFFFF;
+  display: block;
+  font-size: 0.8571428571em;
+  font-weight: normal;
+  margin-top: 50px;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
+
+.conference-schedule-title {
+  border-bottom: 1px solid #89a9fd;
+  color: #4e1aaf;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.8571428571em;
+  font-weight: 300;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-bottom: 20px;
+  margin: 30px auto 30px;
+  width: 80%;
+}
+
+.accordion-block {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.accordion-block__button {
+  background: transparent;
+  border-radius: 17.5px;
+  color: #4e1aaf;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: 1px solid #4e1aaf;
+  text-align: center;
+}
+
+.accordion-block__panel--padding {
+  padding: 10px;
+}
+
+.accordion-block__panel {
+  background-color: #4e1aaf;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  border-radius: 17.5px;
+  color: #FFFFFF;
+  font-size: 12px;
+  max-height: 0;
+  margin-bottom: 15px;
+  overflow: hidden;
+  padding: 0 18px;
+  -webkit-transition: max-height 0.2s ease-out;
+  transition: max-height 0.2s ease-out;
+}
+
+.accordion-block__date {
+  border-bottom: 1px solid rgba(137, 169, 253, 0.35);
+  padding-bottom: 10px;
+  text-align: center;
+  margin: 0 0 5px;
+}
+
+.accordion-block__description {
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+}
+
+i.fa-calendar {
+  color: #4e1aaf;
+  position: relative;
+  margin-right: 10px;
+}
+
 .chat_section {
   bottom: 0;
   background-color: #ffffff;
@@ -791,14 +1061,8 @@ i.fa-eye {
   width: 100%;
 }
 
-#send_message {
-  position: absolute;
-  bottom: 0;
-  width: 90%;
-}
-
-#send_message_input {
-  width: 100%;
+.chat_button {
+  text-decoration: none;
 }
 
 .chat_close {
@@ -806,4 +1070,47 @@ i.fa-eye {
   position: absolute;
   right: 20px;
   top: 0px;
+}
+
+#send_message {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}
+
+#send_message_input {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.user_with_message {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.usr_msg_box {
+  font-size: 14px;
+}
+
+.usr_msg:nth-of-type(odd) {
+  background-color: rgba(78, 26, 175, 0.85);
+  border-radius: 0 14px 14px 14px;
+  color: #FFFFFF;
+  padding: 10px;
+  width: 80%;
+}
+
+.usr_msg:nth-of-type(even) {
+  background-color: rgba(74, 171, 239, 0.85);
+  border-radius: 14px 0 14px 14px;
+  color: #FFFFFF;
+  float: right;
+  margin-top: 10px;
+  padding: 10px;
+  width: 80%;
+}
+
+.usr_msg_box p {
+  margin: 0;
 }

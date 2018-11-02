@@ -132,6 +132,7 @@ router.post('/forgot-password', function(req, res, next) {
 			  var newpassword =  req.body.password;
 			 
 			user.setpassword(newpassword, function(err) {
+				console.log(newpassword);
 				if(err) throw err;
 			  user.resetPasswordToken = undefined;
 			  user.resetPasswordExpires = undefined;
@@ -153,7 +154,7 @@ router.post('/forgot-password', function(req, res, next) {
 			host: "smtp.gmail.com", 
 			auth: {
 			  user: 'bhartendu7285@gmail.com',
-			  pass: 'lafangeparinde'
+			  pass: ''
 			},
 			tls: {
 				rejectUnauthorized: false
@@ -241,6 +242,11 @@ router.post('/trash/delete', function(req, res){
 		res.send();
 	});
 });
+
+// Router for Conference
+router.get('/conference-schedule', function(req, res){
+	res.render('conference/index.hbs',{title: "Conferece Schedule"})
+})
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){

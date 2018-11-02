@@ -1,16 +1,28 @@
+// Common button
+%login-signup-button {
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,0.26);  
+    border: none;
+    border-radius:27px;
+    color: $color__primary--white;  
+    font-size: em(12px);
+    padding: 10px 20px;  
+    text-align: center;
+    width: 100%;
+  }
+  
 .form-group{
     display: block;
-    margin-bottom: 34px;
+    margin-bottom: 25px;
     position: relative;
 }
 .form-group__control{
     border:none;
-    border-bottom: 1px solid rgba(255,255,255,0.35);    
+    border-bottom: 2px solid rgba(255,255,255,0.35);    
     background: none;
     color: $color__primary--white;
     font-size: em(15px);    
-    padding: 5px 10px 5px 25px;
-    width: 98%;   
+    padding: 5px 10px 7px 25px;
+    width: 100%;
 }
 .form-group__control:focus{    
     outline: none;
@@ -20,14 +32,14 @@
     background-color: transparent;
     border: $color__primary--white solid 1px;
     box-shadow: none;
+    margin-top: 25px;
 }
 .signup-btn{
     @extend %login-signup-button;
     background: $color__dark-blue;    
-    display: block;
-    font-size: em(12px);
+    display: block;    
     font-weight: normal;
-    margin-top: 20px;
+    margin-top: 10px;
     text-decoration: none;
     width: 100%;
 }

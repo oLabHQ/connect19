@@ -1,0 +1,120 @@
+
+.wall-header{
+    box-shadow: 0 2px 4px 0 rgba(197,205,232,0.68);
+    display: flex;
+    justify-content: space-between;    
+}
+.wall-header__connect-tab{
+    background-color: $color__primary--white;    
+    box-shadow: -2px -5px 5px 0 rgba(0,0,0,0.5);
+    color: $color__dark-blue;
+    font-weight: 800;
+    font-size: 10px;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    width: 41%;
+}
+.wall-header__chat-tab{
+    background-color: rgba(229,234,252,1);
+    color: rgba(74,171,239,1);
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 0.14px;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    width: 40%;
+}
+.drop-menu{
+    justify-content: flex-end;
+    margin: 10px 5px 0px;
+}
+
+.profile-block{  
+    align-content: space-between;
+    display: flex;    
+}
+
+.profile-block__profile-pic{
+    border-radius: 100px;
+    border: 2px solid $color__dark-blue;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+.profile-block__right{
+    margin-left: 10px;
+}
+.profile-block__username{
+    color: $color__dark-blue;
+    display: inline-block;
+    font-size: em(12px);    
+    margin: 0;
+    text-transform: capitalize;
+    vertical-align: bottom;
+
+}
+a.profile-block__edit-profile-btn{
+    color: $color__purple;
+    display: block;
+    font-size: em(10px);
+    margin: 0;
+    padding: 0;
+}
+.menu-link-block{
+
+}
+.menu-link-block__link{
+    color: $color__purple;
+    border-bottom: 1.33px solid rgba(137,169,253,1);
+    font-size: em(13px);
+    padding-bottom: 25px;
+    margin-top: 25px;
+    &:first-child{
+        margin-top: 60px;
+    }
+    &:last-child{
+        border-bottom: none;
+    }
+}
+.sidenav {
+    background-color: $color__primary--white;
+    box-shadow: 4px 0 11px 0 rgba(229,234,252,1);
+    height: 100%;
+    overflow-x: hidden;    
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: 0.5s;
+    width: 0;  
+    z-index: 1;    
+}
+.sidenav__in{
+    padding:45px 35px;
+}
+
+.sidenav a {    
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+i.fa-volume-down, i.fa-search{
+    color: $color__dark-blue !important;
+    margin-right: 10px;
+    position: relative !important;
+    top: 0 !important;
+
+}

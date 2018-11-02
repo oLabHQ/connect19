@@ -8,7 +8,8 @@ body{
 }
 .image-background{
     background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
-    min-height: 561px;
+    min-height: 700px;
+    height: 100%;
     width: 100%;
 }
 .gradient-background{
@@ -26,8 +27,9 @@ body{
     width: 100%;
 }
 .container{
-    width:95%;
+    max-width: 750px;
     margin: 0 auto;
+    padding: 0 45px;
 }
 .alert{
     padding: 15px;

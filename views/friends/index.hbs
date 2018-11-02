@@ -1,12 +1,12 @@
 
-<div class="gradient-background">
+<div>
     <div class="wall-header">
-    <div class="wall-header__connect-tab">Connect Wall</div>
-    <div class="wall-header__chat-tab">Chat</div>
-</div>  <!-- wall-header -->
-<div class="drop-menu">
-        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
+    <a href="/"  class="wall-header__connect-tab">The Wall</a>
+    <a href="/friends" class="wall-header__chat-tab">Chat</a>
+    <div class="drop-menu">
+      <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
     </div>
+</div>  <!-- wall-header -->
     {{#if success_msg}}
             <div class="alert alert-success">{{success_msg}}</div>
           {{/if}}
@@ -21,6 +21,7 @@
                     
 {{#each users}}
   {{#each user_details}}
+    <a href="/users/chat/{{member_id}}.{{../this.member_id}}" id="{{member_id}}" class="chat_button">
     <div class="friend-list" id="{{member_id}}">
       <div class="friend-list__profile-pic">
         {{#each user_profile}}
@@ -34,9 +35,9 @@
         {{/each}}
       </div>
       <div id="chat_section_wrapper"></div>      
-     <!-- <button id="{{member_id}}" class="chat_button">Chat</button>  -->
-       <a href="/users/chat/{{member_id}}.{{../this.member_id}}" id="{{member_id}}" class="chat_button">Chat</a> 
+     <!-- <button id="{{member_id}}" class="chat_button">Chat</button>  -->       
     </div>
+    </a> 
   {{/each}}
 {{/each}}
 </div>

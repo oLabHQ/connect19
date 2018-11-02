@@ -1,34 +1,60 @@
 <div class="gradient-background">
     <div class="wall-header">
-        <div class="wall-header__connect-tab">The Wall</div>
-        <div class="wall-header__chat-tab">Chat</div>
+        <a href="/" class="wall-header__connect-tab">The Wall</a>
+        <a href="/friends" class="wall-header__chat-tab">Chat</a>
         <div class="drop-menu">
-            <a href="/users/profile"><img src="images/menu.svg" class="drop-menu__button" /></a>
+            <a href="javascript:void(0)" onclick="openNav()"><img src="images/menu.svg" class="drop-menu__button" /></a>
         </div>  
+        <div id="mySidenav" class="sidenav">
+            <div class="sidenav__in">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+  
+  {{#each user}}
+  {{#each user_profile}}
+  <div class="profile-block">
+    <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" />
+    <div class="profile-block__right">
+        <h3 class="profile-block__username">{{../this.username}}</h3>
+        <a class="profile-block__edit-profile-btn" href="/users/editprofile">Edit Profile</a>
+    </div>
+  </div>
+  
+  {{/each}}
+  {{/each}}
+  <div class="menu-link-block">
+    <a href="/conference-schedule" class="menu-link-block__link"><i class="fas fa-calendar"></i> Conference Schedule</a>
+    <a href="/annoucements" class="menu-link-block__link"><i class="fas fa-volume-down"></i> Announcements</a>
+    <a href="#" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
+  </div>  
+</div>
+</div>
     </div>  <!-- wall-header -->
-      
+      <div class="container">
         {{#posts}}
             <div class="post-main-block" id="{{post_id}}"> 
-                <div class="img-block">
-                    <img src="images/{{{this.authorpic}}}" alt="" />
+                <div class="post-top-blck">
+                    <div class="img-block">
+                        <img src="images/{{{this.authorpic}}}" alt="" />
+                    </div>
+                    <div class="post-rt-block">
+                        <div class="author-block">
+                            <div class="author-block__name">{{this.author}}</div>                        
+                        </div>
+                        <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
+                    </div>            
+                    <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
                 </div>
-                <div class="post-rt-block">
-                    <div class="author-block">
-                        <div class="author-block__name">{{this.author}}</div>
-                        <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>
-                    </div>
-                    <div class="post-block">
-                        <div class="post-block__description">{{this.description}}</div>    
-                        {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
-                    </div>
-                </div>            
-                <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
+                <div class="post-block">
+                    <div class="post-block__description">{{this.description}}</div>    
+                    {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
+                </div>
             </div>
          {{/posts}}
         <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
             <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
             <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file">
+            <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
             <input name="submit" type="submit" value="send" class="post-form__button"/>
         </form>
 
@@ -43,6 +69,16 @@
 
     </div>
 </div>
+</div>
+<script>
+     function openNav() {        
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
 <!--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

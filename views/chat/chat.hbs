@@ -1,18 +1,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 <div class="gradient-background">
     <div class="wall-header">
-        <div class="wall-header__connect-tab">Connect Wall</div>
-        <div class="wall-header__chat-tab">Chat</div>
+        <a class="wall-header__connect-tab">The Wall</a>
+        <a class="wall-header__chat-tab">Chat</a>
+        <div class="drop-menu">
+            <a href="/users/profile"><img src="../../images/menu.svg" class="drop-menu__button" /></a>
+        </div>
     </div>  <!-- wall-header -->
-    {{user.username}}
+    <a href="/friends"><</a>    
     <div id="chat_section_wrapper" data-id="{{chat_friend.member_id}}" data-name="{{user.username}}">
         <div class="all_Chat_messages"></div>
     </div>
-    <input id="send_message_input" type="text" placeholder="Send message..">
+    <input id="send_message_input" type="text" class="post-form__description" placeholder="Send message..">
 </div>  <!-- Gradient Background -->
 
 <script>
   var socket = io();
-  
   socket.emit('attach_user_info', {"member_id": "{{user.member_id}}", "user_name":"{{user.username}}"});
 </script>

@@ -1,11 +1,13 @@
 .post-main-block{
     background-color: rgba(255,255,255,1);
-    display: flex;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    justify-content: flex-start;
+    font-weight: 300;    
     margin-bottom: 16px;
     padding: 13px;
+}
+.post-top-blck{
+    display: flex;
+    justify-content: flex-start;
 }
 .img-block{
     width: 35px;
@@ -35,8 +37,7 @@
     color: rgba(137,169,255,1);
     font-family: "Open Sans";
     font-size: 12px;
-    line-height: 17px;
-    margin-left: 15px; 
+    line-height: 17px;    
 }
 .post-block{
    /* background: linear-gradient(159.45deg, rgba(97,134,240,0.85) 0%, rgba(72,75,218,0.85) 100%);  
@@ -57,12 +58,17 @@
     max-width: 100%;
 }
 .post-form{
-    display: flex;    
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(255,255,255,1);
+    width: 100%;
 }
 .post-form__description{
     background-color: transparent;
     border: none;
     border-top: 2px solid rgba(137,169,253, 1);
+    color: $color__primary;
     outline: none;    
     padding: 10px;
     width: 70%;
@@ -77,31 +83,5 @@
     font-size: 0px;
     height: 50px;
     width: 50px;    
-}
-
-.wall-header{
-    display: flex;
-    justify-content: space-between;
-}
-.wall-header__connect-tab{
-    background-color: rgba(229,234,252,1);
-    box-shadow: -2px -5px 5px 0 rgba(0,0,0,0.5);
-    color: $color__dark-blue;
-    font-weight: 800;
-    font-size: 10px;
-    padding: 5px 75px;        
-}
-.wall-header__chat-tab{
-    background-color: rgba(255,255,255,1);
-    color: rgba(74,171,239,1);
-    font-weight: 800;
-    font-size: 10px;
-    letter-spacing: 0.14px;
-    padding: 5px 70px;    
-}
-.drop-menu{
-    
-    justify-content: flex-end;
-    margin: 10px 5px 0px;
 }
 

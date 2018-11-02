@@ -76,7 +76,6 @@ var User = module.exports = mongoose.model('User', UserSchema);
 
 
 module.exports.setpassword = function(newpassword, callback){
-	console.log('this istest');
 	bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(newpassword, salt, function(err, hash) {
 	        newpassword = hash;
