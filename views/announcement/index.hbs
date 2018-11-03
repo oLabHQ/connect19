@@ -30,8 +30,9 @@
 </div>
 </div>
     </div>  <!-- wall-header -->
-      <div class="container">          
-        {{#posts}}        
+      <div class="container">             
+        {{#announcement}}
+        
             <div class="post-main-block" id="{{post_id}}"> 
                 <div class="post-top-blck">
                     <div class="img-block">
@@ -39,13 +40,13 @@
                                     {{#each user_profile}}
                                         <img src="/images/{{this.profilepic}}" alt="" />
                                     {{/each}}
-                                {{/each}}
+                                {{/each}}                        
                     </div>
                     <div class="post-rt-block">
-                        <div class="author-block">
-                             {{#each user_details}}                                    
+                        <div class="author-block">                            
+                                  {{#each user_details}}                                    
                                          <div class="author-block__name">{{this.username}}</div>                                                            
-                                {{/each}}                           
+                                {{/each}}                                
                         </div>
                         <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
                     </div>            
@@ -53,26 +54,16 @@
                 </div>
                 <div class="post-block">
                     <div class="post-block__description">{{this.description}}</div>    
-                    {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
+                    {{#if image}}<div class="post-block__featured-image"><img src="/images/{{this.image}}" /></div>{{/if}}
                 </div>
             </div>            
-         {{/posts}}
-        <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
-            <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+         {{/announcement}}
+        <form method="post" action="/announcement/addannouncement" enctype="multipart/form-data" class="post-form">
+            <input type="text" name="announdescription" placeholder="Post..." class="post-form__description"/>
             <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
+            <input type="file" name="announimage" class="post-form__file" id="file" placeholder="Write post...">
             <input name="submit" type="submit" value="send" class="post-form__button"/>
-        </form>
-
-        <!--
-        <form id="post" enctype="multipart/form-data" class="post-form">
-            <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-            <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file">
-            <input id="register_post" name="submit" type="submit" value="send" class="post-form__button"/>
-        </form>
-        -->
-
+        </form>     
     </div>
 </div>
 </div>
@@ -85,23 +76,5 @@
         document.getElementById("mySidenav").style.width = "0";
     }
 </script>
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $("#register_post").on("click", function(){
-        $.ajax({
-            method: "POST",
-            url: "/add",
-            data: $("#post").serialize(),
-            success: function(){
-                alert('hi');
-                console.log("success")
-            },
-            fail:function() {
-                console.log('fail');
-            }
-        })
-    })
-</script>
 
--->
+>

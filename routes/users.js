@@ -107,12 +107,12 @@ router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), fu
 		var file = req.body.profilepic;
 	
 	var id = req.body.id;
-	console.log(username);
-	console.log(description);
+	//console.log(username);
+	//console.log(description);
 	if(req.file.filename){
 		var profilepic = req.file.filename;
 	}
-	console.log(profilepic);
+	//console.log(profilepic);
 	
 	//if(req.file){
 	//	var profileimage = req.file.filename;

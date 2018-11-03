@@ -110,6 +110,7 @@ var users = require('./routes/users');
 var friends = require('./routes/friends');
 var admin = require('./routes/admin');
 var group = require('./routes/groups');
+var announcement = require('./routes/announcement');
 
 
 Handlebars.registerHelper('user_profile', function() {
@@ -198,6 +199,8 @@ app.use('/users', users);
 app.use('/friends', friends);
 app.use('/admin', admin);
 app.use('/groups', group);
+app.use('/announcement', announcement);
+
 
 
 

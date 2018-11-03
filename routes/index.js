@@ -12,16 +12,23 @@ var User = require('../models/user');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
-	Post.find({trashed:"N"},function(err, posts){
+	User.find({member_id:req.user.member_id}, function(err, user){
+	Post.aggregate([{$lookup:{from:"users",localField:"author", foreignField:"member_id", as:"user_details"}},{$match:{trashed:"N"}}]).exec(function(err, posts){
+//	Post.find({trashed:"N"},function(err, posts){
 		//console.log(req.user.user_profile[0].profilepic);
-		console.log(posts);
-		if(err) throw err;
-		res.render('index', {posts:posts, profilepic: req.user.user_profile[0].profilepic});					
-	})
+		//console.log(user);
+		//if(err) throw err;
+		res.render('index', {posts:posts, user: user[0].member_id});					
+	});
 });
+});
+
+
+
 
 router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
 	var description = req.body.description;	
+	var	author = req.user.member_id;
 	var date = new Date();
 	if(req.file){
 		var postimage = req.file.filename;
@@ -32,8 +39,7 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 		description: description,
 		date: date,
 		postimage: postimage,
-		author: req.user.username,
-		authorpic: req.user.user_profile[0].profilepic
+		author: author		
 	});
 
 	Post.createPost(newPost, function(err, post){
@@ -244,7 +250,7 @@ router.post('/trash/delete', function(req, res){
 });
 
 // Router for Conference
-router.get('/conference-schedule', function(req, res){
+router.get('/conference-schedule', ensureAuthenticated, function(req, res){
 	res.render('conference/index.hbs',{title: "Conferece Schedule"})
 })
 

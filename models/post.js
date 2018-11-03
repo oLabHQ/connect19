@@ -13,10 +13,6 @@ var PostSchema = mongoose.Schema({
 	author: {
 		type: String,		
 	},
-	authorpic: {
-		type: String,
-		default: 'prof-img.png'
-	},
 	date: {
 		type: Date,
 		default: Date.now
