@@ -75,14 +75,14 @@ UserSchema.plugin(passportLocalMongoose)
 var User = module.exports = mongoose.model('User', UserSchema);
 
 
-module.exports.setpassword = function(newpassword, callback){
-	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newpassword, salt, function(err, hash) {
-	        newpassword = hash;
-	        newpassword.save(callback);
-	    });
-	});
-}
+//module.exports.newPassword = function(newpassword, callback){
+//	bcrypt.genSalt(10, function(err, salt) {
+//	    bcrypt.hash(newpassword.password, salt, function(err, hash) {
+//	        newpassword.password = hash;
+//	        newpassword.save(callback);
+///	    });
+//	});
+//}
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {
@@ -108,3 +108,6 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 }
+
+
+

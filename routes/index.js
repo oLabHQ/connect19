@@ -86,7 +86,7 @@ router.post('/forgot-password', function(req, res, next) {
 		  host: "smtp.gmail.com", 
 		  auth: {
 			user: 'bhartendu7285@gmail.com',
-			pass: 'lafangeparinde'
+			pass: ''
 		  },
 		  tls: {
 			  rejectUnauthorized: false
@@ -135,20 +135,16 @@ router.post('/forgot-password', function(req, res, next) {
 			return res.redirect('back');
 		  }
 		  if(req.body.password === req.body.confirm) {
-			  var newpassword =  req.body.password;
-			 
-			user.setpassword(newpassword, function(err) {
-				console.log(newpassword);
-				if(err) throw err;
-			  user.resetPasswordToken = undefined;
-			  user.resetPasswordExpires = undefined;
-					
-			  //user.save(function(err) {
-			//	req.logIn(user, function(err) {
-			//	  done(err, user);
-			//	});
-			 // });
-			})
+				user.setPassword(req.body.password, function(err) {
+					user.resetPasswordToken = undefined;
+					user.resetPasswordExpires = undefined;
+
+					user.save(function(err) {
+						req.logIn(user, function(err) {
+							done(err, user);
+						});
+					});
+				})
 		  } else {
 			  req.flash("error", "Passwords do not match.");
 			  return res.redirect('back');
