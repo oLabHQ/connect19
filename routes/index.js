@@ -5,6 +5,7 @@ var upload = multer({ dest: './dist/images' });
 var async = require('async');
 var nodemailer = require('nodemailer');
 var crypto = require('crypto');
+var bcrypt = require('bcryptjs');
 
 var Post = require('../models/post');
 var User = require('../models/user');
@@ -12,13 +13,13 @@ var User = require('../models/user');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
-	User.find({member_id:req.user.member_id}, function(err, user){
+	User.findOne({member_id:req.user.member_id}, function(err, user){
 	Post.aggregate([{$lookup:{from:"users",localField:"author", foreignField:"member_id", as:"user_details"}},{$match:{trashed:"N"}}]).exec(function(err, posts){
 //	Post.find({trashed:"N"},function(err, posts){
 		//console.log(req.user.user_profile[0].profilepic);
 		//console.log(user);
 		//if(err) throw err;
-		res.render('index', {posts:posts, user: user[0].member_id});					
+		res.render('index', {posts:posts, user: user.member_id, users: user, isApproved: user.isApproved});					
 	});
 });
 });
@@ -51,8 +52,10 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 });
 
 // Forgot-Password template
-router.get('/forgot-password', function(req, res){
-	res.render('forgot-password/forgot-password');
+router.get('/forgot-password', ensureAuthenticated, function(req, res){
+	User.findOne({member_id:req.user.member_id}, function(err, user){
+		res.render('forgot-password/forgot-password',{isApproved: user.isApproved});
+	});
 });
 
 
@@ -74,7 +77,8 @@ router.post('/forgot-password', function(req, res, next) {
 		  }
   
 		  user.resetPasswordToken = token;
-		  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+			user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+			console.log(user);
   
 		  user.save(function(err) {
 			done(err, token, user);
@@ -135,16 +139,43 @@ router.post('/forgot-password', function(req, res, next) {
 			return res.redirect('back');
 		  }
 		  if(req.body.password === req.body.confirm) {
-				user.setPassword(req.body.password, function(err) {
+				//user.setPassword(req.body.password, function(err) {					
 					user.resetPasswordToken = undefined;
 					user.resetPasswordExpires = undefined;
-
-					user.save(function(err) {
-						req.logIn(user, function(err) {
-							done(err, user);
+					
+					var password = req.body.password;
+						
+					bcrypt.genSalt(10, function(err, salt) {
+						console.log(salt);
+						bcrypt.hash(password, salt, function(err, hash) {
+						//	console.log(hash);
+							user.password = hash
+								// Store hash in your password DB.
+								
+							//	user.update({$set:{password:hash}}, function (err, user) {
+							//		console.log(user);
+							//		req.flash('success_msg', 'Your password has been changed');
+							//				req.logIn(user, function(err) {
+							//		done(err, user);
+							//				}); 
+									//console.log(user);
+									//console.log('3');
+							//	});
+								user.save({password:hash}, function(err ,user) {
+							//	console.log(user);
+									req.logIn(user, function(err) {
+											done(err, user);
+										});
+									});								
 						});
-					});
-				})
+				});
+				//	user.save(function(err) {
+				//		req.logIn(user, function(err) {
+					//		done(err, user);
+				//		});
+						
+				//	});
+			//	})
 		  } else {
 			  req.flash("error", "Passwords do not match.");
 			  return res.redirect('back');
@@ -184,7 +215,7 @@ router.post('/forgot-password', function(req, res, next) {
 // Post flags
 router.post('/', function(req, res){
 	Post.findOne({'post_id': req.body.flag_post_id}, function(err, post){
-		console.log(post);
+		//console.log(post);
 		post.update({$push: {"flag": {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}}, function(err){
 			res.send();
 		})
@@ -195,11 +226,11 @@ router.post('/', function(req, res){
 // Get flags
 router.get('/flags', ensureAuthenticated, function(req, res){				
 	User.find({username: req.user.username}, function(err, user){
-		console.log(user[0].admin);
+		//console.log(user[0].admin);
 		Post.find({},function(err, posts){ 
 			//console.log(req.user.user_profile[0].profilepic);
 			if(err) throw err;
-			res.render('flags/index', {posts:posts, user: user[0].admin});					
+			res.render('flags/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});					
 		});
 	});
 });
@@ -222,7 +253,7 @@ router.get('/trash', ensureAuthenticated, function(req, res){
 		Post.find({},function(err, posts){
 			//console.log(req.user.user_profile[0].profilepic);
 			if(err) throw err;
-			res.render('trash/index', {posts:posts, user: user[0].admin});
+			res.render('trash/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});
 		});
 	});
 });

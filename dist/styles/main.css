@@ -245,6 +245,7 @@ a.profile-block__edit-profile-btn {
   display: block;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
 .sidenav a:hover {
@@ -462,7 +463,13 @@ i.fa-eye {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  margin-top: 60px;
+  margin-top: 170px;
+}
+.profile-image img {
+  border: 2px solid #FFFFFF;
+  border-radius: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .profile-detail {
@@ -532,7 +539,13 @@ i.fa-eye {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  margin-top: 60px;
+  margin-top: 170px;
+}
+.edit-profile__profile-image img {
+  border: 2px solid #FFFFFF;
+  border-radius: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .edit-profile-form__description {

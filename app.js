@@ -218,7 +218,6 @@ var server = app.listen(app.get('port'), function(){
 var io = require("socket.io").listen(server);
 
   io.on('connection', function(socket){
-
     socket.on("attach_user_info", function(user_info){    
       socket.member_id = user_info.member_id;
       socket.user_name = user_info.user_name;    

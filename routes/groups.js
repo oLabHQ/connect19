@@ -10,7 +10,7 @@ var User = require('../models/user');
 var Group = require('../models/group');
 var Groupposts = require('../models/groupposts');
 
-
+ 
 // Get Groups
 router.get('/', ensureAuthenticated, function(req,res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
@@ -19,7 +19,7 @@ router.get('/', ensureAuthenticated, function(req,res){
         //console.log(group[0].createdby);
         console.log(group[0].ispinned)
         if(err) throw err;
-        res.render('groups/index', {group: group, ispinned: group[0].ispinned, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id, isadmin: user.admin});
+        res.render('groups/index', {group: group, ispinned: group[0].ispinned, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id, isadmin: user.admin, users: user, isApproved: user.isApproved});
     }); 
 });
 });
@@ -109,7 +109,9 @@ router.get('/:id', ensureAuthenticated, function(req, res){
 
 // Get private Group join invitaion page
 router.get('/:id/join',ensureAuthenticated, function(req, res){    
-    res.render('groups/join');
+    User.findOne({member_id:req.user.member_id}, function(err, user){
+    res.render('groups/join',{isApproved: user.isApproved});
+    });
 });
 
 // Send Group join invitation
@@ -139,7 +141,7 @@ router.get('/invitations', ensureAuthenticated, function(req, res){
         Group.find({group_id:user.group_invitation}, function(err, group){
             //console.log(user.group_invitation);
            // console.log(group);
-            res.render('groups/invitations', {group_invitaions:user.group_invitation, group: group});
+            res.render('groups/invitations', {group_invitaions:user.group_invitation, group: group, isApproved: user.isApproved});
         });
     });
 });
@@ -179,11 +181,11 @@ router.get('/:id', ensureAuthenticated, function(req, res){
             Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}]).sort({ispinned:-1}).exec(function(err, user_details){
             //console.log(user_details);
             //res.render("groups/posts", {groupposts: user_details});
-            res.render("groups/posts", {groupposts: user_details,groupcreatedby:group.createdby, group: group, user: user[0].member_id, isprivate: group.isprivate});
+            res.render("groups/posts", {groupposts: user_details,groupcreatedby:group.createdby, group: group, user: user[0].member_id, isprivate: group.isprivate, users: user, isApproved: user[0].isApproved});
             });        
         });
     });
-}); 
+});
 
 
 // Add Group Post
@@ -240,14 +242,13 @@ router.get('/:id/flags',ensureAuthenticated, function(req, res){
     Group.find({group_id: req.params.id},{createdby:1}, function(err, createdby){
         //console.log(createdby[0].createdby); 
         //Groupposts.find({group_id: req.params.id}, function(err, posts){
-            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}, { $project : { flag : 1 , user_details : 1 } }]).exec(function(err, posts){
-                //console.log(posts);         
-            res.render("groups/flags", {posts: posts, createdby:createdby[0].createdby, user:user.member_id});
+            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}, { $project : { group_id:1, flag : 1 , user_details : 1 } }]).exec(function(err, posts){
+                console.log(posts);         
+            res.render("groups/flags", {posts: posts, createdby:createdby[0].createdby, user:user.member_id, users: user, isApproved: user.isApproved});
         });    
     });
     });
 });
-
 
 
 // Group Post flags 
@@ -255,7 +256,7 @@ router.post('/:id', function(req, res){
     var groupid = req.params.id;
     //console.log(req.body.flag_post_id);
     Groupposts.findOne({'post_id': req.body.flag_post_id}, function(err, post){
-        //console.log(post);
+        console.log(post);
        post.update({$push: {"flag":  {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}}, function(err){
             if(err) throw err;
             //console.log('updated the data')
@@ -266,11 +267,13 @@ router.post('/:id', function(req, res){
 
 
 // Get Group Post Trash
-router.get('/:id/trash', function(req, res){
-    Groupposts.find({group_id: req.params.id}, function(err, posts){
-        //console.log(posts);
-        res.render("groups/trash", {posts: posts});
-    });    
+router.get('/:id/trash', ensureAuthenticated, function(req, res){
+    User.findOne({member_id:req.user.member_id}, function(err, user){
+        Groupposts.find({group_id: req.params.id}, function(err, posts){
+            //console.log(posts);
+            res.render("groups/trash", {posts: posts, isApproved:user.isApproved});
+        });
+    });
 });
 
 
@@ -278,8 +281,9 @@ router.get('/:id/trash', function(req, res){
 router.post('/:id/flags', function(req, res){
     
     var groupid  = req.params.id;
+    console.log(req.body.trash_post_id); 
 	Groupposts.findOne({'post_id': req.body.trash_post_id}, function(err, post){
-        //console.log(post);
+        console.log(post);
        post.update({$set: {"trashed":"Y"}, $push: {"trash":  {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}, $pull: {"flag": {post_id: req.body.trash_post_id}}}, function(err){
             if(err) throw err;
             //console.log('updated the data')

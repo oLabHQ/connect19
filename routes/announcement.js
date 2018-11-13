@@ -8,10 +8,10 @@ var User = require('../models/user');
 var Announcement = require('../models/announcement');
 
 router.get('/', ensureAuthenticated, function(req, res){
-	User.find({member_id:req.user.member_id}, function(err, users){
+	User.findOne({member_id:req.user.member_id}, function(err, users){
 		Announcement.aggregate([{$lookup:{from:"users",localField:"author", foreignField:"member_id", as:"user_details"}}]).exec(function(err, announcement){    				
 		if(err) throw err;
-		res.render('announcement/index', {announcement:announcement, users: users[0].member_id, admin: users[0].admin});					
+		res.render('announcement/index', {announcement:announcement, users: users, admin: users.admin, isApproved: users.isApproved});					
 		});
 	});
 })

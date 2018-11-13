@@ -46,7 +46,11 @@ var UserSchema = mongoose.Schema({
 	admin: {
 		type: Boolean,
 		default: "false"
-	},	
+	},
+	isApproved: {
+		type: Boolean,
+		default: "false"
+	},
 	friends:[
 		{
 			"member_id": String,		
@@ -75,7 +79,7 @@ UserSchema.plugin(passportLocalMongoose)
 var User = module.exports = mongoose.model('User', UserSchema);
 
 
-//module.exports.newPassword = function(newpassword, callback){
+//module.exports.createPassword = function(newpassword, callback){
 //	bcrypt.genSalt(10, function(err, salt) {
 //	    bcrypt.hash(newpassword.password, salt, function(err, hash) {
 //	        newpassword.password = hash;
@@ -83,6 +87,8 @@ var User = module.exports = mongoose.model('User', UserSchema);
 ///	    });
 //	});
 //}
+
+
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {

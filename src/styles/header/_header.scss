@@ -62,9 +62,7 @@ a.profile-block__edit-profile-btn{
     margin: 0;
     padding: 0;
 }
-.menu-link-block{
 
-}
 .menu-link-block__link{
     color: $color__purple;
     border-bottom: 1.33px solid rgba(137,169,253,1);
@@ -98,6 +96,7 @@ a.profile-block__edit-profile-btn{
     text-decoration: none;
     display: block;
     transition: 0.3s;
+    white-space: nowrap;
 }
 
 .sidenav a:hover {

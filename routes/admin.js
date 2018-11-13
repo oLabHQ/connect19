@@ -15,7 +15,7 @@ router.get('/', ensureAuthenticated, function(req,res){
 			//var friend_request_sent = users[0].friend_requests[0].member_id;
 			//console.log(friend_request_sent);
 			//res.render('friends/index', {user_friends: users, friend_request_sent : friend_request_sent});	
-			res.render('admin/index', {user_friends: users, user: user[0].admin});	
+			res.render('admin/index', {user_friends: users, user: user[0].admin, isApproved: user[0].isApproved});	
 		});
 	});
  });
@@ -31,8 +31,30 @@ router.post('/', function(req, res){
 			res.send();
 		});  
 	});
+}); 
+
+// Approve User
+router.post('/approve', function(req, res){
+	User.findOne({'member_id': req.body.user_id}, function(err, user){		
+		//console.log(req.body.admin_user_id);
+		var user_value = req.body.user_value;
+		//console.log(admin_value);
+			user.update({$set:{isApproved: user_value}}, function(err){
+			res.send();
+		});  
+	});
 });
 
+
+// Delete User
+router.post('/delete-user', function(req, res){
+	//console.log(req.body.trashed_post_id);
+	if(getConfirmation){
+	User.remove({'member_id': req.body.user_id}, function(err, user){
+		res.send();
+	});
+}
+});
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){

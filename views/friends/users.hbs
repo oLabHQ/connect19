@@ -1,10 +1,5 @@
-  <div class="wall-header">
-    <a class="wall-header__connect-tab">The Wall</a>
-    <a class="wall-header__chat-tab">Chat</a>
-    <div class="drop-menu">
-      <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div>
-  </div>  <!-- wall-header -->
+  {{#if isApproved}}
+  {{> header }}
 
     {{#if success_msg}}
       <div class="alert alert-success">{{success_msg}}</div>
@@ -32,3 +27,6 @@
       <button id="{{member_id}}" type="button" class="request-btn test1"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
     </div>
   {{/each}}
+  {{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}

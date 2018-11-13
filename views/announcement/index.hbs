@@ -1,80 +1,46 @@
 <div class="gradient-background">
-    <div class="wall-header">
-        <a href="/" class="wall-header__connect-tab">The Wall</a>
-        <a href="/friends" class="wall-header__chat-tab">Chat</a>
-        <div class="drop-menu">
-            <a href="javascript:void(0)" onclick="openNav()"><img src="images/menu.svg" class="drop-menu__button" /></a>
-        </div>  
-        <div id="mySidenav" class="sidenav">
-            <div class="sidenav__in">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  
-  
-  {{#each user}}
-  {{#each user_profile}}
-  <div class="profile-block">
-    <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" />
-    <div class="profile-block__right">
-        <h3 class="profile-block__username">{{../this.username}}</h3>
-        <a class="profile-block__edit-profile-btn" href="/users/editprofile">Edit Profile</a>
-    </div>
-  </div>
-  
-  {{/each}}
-  {{/each}}
-  <div class="menu-link-block">
-    <a href="/conference-schedule" class="menu-link-block__link"><i class="fas fa-calendar"></i> Conference Schedule</a>
-    <a href="/announcement" class="menu-link-block__link"><i class="fas fa-volume-down"></i> Announcements</a>
-    <a href="#" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
-  </div>  
-</div>
-</div>
-    </div>  <!-- wall-header -->
-      <div class="container">    
-                  
-        {{#announcement}}
-        
-            <div class="post-main-block" id="{{post_id}}"> 
-                <div class="post-top-blck">
-                    <div class="img-block">
-                        {{#each user_details}}
-                                    {{#each user_profile}}
-                                        <img src="/images/{{this.profilepic}}" alt="" />
-                                    {{/each}}
-                                {{/each}}                        
-                    </div>
-                    <div class="post-rt-block">
-                        <div class="author-block">                            
-                                  {{#each user_details}}                                    
-                                         <div class="author-block__name">{{this.username}}</div>                                                            
-                                {{/each}}                                
+    {{#if isApproved}}
+        {{> header }}
+            <div class="container">    
+                        
+                {{#announcement}}
+                
+                    <div class="post-main-block" id="{{post_id}}"> 
+                        <div class="post-top-blck">
+                            <div class="img-block">
+                                {{#each user_details}}
+                                            {{#each user_profile}}
+                                                <img src="/images/{{this.profilepic}}" alt="" />
+                                            {{/each}}
+                                        {{/each}}                        
+                            </div>
+                            <div class="post-rt-block">
+                                <div class="author-block">                            
+                                        {{#each user_details}}                                    
+                                                <div class="author-block__name">{{this.username}}</div>                                                            
+                                        {{/each}}                                
+                                </div>
+                                <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
+                            </div>                    
                         </div>
-                        <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
-                    </div>                    
-                </div>
-                <div class="post-block">
-                    <div class="post-block__description">{{this.description}}</div>    
-                    {{#if image}}<div class="post-block__featured-image"><img src="/images/{{this.image}}" /></div>{{/if}}
-                </div>
-            </div>            
-         {{/announcement}}
-         {{#if admin}}
-        <form method="post" action="/announcement/addannouncement" enctype="multipart/form-data" class="post-form">
-            <input type="text" name="announdescription" placeholder="Post..." class="post-form__description"/>
-            <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="announimage" class="post-form__file" id="file" placeholder="Write post...">
-            <input name="submit" type="submit" value="send" class="post-form__button"/>
-        </form>  
-        {{/if}}    
-    </div>
+                        <div class="post-block">
+                            <div class="post-block__description">{{this.description}}</div>    
+                            {{#if image}}<div class="post-block__featured-image"><img src="/images/{{this.image}}" /></div>{{/if}}
+                        </div>
+                    </div>            
+                {{/announcement}}
+                {{#if admin}}
+                <form method="post" action="/announcement/addannouncement" enctype="multipart/form-data" class="post-form">
+                    <input type="text" name="announdescription" placeholder="Post..." class="post-form__description"/>
+                    <img src="images/attachment.svg" id="img"/>
+                    <input type="file" name="announimage" class="post-form__file" id="file" placeholder="Write post...">
+                    <input name="submit" type="submit" value="send" class="post-form__button"/>
+                </form>  
+                {{/if}}    
+            </div>
+        </div>
+{{else}}
+    <h2>Admin has not approved you as Connect19 user yet</h2>
+{{/if}}
 </div>
-</div>
-<script>
-     function openNav() {        
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-    
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
+

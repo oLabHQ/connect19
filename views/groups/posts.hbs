@@ -1,11 +1,6 @@
 <div class="gradient-background">
-    <div class="wall-header">
-        <div class="wall-header__connect-tab">Connect Wall</div>
-        <div class="wall-header__chat-tab">Chat</div>
-    </div>  <!-- wall-header -->
-    <div class="drop-menu">
-        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div>
+    {{#if isApproved}}
+    {{> header }}
  
 {{#if isprivate}}
    <!-- List down all Posts-->
@@ -106,3 +101,7 @@
     {{/group}}        
 </div>
  {{/if}}
+
+ {{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}

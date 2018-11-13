@@ -1,11 +1,6 @@
 <div class="gradient-background">
-    <div class="wall-header">
-        <div class="wall-header__connect-tab">Connect Wall</div>
-        <div class="wall-header__chat-tab">Chat</div>
-    </div>  <!-- wall-header -->
-    <div class="drop-menu">
-        <a href="/users/profile"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div> 
+    {{#if isApproved}}
+    {{> header }}
 <h1 class="group-title">{{this.groupname}} Group flag posts</h1>
 
 {{#compare createdby user operator="=="}}
@@ -41,4 +36,7 @@
    {{else}}
    <h1>You are not authorised to see this page</h1>
    {{/compare}}
+   {{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}
 </div>

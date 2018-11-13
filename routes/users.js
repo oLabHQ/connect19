@@ -87,15 +87,15 @@ router.get('/profile', ensureAuthenticated, function(req, res){
 		//console.log(user)
 		//console.log(user.user_profile[0].profilepic)		
 		if(err) throw err;
-		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic});
+		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved});
 	});
 });
 
 // Get profile profile
 router.get('/editprofile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){				
-		//console.log(user);
-		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic});
+		console.log(user);
+		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved});
 	});
 });
 

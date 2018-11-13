@@ -1,35 +1,8 @@
 <div class="gradient-background">
-    <div class="wall-header">
-        <a href="/" class="wall-header__connect-tab">The Wall</a>
-        <a href="/friends" class="wall-header__chat-tab">Chat</a>
-        <div class="drop-menu">
-            <a href="javascript:void(0)" onclick="openNav()"><img src="images/menu.svg" class="drop-menu__button" /></a>
-        </div>  
-        <div id="mySidenav" class="sidenav">
-            <div class="sidenav__in">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  
-  
-  {{#each user}}
-  {{#each user_profile}}
-  <div class="profile-block">
-    <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" />
-    <div class="profile-block__right">
-        <h3 class="profile-block__username">{{../this.username}}</h3>
-        <a class="profile-block__edit-profile-btn" href="/users/editprofile">Edit Profile</a>
-    </div>
-  </div>
-  
-  {{/each}}
-  {{/each}}
-  <div class="menu-link-block">
-    <a href="/conference-schedule" class="menu-link-block__link"><i class="fas fa-calendar"></i> Conference Schedule</a>
-    <a href="/announcement" class="menu-link-block__link"><i class="fas fa-volume-down"></i> Announcements</a>
-    <a href="#" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
-  </div>  
-</div>
-</div>
-    </div>  <!-- wall-header -->
+
+{{#if isApproved}}
+  {{> header }}
+      
       <div class="container">          
         {{#posts}}        
             <div class="post-main-block" id="{{post_id}}"> 
@@ -75,16 +48,11 @@
 
     </div>
 </div>
+{{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+{{/if}}
 </div>
-<script>
-     function openNav() {        
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-    
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
+
 <!--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

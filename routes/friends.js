@@ -10,13 +10,15 @@ var User = require('../models/user');
 
 // Get Users
 router.get('/users', ensureAuthenticated, function(req,res){    
-   User.find({"email": {$ne: req.user.email}}, function(err, users){	 
+	User.findOne({member_id:req.user.member_id}, function(err, user){
+   		User.find({"email": {$ne: req.user.email}}, function(err, users){	 
 		if(err) throw err;	
 		//console.log(users[0].friend_requests[0].member_id)
 		//var friend_request_sent = users[0].friend_requests[0].member_id;
 		//console.log(friend_request_sent);
 		//res.render('friends/index', {user_friends: users, friend_request_sent : friend_request_sent});	
-		res.render('friends/users', {user_friends: users});	
+		res.render('friends/users', {user_friends: users, users: user, isApproved: user.isApproved});	
+   });
 });
 });
 
@@ -43,13 +45,15 @@ router.post('/', ensureAuthenticated, function(req, res){
 
 // Pending Requests
 router.get('/friend-requests', ensureAuthenticated, function(req, res){
+	User.findOne({member_id:req.user.member_id}, function(err, user){
 	//User.findOne({username:req.user.username}, function(err, friendrequests){	
 	User.aggregate([{$unwind: "$friend_requests"},{$lookup:{from:"users",localField:"friend_requests.member_id", foreignField:"member_id", as:"user_details"}},{$match:{member_id:req.user.member_id}}]).exec(function(err, friendrequests){
 		//console.log(friendrequests);
 		if(err) throw err;
 		//res.render('friends/pendingrequests', {friendrequests: friendrequests.friend_requests});
-		res.render('friends/pendingrequests', {friendrequests: friendrequests});
+		res.render('friends/pendingrequests', {friendrequests: friendrequests, users: user, isApproved: user.isApproved});
 	});
+});
 });
 
 // Accept friends requests
@@ -71,14 +75,14 @@ router.post('/friend-requests', ensureAuthenticated, function(req, res){
 
 // Get friends list
 router.get('/', ensureAuthenticated, function(req, res){
-	//User.findOne({member_id:req.user.member_id}, function(err, friends){
+	User.findOne({member_id:req.user.member_id}, function(err, user){
 		//console.log(friends);  
 		//User.find({member_id:friends.friend[0].member_id}, function(err, friend){
 		//console.log(friend);
 	User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends.member_id", foreignField:"member_id", as:"user_details"}},{$match:{member_id:req.user.member_id}}]).exec(function(err, users){
 		//console.log(users);
-		res.render('friends/index',{users:users})
-	//	});
+		res.render('friends/index',{user:users, users: user, isApproved: user.isApproved})
+		});
 	});
 });
  

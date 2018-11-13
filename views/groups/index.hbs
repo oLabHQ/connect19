@@ -1,11 +1,6 @@
 <div class="gradient-background">
-    <div class="wall-header">
-        <div class="wall-header__connect-tab">Connect Wall</div>
-        <div class="wall-header__chat-tab">Chat</div>
-    </div>  <!-- wall-header -->
-    <div class="drop-menu">
-        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div>
+    {{#if isApproved}}
+    {{> header }}
 
     {{#if success_msg}}
         <div class="alert alert-success">{{success_msg}}</div>
@@ -66,4 +61,7 @@
     <input type="radio" name="private" value="true" /> Private
     <button id="create_group" class="group-form__btn">Create Group</button>    
     </form>
+    {{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}
 </div>

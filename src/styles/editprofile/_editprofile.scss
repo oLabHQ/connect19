@@ -26,8 +26,14 @@
 }
 .edit-profile__profile-image{
     display: flex;
-    justify-content: space-around;
-    margin-top: 60px;
+    justify-content: space-around;    
+    margin-top: 170px;
+    img{
+        border: 2px solid $color__primary--white;
+        border-radius: 100px;        
+        width: 100px;
+        height: 100px;        
+    }
 }
 .edit-profile-form__username{
     @extend %input-edit-profile;

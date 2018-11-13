@@ -1,3 +1,5 @@
+{{#if isApproved}}
+{{> header }}
 {{#if test}}
         <div class="alert alert-error">Username not found</div> 
     {{/if}}
@@ -15,6 +17,9 @@
     <input type="text" name="user" id="tags" />
     <button type="submit">Send invitaion</button>
 </form>
+{{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}
   
   <!--
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

@@ -141,12 +141,34 @@
     });
 
 
+    // Add user as Connect19 member
+    $(".friend-list__approve--user").on("change", function(){
+        var user_value = $(this).is(":checked");
+        var user_id = $(this).attr("id"); 
+        console.log(user_value);
+        console.log(user_id);        
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"user_id": user_id, "user_value": user_value}),
+            contentType: 'application/json',
+            url: "/admin/approve",            
+            success: function(){
+                $('#notify').show().html("User has been approved");
+                console.log('This user has been approved');                
+            },
+            complete: function () { 
+                
+            }
+        });
+    });
+
+
     // Flag Group-post
     $(".flag-group-post").on("click", function(){      
         var group_id = $("#group-id").attr("data-id");
         var flag_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(flag_post_id);
+        console.log(flag_post_id);
         console.log(group_id);
         $.ajax({
             method: "POST",
@@ -254,8 +276,8 @@
         var pin_value = $(this).is(":checked");
         //var admin_user_id = $(this).attr("id");
         var group_id = $(this).parent().attr("id");
-        console.log(pin_value);
-        console.log(group_id);        
+        //console.log(pin_value);
+        //console.log(group_id);        
         $.ajax({
             method: "POST",
             data: JSON.stringify({"group_id": group_id, "pin_value": pin_value}),
@@ -294,6 +316,27 @@
     });
 
 
+    // Delete User from Connect19
+    $(".friend-list__delete-user").on("click", function(){    
+        var user_id = $(this).parent().attr("id");
+        var clicked_button = $(this);
+        //console.log(trash_post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({"user_id": user_id}),
+            contentType: 'application/json',
+            url: "/admin/delete-user",            
+            success: function(){
+                console.log('This User has been Deleted');
+                $('.trash-block').hide();
+            },
+            complete: function () {
+                clicked_button.parent().remove();
+                clicked_button.html('User Deleted').attr("disabled", "disabled");
+            }
+        });
+    });
+
     // Find users input focus to send invitation 
     $("#tags").on("focus", function(){
         //console.log('hello');
@@ -328,7 +371,7 @@
 
           var value1 = window.location.pathname;
           var value2 = value1.split('/');
-          var value3 = value2.pop();
+          var value3 = value2.pop(); 
 
           return value3;
       };
@@ -373,10 +416,10 @@
             socket.on("attach_user_info", function(user_info){    
                 socket.member_id = user_info.member_id;
                 socket.user_name = user_info.user_name;    
-                console.log("socket", socket)
+               // console.log("socket", socket)
               });
             socket.on("message_from_server", function(received_msg){
-                console.log("received_msg", received_msg);
+               // console.log("received_msg", received_msg);
                 $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>"+received_msg.user_name+":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>")
               });
           });

@@ -1,11 +1,6 @@
 <div class="gradient-background">
-    <div class="wall-header">
-    <a class="wall-header__connect-tab">The Wall</a>
-    <a class="wall-header__chat-tab">Chat</a>
-<div class="drop-menu">
-        <a href="javascript:void();"><img src="/images/menu.svg" class="drop-menu__button" /></a>
-    </div>
-</div>  <!-- wall-header -->
+{{#if isApproved}}
+    {{> header }}
 
     {{#if success_msg}}
             <div class="alert alert-success">{{success_msg}}</div>
@@ -22,29 +17,40 @@
 
   {{#if user}}
       {{#each user_friends}}
-      <div class="friend-list">
+      <div class="friend-list" id="{{this.member_id}}">
         <div class="friend-list__profile-pic">
             {{#each user_profile}}
             <img src="../images/{{profilepic}}" />
             {{/each}}
         </div>
-      <div class="friend-list__detail">
-        <h2 class="friend-list__username">{{this.username}}</h2>
-        {{#each user_profile}}
-        <p class="friend-list__description">{{{description}}}</p>
-        {{/each}}
-      </div>
-      <label> Make admin: 
+        <div class="friend-list__detail">
+          <h2 class="friend-list__username">{{this.username}}</h2>
+          {{#each user_profile}}
+          <p class="friend-list__description">{{{description}}}</p>
+          {{/each}}
+        </div>
+        <label> Make admin: 
           {{#if admin}}
-        <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn" checked>
-        {{else}}
-        <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn">
-        {{/if}}
-      </label>
+            <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn" checked>
+          {{else}}
+            <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn">
+          {{/if}}
+        </label>
+        <label> Approve User: 
+          {{#if isApproved}}
+            <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user" checked>
+          {{else}}
+            <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user">
+          {{/if}}
+        </label>      
+        <button class="friend-list__delete-user">Delete</button>
       </div>
       {{/each}}
     {{else}}
           <h2>You are not authorised to see this page</h2>
+    {{/if}}
+   {{else}}
+<h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
     <div id="notify"></div>
 </div>
