@@ -1,15 +1,19 @@
 <div class="gradient-background">
-    {{#if isApproved}}
-    {{> header }}
-    <h1>Group Invitations</h1>
-    {{#each group}}
-    <div class="group-invitation-block" id="{{group_id}}">
-        <div class="group-invitation-block__group-text">You have got invitation to join <a href="/groups/{{group_id}}" class="group-invitation-block__group-name">{{this.groupname}}</a></div>
-        <button class="group-invitation-block__accept-invitation">Accept invitation</button>
+    <div class="container">
+        {{#if isApproved}}
+        {{> header }}
+        <div class="group-invitation-title-block">
+            <i class="fas fa-users"></i> <h1 class="accept-group-title-block__heading">Group Invitations</h1>
+        </div>
+        {{#each group}}
+        <div class="group-invitation-block" id="{{group_id}}">
+            <div class="group-invitation-block__group-text">You have got invitation to join <a href="/groups/{{group_id}}" class="group-invitation-block__group-name">{{this.groupname}}</a></div>
+            <button class="btn-blue-common group-invitation-block__accept-invitation">Accept invitation</button>
+        </div>
+        {{/each}}
+        {{else}}
+            <h2>Admin has not approved you as Connect19 user yet</h2>
+        {{/if}}
     </div>
-    {{/each}}
-    {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
-    {{/if}}
 </div>
 

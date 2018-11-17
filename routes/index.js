@@ -14,7 +14,7 @@ var User = require('../models/user');
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
 	User.findOne({member_id:req.user.member_id}, function(err, user){
-	Post.aggregate([{$lookup:{from:"users",localField:"author", foreignField:"member_id", as:"user_details"}},{$match:{trashed:"N"}}]).exec(function(err, posts){
+	Post.aggregate([{$lookup:{from:"users",localField:"author", foreignField:"member_id", as:"user_details"}},{$match:{trashed:"N"}},{$sort:{date:-1}}]).exec(function(err, posts){
 //	Post.find({trashed:"N"},function(err, posts){
 		//console.log(req.user.user_profile[0].profilepic);
 		//console.log(user);
@@ -26,7 +26,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 
 
-
+// Add Posts
 router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
 	var description = req.body.description;	
 	var	author = req.user.member_id;

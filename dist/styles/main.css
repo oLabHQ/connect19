@@ -94,7 +94,7 @@ body {
 .container {
   max-width: 750px;
   margin: 0 auto;
-  padding: 0 45px;
+  padding: 0 15px;
 }
 
 .alert {
@@ -121,6 +121,23 @@ body {
   text-decoration: none;
 }
 
+.btn-blue-common {
+  background: #4e1aaf;
+  border: none;
+  border-radius: 27px;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  color: #fff;
+  display: block;
+  font-size: .8571428571em;
+  font-weight: 400;
+  margin-top: 50px;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
+
 .header {
   text-align: center;
   padding-top: 5.3571428571em;
@@ -140,8 +157,6 @@ body {
 
 .wall-header__connect-tab {
   background-color: #FFFFFF;
-  -webkit-box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: -2px -5px 5px 0 rgba(0, 0, 0, 0.5);
   color: #4e1aaf;
   font-weight: 800;
   font-size: 10px;
@@ -304,7 +319,9 @@ i.fa-volume-down, i.fa-search {
   border: #FFFFFF solid 1px;
   -webkit-box-shadow: none;
           box-shadow: none;
-  margin-top: 25px;
+  display: block;
+  text-decoration: none;
+  margin-top: 50px;
 }
 
 .signup-btn {
@@ -328,13 +345,13 @@ i.fa-volume-down, i.fa-search {
   margin-top: 20px;
 }
 
-i.fas {
+.singup-foorm i.fas {
   color: #FFFFFF;
   position: absolute;
   top: 5px;
 }
 
-i.fa-eye {
+.singup-foorm i.fa-eye {
   color: #FFFFFF;
   position: absolute;
   top: 5px;
@@ -539,7 +556,7 @@ i.fa-eye {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  margin-top: 170px;
+  margin-top: 100px;
 }
 .edit-profile__profile-image img {
   border: 2px solid #FFFFFF;
@@ -562,7 +579,7 @@ i.fa-eye {
   text-align: center;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #c27bff;
   font-size: 1em;
   font-weight: 900;
@@ -620,7 +637,7 @@ i.fa-eye {
   border: none;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
@@ -659,10 +676,49 @@ i.fa-eye {
   text-transform: capitalize;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.group-block__name, .group-block__description {
   color: #89A9FF;
-  font-size: 1.1428571429em;
+  font-size: 0.8571428571em;
   margin: 0;
+}
+
+.create-group-block__title, .create-group-block__description {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #ffffff;
+  color: #FFFFFF;
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px 10px 10px 0;
+  width: 100%;
+}
+
+.create-group-block input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #FFFFFF;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.create-group-block input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #FFFFFF;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.create-group-block input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #FFFFFF;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.create-group-block__title input::-moz-placeholder {
+  /* Firefox 18- */
+  color: #FFFFFF;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
 }
 
 .group-block {
@@ -684,6 +740,10 @@ i.fa-eye {
   font-weight: 900;
   text-transform: capitalize;
 }
+.group-block__name a {
+  color: #c27bff;
+  text-decoration: none;
+}
 
 .group-block__description {
   font-size: 1.0714285714em;
@@ -691,12 +751,113 @@ i.fa-eye {
   margin-top: 2px;
 }
 
-.group-form {
-  position: fixed;
-  bottom: 0;
+.group-name-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.group-name-block__title {
+  color: #4e1aaf;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.group-name-block__title i {
+  color: #4e1aaf;
+  position: relative;
+  margin-right: 5px;
+}
+
+.group-name-block__icon i {
+  color: #4e1aaf;
+}
+
+.modal-content__title {
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 1.1428571429em;
+}
+.modal-content__title i {
+  display: block;
+  font-size: 50px;
+  position: relative;
+}
+
+.radio-input {
+  display: inline-block;
+  position: relative;
+}
+.radio-input input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+}
+.radio-input label {
+  color: #FFFFFF;
+  display: block;
+  position: relative;
+  font-weight: 300;
+  font-size: 1em;
+  padding: 18px 18px 18px 30px;
+  margin: 10px auto;
+  height: 30px;
+  z-index: 9;
+  cursor: pointer;
+  -webkit-transition: all 0.25s linear;
+}
+.radio-input .check {
+  display: block;
+  position: absolute;
+  border: 5px solid #ffffff;
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  top: 30px;
+  z-index: 5;
+  transition: border .25s linear;
+  -webkit-transition: border .25s linear;
+}
+.radio-input .check::before {
+  display: block;
+  position: absolute;
+  content: '';
+  border-radius: 100%;
+  height: 8px;
+  width: 8px;
+  top: 1px;
+  left: 1px;
+  margin: auto;
+  transition: background 0.25s linear;
+  -webkit-transition: background 0.25s linear;
+}
+.radio-input input[type=radio]:checked ~ .check {
+  border: 5px solid #4e1aaf;
+}
+.radio-input input[type=radio]:checked ~ .check::before {
+  background: #4e1aaf;
+}
+.radio-input input[type=radio]:checked ~ label {
+  color: #4e1aaf;
+}
+
+.create-group-block__btn {
+  background: #4e1aaf;
+  border: none;
+  border-radius: 5px;
+  color: #FFFFFF;
+  display: block;
+  font-size: 14px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
@@ -711,31 +872,36 @@ i.fa-eye {
 }
 
 .group-post-block {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-bottom: 1px solid rgba(137, 169, 253, 0.2);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 10px;
-  padding-bottom: 10px;
+  background-color: #FFFFFF;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  margin-bottom: 16px;
+  padding: 13px;
 }
 
 .group-post-block__left {
-  width: 35px;
-  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .group-post-block__right {
-  margin-left: 10px;
-  width: 88%;
+  width: 100%;
+}
+
+.group-post-block__image {
+  border-radius: 5px;
+  max-width: 100%;
+  margin-top: 10px;
 }
 
 .group-post-block__left img {
   border-radius: 100px;
-  width: 100%;
-  height: 100%;
+  max-width: 35px;
+  height: 35px;
 }
 
 .group-post-block__name {
@@ -744,8 +910,9 @@ i.fa-eye {
 }
 
 .group-post-block__description {
-  font-size: 1.0714285714em;
-  font-weight: 300;
+  color: #08109b;
+  font-size: 0.8571428571em;
+  font-weight: 400;
 }
 
 .group-form {
@@ -776,7 +943,57 @@ i.fa-eye {
   margin-left: 15px;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.flag-dropdown {
+  list-style: none;
+  position: relative;
+  right: 0px;
+  color: #8eb2f1;
+}
+
+.flag-dropdown__submenu {
+  display: none;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  right: 0;
+  font-size: 14px;
+}
+.flag-dropdown__submenu a {
+  color: #c27bff;
+  text-decoration: none;
+}
+.flag-dropdown__submenu i {
+  color: #4e1aaf;
+}
+.flag-dropdown__submenu input {
+  position: absolute;
+  width: 100%;
+}
+
+.flag-dropdown:hover .flag-dropdown__submenu {
+  display: block;
+  background-color: #e5eafc;
+}
+.flag-dropdown:hover .flag-dropdown__submenu li {
+  display: block;
+  list-style: none;
+  white-space: nowrap;
+  padding: 10px;
+}
+.flag-dropdown:hover .flag-dropdown__submenu li:hover {
+  background-color: #4e1aaf;
+}
+.flag-dropdown:hover .flag-dropdown__submenu li:hover i {
+  color: #FFFFFF;
+}
+.flag-dropdown:hover .flag-dropdown__submenu li:hover a {
+  color: #FFFFFF;
+}
+.flag-dropdown:hover .flag-dropdown__submenu li:hover button {
+  color: #FFFFFF;
+}
+
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
@@ -791,25 +1008,25 @@ i.fa-eye {
 }
 
 .group-flag-block {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-bottom: 1px solid rgba(137, 169, 253, 0.2);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 10px;
-  padding-bottom: 10px;
+  background-color: #fff;
+  font-family: Open Sans,sans-serif;
+  font-weight: 300;
+  margin-bottom: 16px;
+  padding: 13px;
 }
 
 .group-flag-block__left {
-  width: 35px;
-  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .group-flag-block__right {
-  margin-left: 10px;
-  width: 88%;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .group-flag-block__left img {
@@ -819,31 +1036,38 @@ i.fa-eye {
 }
 
 .group-flag-block__description {
-  font-size: 1.0714285714em;
-  font-weight: 300;
+  color: #08109b;
+  font-size: 0.8571428571em;
+  font-weight: 400;
 }
 
-.group-flag-author-block {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.group-flag-img-block {
+  width: 35px;
+  height: 35px;
+}
+
+.group-flag-post-rt-block {
+  width: 82%;
+  margin-left: 10px;
 }
 
 .group-flag-author-block__name {
-  color: #4e1aaf;
+  color: #c27bff;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-weight: 700;
   text-transform: capitalize;
 }
 
+.group-flag-block__image {
+  border-radius: 5px;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
 .group-flag-author-block__date {
   color: #89a9ff;
   font-size: 12px;
-  margin-left: 15px;
 }
 
 .group-flag-block__trash-post {
@@ -851,7 +1075,7 @@ i.fa-eye {
   font-size: 14px;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
@@ -869,42 +1093,40 @@ i.fa-eye {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: #FFFFFF;
   border-bottom: 1px solid rgba(137, 169, 253, 0.2);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   margin: 10px;
-  padding-bottom: 10px;
+  padding: 13px;
 }
 
 .group-trash-block__left {
-  width: 35px;
-  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .group-trash-block__right {
-  margin-left: 10px;
-  width: 88%;
+  width: 100%;
 }
 
 .group-trash-block__left img {
   border-radius: 100px;
-  width: 100%;
-  height: 100%;
+  width: 35px;
+  height: 35px;
 }
 
 .group-trash-block__description {
-  font-size: 1.0714285714em;
-  font-weight: 300;
+  color: #08109b;
+  font-size: 0.8571428571em;
+  font-weight: 400;
 }
 
 .group-trash-author-block {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  width: 82%;
+  margin-left: 10px;
 }
 
 .group-trash-author-block__name {
@@ -918,7 +1140,6 @@ i.fa-eye {
 .group-trash-author-block__date {
   color: #89a9ff;
   font-size: 12px;
-  margin-left: 15px;
 }
 
 .group-flag-block__trash-post {
@@ -926,10 +1147,38 @@ i.fa-eye {
   font-size: 14px;
 }
 
-.friend-list__username, .friend-list__description, .pending-request__title, .group-block__name, .group-block__description, .group-post-block__name, .group-post-block__description, .group-flag-block__description, .group-trash-block__description, .group-invitation-block__group-text {
+.group-trash-block__image {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.group-trash-block__delete-btn {
+  background: none;
+  border: none;
+  color: rgba(137, 0, 255, 0.5);
+}
+
+.group-trash-block__undo-btn {
+  background: none;
+  border: none;
+  color: rgba(137, 0, 255, 0.5);
+}
+
+.friend-list__username, .friend-list__description, .pending-request__title, .group-post-block__name, .group-invitation-block__group-text {
   color: #89A9FF;
   font-size: 1.1428571429em;
   margin: 0;
+}
+
+.group-invitation-title-block {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.group-invitation-title-block i {
+  color: #c27bff;
+  font-size: 24px;
 }
 
 .group-invitation-block {
@@ -937,19 +1186,112 @@ i.fa-eye {
       -ms-flex-align: center;
           align-items: center;
   border-bottom: 1px solid rgba(137, 169, 253, 0.2);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   margin: 10px;
-  padding-bottom: 10px;
+  padding: 15px 0;
+}
+
+.accept-group-title-block__heading {
+  margin-left: 10px;
+  color: #c27bff;
+  display: inline-block;
+  font-size: 1.2857142857em;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.group-invitation-block__group-text {
+  margin-bottom: 10px;
 }
 
 .group-invitation-block__group-name {
   color: #4e1aaf;
   text-transform: capitalize;
+  text-decoration: none;
+}
+
+.group-invitation-block__accept-invitation {
+  margin-top: 0;
+}
+
+.send-invitaion-block {
+  margin-top: 50px;
+}
+
+.send-invitaion-block__input {
+  border: none;
+  border-bottom: 2px solid #c27bff;
+  background: none;
+  color: #c27bff;
+  font-size: 1.0714285714em;
+  padding: 5px 10px 7px 25px;
+  width: 100%;
+}
+
+.send-invitaion-block__send-btn {
+  background: #4e1aaf;
+  border: none;
+  border-radius: 27px;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+          box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
+  color: #fff;
+  display: block;
+  font-size: .8571428571em;
+  font-weight: 400;
+  margin-top: 50px;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
+
+.join-group-title-block {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.join-group-title-block__heading {
+  margin-left: 10px;
+  color: #c27bff;
+  display: inline-block;
+  font-size: 1.7142857143em;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.join-group-title-block i {
+  position: relative;
+  font-size: 35px;
+  color: #c27bff;
+}
+
+.send-invitaion-block__input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #c27bff;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.send-invitaion-block__input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #c27bff;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.send-invitaion-block__input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #c27bff;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
+}
+
+.send-invitaion-block__input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #c27bff;
+  font-size: 0.8571428571em;
+  opacity: 0.5;
 }
 
 .forgot-password {
@@ -1126,4 +1468,84 @@ i.fa-calendar {
 
 .usr_msg_box p {
   margin: 0;
+}
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background: linear-gradient(225deg, #c27bff 0%, #97b3ff 100%);
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 10px;
+  position: relative;
+  border-radius: 10px;
+}
+
+/* The Close Button */
+.close {
+  background: #4e1aaf;
+  border-radius: 100px;
+  color: #ffffff;
+  position: absolute;
+  right: -5px;
+  top: -7px;
+  font-size: 28px;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 30px;
+  height: 30px;
+}
+
+.close:hover,
+.close:focus {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 700px) {
+  .group-invitation-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+
+  .group-invitation-block__accept-invitation {
+    width: auto;
+  }
 }

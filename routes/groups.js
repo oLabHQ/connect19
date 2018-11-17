@@ -131,7 +131,7 @@ router.post('/:id/join', ensureAuthenticated, function(req, res){
             }
         });
     });   
-});
+}); 
 
 
 // View Group Invitaions
@@ -234,7 +234,7 @@ router.post('/pinpost', function(req, res){
     });
 });
 
-
+ 
 // Get Group Post flags
 router.get('/:id/flags',ensureAuthenticated, function(req, res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
@@ -269,9 +269,13 @@ router.post('/:id', function(req, res){
 // Get Group Post Trash
 router.get('/:id/trash', ensureAuthenticated, function(req, res){
     User.findOne({member_id:req.user.member_id}, function(err, user){
-        Groupposts.find({group_id: req.params.id}, function(err, posts){
-            //console.log(posts);
-            res.render("groups/trash", {posts: posts, isApproved:user.isApproved});
+        Group.find({group_id: req.params.id},{createdby:1}, function(err, createdby){
+            //console.log(createdby[0].createdby); 
+            //Groupposts.find({group_id: req.params.id}, function(err, posts){
+                Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}, { $project : { group_id:1, trash : 1 , user_details : 1 } }]).exec(function(err, posts){
+                    console.log(posts);         
+                res.render("groups/trash", {posts: posts, createdby:createdby[0].createdby, user:user.member_id, users: user, isApproved: user.isApproved});
+            });    
         });
     });
 });

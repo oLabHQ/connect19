@@ -1,38 +1,72 @@
 <div class="gradient-background">
     {{#if isApproved}}
+      <div class="container">
     {{> header }}
  
 {{#if isprivate}}
    <!-- List down all Posts-->
     {{#group}}
+    <h1 class="group-title">{{groupname}} Group</h1>    
         {{#comparegroup users_joined ../user}}
-            {{#each ../groupposts}}                           
-                <div id="group-id" data-id="{{this.group_id}}">
-                    <div class="group-post-block" id="{{this.post_id}}">    
-                        <div class="group-post-block__left">
-                                {{#each user_details}}
-                                    {{#each user_profile}}
-                                        <img src="/images/{{this.profilepic}}" alt="" />
-                                    {{/each}}
-                                {{/each}}
-                        </div>
-                        <div class="group-post-block__right">
-                            <div class="group-post-block__description">{{this.description}}</div>   
-                            {{#if postimage}}
-                            <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
-                            {{/if}}   
-                            <div class="post-author-block">
-                                <div class="post-author-block__name">{{this.author}}</div>
-                                <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
-                            </div>                    
-                        </div>
-                        <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
+            {{#each ../groupposts}}         
+        <div id="group-id" data-id="{{this.group_id}}">       
+            <div class="group-post-block">    
+                <div class="group-post-block__left" id="{{this.post_id}}"> 
+                    <div class="img-block">                                       
+                        {{#each user_details}}
+                            {{#each user_profile}}
+                               <img src="/images/{{this.profilepic}}" alt="" />
+                            {{/each}}
+                        {{/each}}
                     </div>
+                    <div class="post-rt-block">
+                        <div class="post-author-block">
+                            {{#each user_details}}                                    
+                                <div class="post-author-block__name">{{this.username}}</div>                                                            
+                            {{/each}}                                                       
+                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY"}}</div>   
+                        </div>             
+                    </div>
+                    <ul class="flag-dropdown">
+                        <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                            <ul class="flag-dropdown__submenu" >
+                                {{#compare ../groupcreatedby ../user operator="=="}}
+                                    <li id="{{this.post_id}}">                                     
+                                            {{#if ispinned}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" checked/> Pinned
+                                            {{else}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" /> Pin post
+                                            {{/if}}                                   
+                                    </li>
+                                 {{/compare}}
+                                <li id="{{this.post_id}}">
+                                 <i class="fa fa-flag" aria-hidden="true"></i>   <a href="javascript:void(0);" class="flag-group-post">Flag Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>   
+                <!--    {{#compare ../groupcreatedby ../user operator="=="}}
+                    {{#if ispinned}}
+                        <input type="checkbox" name="pinpost" class="pinpost" checked/>
+                    {{else}}
+                        <input type="checkbox" name="pinpost" class="pinpost" />
+                    {{/if}}
+                {{/compare}}
+                    <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
+                    -->
                 </div>
-            {{/each}}
+                <div class="group-post-block__right">                   
+                    <div class="group-post-block__description">{{this.description}}</div>   
+                    {{#if postimage}}
+                        <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
+                    {{/if}}                                     
+                </div>                                            
+            </div>
+            
+        </div>
+    {{/each}}
 
-            <!-- Create Posts -->    
-            <h1>Create Posts</h1>  
+            <!-- Create Posts -->                 
             <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
                 <input name="groupid" type="hidden" value="{{this.group_id}}" />
                 <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
@@ -55,42 +89,63 @@
 
     {{#each groupposts}}         
         <div id="group-id" data-id="{{this.group_id}}">       
-            <div class="group-post-block" id="{{this.post_id}}">    
-                <div class="group-post-block__left">                    
-                    {{#each user_details}}
-                    {{#each user_profile}}
-                    <img src="/images/{{this.profilepic}}" alt="" />
-                    {{/each}}
-                    {{/each}}
-                </div>
-                <div class="group-post-block__right">
-                    {{#each user_details}}
-                        {{this.username}}                                               
-                    {{/each}}
-                    <div class="group-post-block__description">{{this.description}}</div>   
-                    {{#if postimage}}
-                    <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
-                    {{/if}}   
-                    <div class="post-author-block">
-                                <div class="post-author-block__name">{{this.author}}</div>
-                                <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>
-                    </div>                    
-                </div>
-                {{#compare ../groupcreatedby ../user operator="=="}}
+            <div class="group-post-block">    
+                <div class="group-post-block__left" id="{{this.post_id}}"> 
+                    <div class="img-block">                                       
+                        {{#each user_details}}
+                            {{#each user_profile}}
+                               <img src="/images/{{this.profilepic}}" alt="" />
+                            {{/each}}
+                        {{/each}}
+                    </div>
+                    <div class="post-rt-block">
+                        <div class="post-author-block">
+                            {{#each user_details}}                                    
+                                <div class="post-author-block__name">{{this.username}}</div>                                                            
+                            {{/each}}                                                       
+                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY"}}</div>   
+                        </div>             
+                    </div>
+                    <ul class="flag-dropdown">
+                        <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                            <ul class="flag-dropdown__submenu" >
+                                {{#compare ../groupcreatedby ../user operator="=="}}
+                                    <li id="{{this.post_id}}">                                     
+                                            {{#if ispinned}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" checked/> Pinned
+                                            {{else}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" /> Pin post
+                                            {{/if}}                                   
+                                    </li>
+                                 {{/compare}}
+                                <li id="{{this.post_id}}">
+                                 <i class="fa fa-flag" aria-hidden="true"></i>   <a href="javascript:void(0);" class="flag-group-post">Flag Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>   
+                <!--    {{#compare ../groupcreatedby ../user operator="=="}}
                     {{#if ispinned}}
                         <input type="checkbox" name="pinpost" class="pinpost" checked/>
                     {{else}}
                         <input type="checkbox" name="pinpost" class="pinpost" />
                     {{/if}}
-                {{/compare}}            
-                <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>        
+                {{/compare}}
+                    <a href="javascript:void(0);" class="flag-group-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
+                    -->
+                </div>
+                <div class="group-post-block__right">                   
+                    <div class="group-post-block__description">{{this.description}}</div>   
+                    {{#if postimage}}
+                        <img class="group-post-block__image" src="/images/{{this.postimage}}" alt="" />
+                    {{/if}}                                     
+                </div>                                            
             </div>
             
         </div>
     {{/each}}
-
-    {{#group}}
-        <h1>Create Posts</h1>  
+</div>
+    {{#group}}       
         <form method="post" action="/groups/addposts" enctype="multipart/form-data" class="post-form">
             <input name="groupid" type="hidden" value="{{this.group_id}}" />
             <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
@@ -100,8 +155,9 @@
         </form> 
     {{/group}}        
 </div>
+
  {{/if}}
 
  {{else}}
 <h2>Admin has not approved you as Connect19 user yet</h2>
-    {{/if}}
+{{/if}}

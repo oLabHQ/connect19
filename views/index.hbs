@@ -1,75 +1,42 @@
 <div class="gradient-background">
-
-{{#if isApproved}}
-  {{> header }}
-      
-      <div class="container">          
-        {{#posts}}        
-            <div class="post-main-block" id="{{post_id}}"> 
-                <div class="post-top-blck">
-                    <div class="img-block">
-                        {{#each user_details}}
-                                    {{#each user_profile}}
-                                        <img src="/images/{{this.profilepic}}" alt="" />
-                                    {{/each}}
+    {{#if isApproved}}
+        <div class="container">
+            {{> header }}                
+            {{#posts}}        
+                <div class="post-main-block" id="{{post_id}}"> 
+                    <div class="post-top-blck">
+                        <div class="img-block">
+                            {{#each user_details}}
+                                {{#each user_profile}}
+                                    <img src="/images/{{this.profilepic}}" alt="" />
                                 {{/each}}
-                    </div>
-                    <div class="post-rt-block">
-                        <div class="author-block">
-                             {{#each user_details}}                                    
-                                         <div class="author-block__name">{{this.username}}</div>                                                            
-                                {{/each}}                           
+                            {{/each}}
                         </div>
-                        <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
-                    </div>            
-                    <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
-                </div>
-                <div class="post-block">
-                    <div class="post-block__description">{{this.description}}</div>    
-                    {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
-                </div>
-            </div>            
-         {{/posts}}
-        <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
-            <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-            <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
-            <input name="submit" type="submit" value="send" class="post-form__button"/>
-        </form>
-
-        <!--
-        <form id="post" enctype="multipart/form-data" class="post-form">
-            <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
-            <img src="images/attachment.svg" id="img"/>
-            <input type="file" name="postimage" class="post-form__file" id="file">
-            <input id="register_post" name="submit" type="submit" value="send" class="post-form__button"/>
-        </form>
-        -->
-
-    </div>
+                        <div class="post-rt-block">
+                            <div class="author-block">
+                                {{#each user_details}}                                    
+                                    <div class="author-block__name">{{this.username}}</div>                                                            
+                                {{/each}}                           
+                            </div>
+                            <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
+                        </div>            
+                        <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
+                    </div>
+                    <div class="post-block">
+                        <div class="post-block__description">{{this.description}}</div>    
+                        {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
+                    </div>
+                </div>            
+            {{/posts}}
+        </div>     
+            <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
+                <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+                <img src="images/attachment.svg" id="img"/>
+                <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
+                <input name="submit" type="submit" value="send" class="post-form__button"/>
+            </form>
+                 
+    {{else}}
+    <h2>Admin has not approved you as Connect19 user yet</h2>
+    {{/if}}
 </div>
-{{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
-{{/if}}
-</div>
-
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $("#register_post").on("click", function(){
-        $.ajax({
-            method: "POST",
-            url: "/add",
-            data: $("#post").serialize(),
-            success: function(){
-                alert('hi');
-                console.log("success")
-            },
-            fail:function() {
-                console.log('fail');
-            }
-        })
-    })
-</script>
-
--->

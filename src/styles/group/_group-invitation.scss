@@ -1,0 +1,41 @@
+%common-title{
+    color: #89A9FF;
+    font-size: em(16px);
+    margin: 0;
+}
+.group-invitation-title-block{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    i{
+        color: $color__purple;
+        font-size: 24px;
+    }
+}
+.group-invitation-block{
+    align-items: center;
+    border-bottom: 1px solid rgba(137,169,253,0.2);    
+    margin: 10px;
+    padding: 15px 0;
+}
+.accept-group-title-block__heading{
+    margin-left:10px;
+    color: $color__purple;
+    display: inline-block;
+    font-size: em(18px);
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.group-invitation-block__group-text{
+    @extend %common-title;
+    margin-bottom: 10px;
+}
+.group-invitation-block__group-name{
+    color: $color__dark-blue;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+.group-invitation-block__accept-invitation{
+    margin-top: 0;
+}

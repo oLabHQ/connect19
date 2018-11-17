@@ -29,7 +29,7 @@ body{
 .container{
     max-width: 750px;
     margin: 0 auto;
-    padding: 0 45px;
+    padding: 0 15px;
 }
 .alert{
     padding: 15px;
@@ -50,4 +50,19 @@ body{
 .flag-post{
     font-size: 12px;
     text-decoration: none;    
+}
+.btn-blue-common{
+    background: $color__dark-blue;
+    border: none;
+    border-radius: 27px;
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,.26);
+    color: #fff;
+    display: block;
+    font-size: .8571428571em;
+    font-weight: 400;
+    margin-top: 50px;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
 }

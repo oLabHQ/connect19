@@ -1,26 +1,30 @@
+<div class="gradient-background">
 {{#if isApproved}}
-{{> header }}
-{{#if test}}
-        <div class="alert alert-error">Username not found</div> 
-    {{/if}}
-<h1>Join Group</h1>
-{{title}}
-{{#if error_msg}}
-        <div class="alert alert-error">{{error_msg}}</div>
-    {{/if}}
+<div class="container">
+  {{> header }}
+  {{#if test}}
+          <div class="alert alert-error">Username not found</div> 
+      {{/if}}
+      <div class="join-group-title-block">
+  <i class="fas fa-users"></i> <h2 class="join-group-title-block__heading">Join Group</h2>
+  </div>  
+  {{#if error_msg}}
+          <div class="alert alert-error">{{error_msg}}</div>
+      {{/if}}
 
-{{#if success_msg}}
-        <div class="alert alert-success">{{success_msg}}</div>
-    {{/if}}    
+  {{#if success_msg}}
+          <div class="alert alert-success">{{success_msg}}</div>
+      {{/if}}    
 
-<form method="POST" action="join">
-    <input type="text" name="user" id="tags" />
-    <button type="submit">Send invitaion</button>
-</form>
-{{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
-    {{/if}}
-  
+  <form method="POST" action="join" class="send-invitaion-block">
+      <input type="text" name="user" id="tags" class="send-invitaion-block__input" placeholder="Enter Username"/>
+      <button type="submit" class="send-invitaion-block__send-btn">Send invitaion</button>
+  </form>
+  {{else}}
+  <h2>Admin has not approved you as Connect19 user yet</h2>
+      {{/if}}
+  </div>
+  </div>
   <!--
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">

@@ -1,67 +1,99 @@
 <div class="gradient-background">
     {{#if isApproved}}
-    {{> header }}
+        <div class="container">
+            {{> header }}
 
-    {{#if success_msg}}
-        <div class="alert alert-success">{{success_msg}}</div>
-    {{/if}}
+            {{#if success_msg}}
+                <div class="alert alert-success">{{success_msg}}</div>
+            {{/if}}
 
-    {{#if error_msg}}
-        <div class="alert alert-error">{{error_msg}}</div>
-    {{/if}}
+            {{#if error_msg}}
+                <div class="alert alert-error">{{error_msg}}</div>
+            {{/if}}
 
-    {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-    {{/if}}
+            {{#if error}}
+                <div class="alert alert-error">{{error}}</div>
+            {{/if}}
 
-    {{#if groupname}}
-        <div class="alert alert-error">Groupname has taken already try new</div> 
-    {{/if}}
-    
-    {{#if errors}}
-        {{#each errors}}
-            <div class="alert alert-error">{{msg}}</div>
-        {{/each}}
-    {{/if}}    
-    
-  
-<!-- List down all groups-->
-    {{#each group}}    
-        <div class="group-block" id="{{this.group_id}}">
-            <div class="group-block__left">
-                <div class="group-block__name"><a href="/groups/{{group_id}}">{{this.groupname}}</a></div>
-                <div class="group-block__description">{{this.description}}</div>
-                <div class="group-block__author">{{this.createdby}}</div>
-            </div>
-            {{#if ../isadmin}}
-                {{#if ispinned}}
-                    <input type="checkbox" name="pinpost" class="pingroup" checked/>
-                {{else}}
-                    <input type="checkbox" name="pinpost" class="pingroup" />
-                {{/if}}
+            {{#if groupname}}
+                <div class="alert alert-error">Groupname has taken already try new</div> 
             {{/if}}
             
-            {{#if isprivate}}
-                {{#compare createdby ../user operator="=="}}
-                    <div class="group-block__right">                
-                        <!-- <button id="join-group">Send invitation</button>  -->
-                        <a href="/groups/{{group_id}}/join">Send invitation</a>
+            {{#if errors}}
+                {{#each errors}}
+                    <div class="alert alert-error">{{msg}}</div>
+                {{/each}}
+            {{/if}}    
+            
+        
+            <!-- List down all groups-->
+            <div class="group-name-block">
+                <h2 class="group-name-block__title"><i class="fas fa-users"></i> Groups</h2>
+                <div class="group-name-block__icon">
+                    <i class="fa fa-plus-circle" id="myBtn"></i>
+                </div>
+            </div>
+            {{#each group}}    
+                <div class="group-block" id="{{this.group_id}}">
+                    <div class="group-block__left">
+                        <div class="group-block__name"><a href="/groups/{{group_id}}">{{this.groupname}}</a></div>
+                        <div class="group-block__description">{{this.description}}</div>
+                       <!-- <div class="group-block__author">{{this.username}}</div>  -->
                     </div>
-                {{/compare}}
-            {{/if}}                      
+                    {{#if ../isadmin}}
+                        {{#if ispinned}}
+                            <input type="checkbox" name="pinpost" class="pingroup" checked/>
+                        {{else}}
+                            <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pingroup" />                       
+                        {{/if}}
+                    {{/if}}
+                    
+                    {{#if isprivate}}
+                        {{#compare createdby ../user operator="=="}}
+                            <div class="group-block__right">                
+                                <!-- <button id="join-group">Send invitation</button>  -->
+                                <a href="/groups/{{group_id}}/join">Invite</a>
+                            </div>
+                        {{/compare}}
+                    {{/if}}                      
+                </div>
+            {{/each}}
+            
+
+                      <!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-container">
+      <!-- Create groups -->
+            <h1 class="modal-content__title"><i class="fas fa-users"></i> Create Groups</h1>    
+            <form method="POST" action="/groups" class="create-group-block">        
+            <input type="text" name ="title" class="create-group-block__title" placeholder="Enter Group Name.." />
+            <input type="text" name="description" class="create-group-block__description" placeholder="Enter Description..."/>
+            <div class="radio-input">
+            <input type="radio" id="f-option" name="private" value="false" checked="checked">
+            <label for="f-option">Public</label>
+            <div class="check"></div>
+            </div>
+            <div class="radio-input">
+            <input type="radio" id="s-option" name="private" value="true">
+            <label for="s-option">Private</label>
+            <div class="check">
+                <div class="inside"></div>
+            </div>
+            </div>
+        <!--    <input type="radio" name="private" value="false" checked="checked" /> Public
+            <input type="radio" name="private" value="true" /> Private  -->
+            <button id="create_group" class="create-group-block__btn">Create Group</button>    
+            </form>
+    </div>
+  </div>
+  </div>
+            
         </div>
-    {{/each}}
-    
-    <!-- Create groups -->
-    <h1>Create Groups</h1>    
-    <form method="POST" action="/groups" class="group-form">        
-    <input type="text" name ="title" class="group-form__title" />
-    <input type="text" name="description" class="group-form__description" />
-    <input type="radio" name="private" value="false" checked="checked" /> Public
-    <input type="radio" name="private" value="true" /> Private
-    <button id="create_group" class="group-form__btn">Create Group</button>    
-    </form>
     {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
+        <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
+    
 </div>

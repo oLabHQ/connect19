@@ -1,27 +1,28 @@
 <div class="gradient-background">
     {{#if isApproved}}
-    {{> header }}
-    
-        {{#if user}}
-            {{#each posts}}
-                <div class="trash-block" id="{{post_id}}">
-                    {{#each trash}}
-                        <div class="trash-block__author"> {{this.author}}</div>
-                            {{#if postimage}}
-                                <div class="trash-block__featured-image">
-                                    <img src="/images/{{this.postimage}}" />
-                                </div>
-                            {{/if}}
-                        <div class="trash-block__description">{{this.description}}</div>  
-                        <button class="trash-block__undo-btn">Undo</button>
-                        <button class="trash-block__delete-btn">Delete</button>
-                    {{/each}}
-                </div>        
-            {{/each}}   
-            {{else}}
-            <h2>You are not authorised to see this page</h2>
-        {{/if}}
+        <div class="container">
+            {{> header }}
+            {{#if user}}
+                    {{#each posts}}
+                        <div class="trash-block" id="{{post_id}}">
+                            {{#each trash}}
+                                <div class="trash-block__author"> {{this.author}}</div>
+                                    {{#if postimage}}
+                                        <div class="trash-block__featured-image">
+                                            <img src="/images/{{this.postimage}}" />
+                                        </div>
+                                    {{/if}}
+                                <div class="trash-block__description">{{this.description}}</div>  
+                                <button class="trash-block__undo-btn">Undo</button>
+                                <button class="trash-block__delete-btn">Delete</button>
+                            {{/each}}
+                        </div>        
+                    {{/each}}   
+                    {{else}}
+                    <h2>You are not authorised to see this page</h2>
+            {{/if}}
+        </div>
     {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
+        <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
 </div>

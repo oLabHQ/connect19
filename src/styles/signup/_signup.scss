@@ -32,7 +32,9 @@
     background-color: transparent;
     border: $color__primary--white solid 1px;
     box-shadow: none;
-    margin-top: 25px;
+    display: block;
+    text-decoration: none;
+    margin-top: 50px;
 }
 .signup-btn{
     @extend %login-signup-button;
@@ -54,12 +56,12 @@
 .signup-btn--margin-top{
     margin-top:20px;
 }
-i.fas{
+.singup-foorm i.fas{
     color: $color__primary--white;
     position: absolute;
     top: 5px;
 }
-i.fa-eye{
+.singup-foorm i.fa-eye{
     color: $color__primary--white;
     position: absolute;
     top: 5px;
