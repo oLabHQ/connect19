@@ -53,10 +53,11 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 });
 
 // Forgot-Password template
-router.get('/forgot-password', ensureAuthenticated, function(req, res){
-	User.findOne({member_id:req.user.member_id}, function(err, user){
-		res.render('forgot-password/forgot-password',{isApproved: user.isApproved});
-	});
+router.get('/forgot-password', function(req, res){
+	//User.findOne({member_id:req.user.member_id}, function(err, user){
+		//res.render('forgot-password/forgot-password',{isApproved: user.isApproved});
+		res.render('forgot-password/forgot-password');
+	//});
 });
 
 
