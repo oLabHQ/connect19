@@ -90,8 +90,8 @@ router.post('/forgot-password', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 		  host: "smtp.gmail.com", 
 		  auth: {
-			user: 'bhartendu7285@gmail.com',
-			pass: ''
+			user: 'connect19test@gmail.com',
+			pass: 'connect19@123'
 		  },
 		  tls: {
 			  rejectUnauthorized: false
@@ -99,7 +99,7 @@ router.post('/forgot-password', function(req, res, next) {
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'bhartendu7285@gmail.com',
+		  from: 'connect19test@gmail.com',
 		  subject: 'Node.js Password Reset',
 		  text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
 			'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -187,8 +187,8 @@ router.post('/forgot-password', function(req, res, next) {
 		var smtpTransport = nodemailer.createTransport({
 			host: "smtp.gmail.com", 
 			auth: {
-			  user: 'bhartendu7285@gmail.com',
-			  pass: ''
+			  user: 'connect19test@gmail.com',
+			  pass: 'connect19@123'
 			},
 			tls: {
 				rejectUnauthorized: false
@@ -196,7 +196,7 @@ router.post('/forgot-password', function(req, res, next) {
 		});
 		var mailOptions = {
 		  to: user.email,
-		  from: 'bhartendu7285@gmail.com',
+		  from: 'connect19test@gmail.com',
 		  subject: 'Your password has been changed',
 		  text: 'Hello,\n\n' +
 			'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
