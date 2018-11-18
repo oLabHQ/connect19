@@ -19,7 +19,8 @@ router.get('/', ensureAuthenticated, function(req, res){
 		//console.log(req.user.user_profile[0].profilepic);
 		//console.log(user);
 		//if(err) throw err;
-		res.render('index', {posts:posts, user: user.member_id, users: user, isApproved: user.isApproved});					
+		//console.log(user.admin);
+		res.render('index', {posts:posts, user: user.member_id, users: user, isApproved: user.isApproved, isAdmin: user.admin});					
 	});
 });
 });
@@ -227,8 +228,9 @@ router.post('/', function(req, res){
 router.get('/flags', ensureAuthenticated, function(req, res){				
 	User.find({username: req.user.username}, function(err, user){
 		//console.log(user[0].admin);
-		Post.find({},function(err, posts){ 
+		Post.find({},{flag:1},function(err, posts){ 
 			//console.log(req.user.user_profile[0].profilepic);
+			//console.log(posts);
 			if(err) throw err;
 			res.render('flags/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});					
 		});

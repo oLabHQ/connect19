@@ -48,12 +48,10 @@ router.post('/approve', function(req, res){
 
 // Delete User
 router.post('/delete-user', function(req, res){
-	//console.log(req.body.trashed_post_id);
-	if(getConfirmation){
+	console.log(req.body.user_id);	
 	User.remove({'member_id': req.body.user_id}, function(err, user){
-		res.send();
-	});
-}
+		res.send();	
+});
 });
 
 function ensureAuthenticated(req, res, next){

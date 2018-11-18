@@ -1,19 +1,23 @@
 <div class="gradient-background">
     {{#if isApproved}}
     {{> header }}
-    <h1>Pending Requests</h1>
+    <div class="common-title-block">
+        <i class="fas fa-user-plus"></i> <h1 class="common-title-block__title">Freind Requests</h1>
+    </div>
     {{#each friendrequests}}
         {{#each user_details}}
             <div class="pending-request" id="{{member_id}}">
-                <div class="friend-list__profile-pic">
+                <div class="pending-request__profile-pic">
                 {{#each user_profile}}
                     <img src="../images/{{profilepic}}" />
                 {{/each}}
                 </div>
+                <div class="pending-request__detail">
                 <h2 class="pending-request__title">{{username}}</h2> 
                 {{#each user_profile}}
                     <p class="friend-list__description">{{{description}}}</p>
                 {{/each}}
+                </div>
                 <button class="pending-request__accept-btn" id ="accept_friend_request">Accept</button>       
             </div>
         {{/each}}

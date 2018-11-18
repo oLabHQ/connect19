@@ -1,8 +1,8 @@
 <div class="gradient-background">
     {{#if isApproved}}
         <div class="container">
-            {{> header }}                
-            {{#posts}}        
+            {{> header }}                   
+            {{#posts}}     
                 <div class="post-main-block" id="{{post_id}}"> 
                     <div class="post-top-blck">
                         <div class="img-block">
@@ -19,8 +19,26 @@
                                 {{/each}}                           
                             </div>
                             <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>                
-                        </div>            
-                        <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>
+                        </div>  
+                        <ul class="flag-dropdown">
+                        <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                            <ul class="flag-dropdown__submenu" >                                
+                        <!--        {{#if ../isAdmin}}
+                                    <li id="{{this.post_id}}">                                     
+                                            {{#if ispinned}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" checked/> Pinned
+                                            {{else}}
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" /> Pin post
+                                            {{/if}}                                   
+                                    </li>
+                                 {{/if}}  -->
+                                <li id="{{this.post_id}}">
+                                 <i class="fa fa-flag" aria-hidden="true"></i>   <a href="javascript:void(0);" class="flag-post">Flag Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>            
+                      <!--  <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>  -->
                     </div>
                     <div class="post-block">
                         <div class="post-block__description">{{this.description}}</div>    

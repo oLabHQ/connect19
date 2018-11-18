@@ -50,7 +50,14 @@ input:-ms-input-placeholder { /* IE 10+ */
     display: flex;
     justify-content: space-between;     
     margin: 10px;
-    padding-bottom: 10px;    
+    padding-bottom: 10px;
+    i{
+        color: $color__primary--light;
+        text-align: right;
+    }
+    i.fa-plus-circle{
+        color: $color__dark-blue;
+    }
 }
 .group-block__name{
     @extend %group-title;
@@ -67,7 +74,9 @@ input:-ms-input-placeholder { /* IE 10+ */
     font-weight: 300;    
     margin-top: 2px;
 }
-
+.group-block__left{
+    width: 72%;
+}
 .group-name-block{
     display: flex;
     align-items: center;
@@ -174,4 +183,91 @@ input[type=radio]{
     font-size: 14px;
     margin-top: 15px;
     padding: 10px;
+    width: 100%;
 }
+.pin-checkbox-block{
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/*
+.pin-checkbox-block:hover input ~ .pin-checkbox-block__checkmark {
+    background-color: $color__purple;
+}
+*/
+.pin-checkbox-block__checbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.pin-checkbox-block__checkmark{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+ /*   background-color: $color__purple; */
+}
+/*
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark {
+    background-color: $color__purple;
+}
+*/
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark:after {
+    display: block;
+}
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark::before{
+    display: none;
+}
+.pin-checkbox-block__checkmark:after {
+    content: "Pinned";
+    color: $color__purple;
+    position: absolute;
+    display: none;
+    font-size: 12px;
+}
+/*
+.pin-checkbox-block__checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+*/
+.pin-checkbox-block__checkmark:before {
+    content: "Pin Post";
+    color: $color__purple;
+    position: absolute;
+    display: block;
+    font-size: 12px;
+    white-space: nowrap;
+}
+/*
+.pin-checkbox-block__checkmark:before {
+    left: 8px;
+    top: 8px;    
+    border: solid white;
+    border-width: 5px;    
+}
+*/
+
+.group-block__invite{
+    color: $color__dark-blue;
+    text-decoration: none;
+}
+
+

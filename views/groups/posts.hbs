@@ -6,6 +6,9 @@
 {{#if isprivate}}
    <!-- List down all Posts-->
     {{#group}}
+    <div class="common-title-block">
+        <i class="fas fa-user-plus"></i> <h1 class="common-title-block__title">{{groupname}} Group</h1>
+    </div>
     <h1 class="group-title">{{groupname}} Group</h1>    
         {{#comparegroup users_joined ../user}}
             {{#each ../groupposts}}         
@@ -83,7 +86,9 @@
 {{else}}
  
     {{#group}}
-    <h1 class="group-title">{{groupname}} Group</h1>    
+    <div class="common-title-block">
+        <i class="fas fa-users"></i> <h1 class="common-title-block__title">{{groupname}} Group</h1>
+    </div>   
     {{/group}}    
     
 

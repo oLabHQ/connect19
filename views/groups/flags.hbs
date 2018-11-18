@@ -2,7 +2,9 @@
     {{#if isApproved}}
      <div class="container">
     {{> header }}
-        <h1 class="group-title">{{this.groupname}} Group flag posts</h1>
+    <div class="common-title-block">        
+        <i class="fas fa-flag"></i> <h1 class="common-title-block__title">{{this.groupname}} Group flag posts</h1>        
+    </div>        
 
 {{#compare createdby user operator="=="}}
     {{#each posts}}        
@@ -50,7 +52,7 @@
    <h1>You are not authorised to see this page</h1>
    {{/compare}}
    {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
+    <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
     </div>
 </div>

@@ -17,7 +17,7 @@ router.get('/', ensureAuthenticated, function(req,res){
         //console.log(user.member_id)
     Group.find({}).sort({ispinned:-1}).exec(function(err, group){
         //console.log(group[0].createdby);
-        console.log(group[0].ispinned)
+       // console.log(group[0].ispinned)
         if(err) throw err;
         res.render('groups/index', {group: group, ispinned: group[0].ispinned, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id, isadmin: user.admin, users: user, isApproved: user.isApproved});
     }); 
@@ -285,9 +285,9 @@ router.get('/:id/trash', ensureAuthenticated, function(req, res){
 router.post('/:id/flags', function(req, res){
     
     var groupid  = req.params.id;
-    console.log(req.body.trash_post_id); 
+    //console.log(req.body.trash_post_id); 
 	Groupposts.findOne({'post_id': req.body.trash_post_id}, function(err, post){
-        console.log(post);
+      //  console.log(post);
        post.update({$set: {"trashed":"Y"}, $push: {"trash":  {"post_id": post.post_id, "description": post.description, "postimage": post.postimage, "author": post.author, "date": post.date}}, $pull: {"flag": {post_id: req.body.trash_post_id}}}, function(err){
             if(err) throw err;
             //console.log('updated the data')

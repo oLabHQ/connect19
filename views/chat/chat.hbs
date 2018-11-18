@@ -1,13 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 <div class="gradient-background">
-    <div class="wall-header">
-        <a class="wall-header__connect-tab">The Wall</a>
-        <a class="wall-header__chat-tab">Chat</a>
-        <div class="drop-menu">
-            <a href="/users/profile"><img src="../../images/menu.svg" class="drop-menu__button" /></a>
-        </div>
-    </div>  <!-- wall-header -->
-    <a href="/friends"><</a>    
+    {{> header }}
+    <a href="/friends"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a>    
     <div id="chat_section_wrapper" data-id="{{chat_friend.member_id}}" data-name="{{user.username}}">
         <div class="all_Chat_messages"></div>
     </div>

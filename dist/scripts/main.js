@@ -276,8 +276,8 @@
         var pin_value = $(this).is(":checked");
         //var admin_user_id = $(this).attr("id");
         var group_id = $(this).parent().attr("id");
-        //console.log(pin_value);
-        //console.log(group_id);        
+        console.log(pin_value);
+        console.log(group_id);        
         $.ajax({
             method: "POST",
             data: JSON.stringify({"group_id": group_id, "pin_value": pin_value}),
@@ -320,7 +320,7 @@
     $(".friend-list__delete-user").on("click", function(){    
         var user_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(trash_post_id);
+        //console.log(user_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({"user_id": user_id}),
@@ -331,7 +331,7 @@
                 $('.trash-block').hide();
             },
             complete: function () {
-                clicked_button.parent().remove();
+               // clicked_button.parent().remove();
                 clicked_button.html('User Deleted').attr("disabled", "disabled");
             }
         });
@@ -348,6 +348,8 @@
             }
         });
     });
+
+    
 
     
 // Script for popup for groups
@@ -461,3 +463,33 @@ window.onclick = function(event) {
       }
       
 }());
+
+// Filte User
+function filterUser() {    
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("filterUser");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("friends-list-block");
+    tr = table.getElementsByTagName("a");
+    tp = table.getElementsByTagName("div");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("h2")[0];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+    for (i = 0; i < tp.length; i++) {
+        td = tp[i].getElementsByTagName("h2")[0];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tp[i].style.display = "";
+          } else {
+            tp[i].style.display = "none";
+          }
+        }       
+      }
+  }

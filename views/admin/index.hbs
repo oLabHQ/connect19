@@ -1,5 +1,5 @@
-<div class="gradient-background">
 {{#if isApproved}}
+<div class="container">
     {{> header }}
 
     {{#if success_msg}}
@@ -13,37 +13,53 @@
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
-
-
+  
+<div class="common-title-block">
+        <i class="fas fa-cog"></i> <h1 class="common-title-block__title">Admin Settings</h1>
+    </div>
   {{#if user}}
       {{#each user_friends}}
-      <div class="friend-list" id="{{this.member_id}}">
-        <div class="friend-list__profile-pic">
+     <!--  <div class="friend-list" id="{{this.member_id}}"> -->
+       <div class="admin-list" id="{{this.member_id}}">
+        <div class="friend-list-top">
+          <div class="friend-list__profile-pic">
+              {{#each user_profile}}
+              <img src="../images/{{profilepic}}" />
+              {{/each}}
+          </div>        
+          <div class="friend-list__detail">
+            <h2 class="friend-list__username">{{this.username}}</h2>
             {{#each user_profile}}
-            <img src="../images/{{profilepic}}" />
+            <p class="friend-list__description">{{{description}}}</p>
             {{/each}}
+          </div>
         </div>
-        <div class="friend-list__detail">
-          <h2 class="friend-list__username">{{this.username}}</h2>
-          {{#each user_profile}}
-          <p class="friend-list__description">{{{description}}}</p>
-          {{/each}}
+        <div class="friend-list-bottom" id="{{this.member_id}}">
+        
+            {{#if admin}}
+              <label class="admin-checkbox-block">
+                <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn admin-checkbox-block__checbox" checked>
+                <span class="admin-checkbox-block__checkmark"></span>
+              </label>
+            {{else}}
+              <label class="admin-checkbox-block">
+                <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn admin-checkbox-block__checbox">
+                <span class="admin-checkbox-block__checkmark"></span>
+              </label>
+            {{/if}}                    
+            {{#if isApproved}}
+            <label class="user-checkbox-block">
+              <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user user-checkbox-block__checbox" checked>
+              <span class="user-checkbox-block__checkmark"></span>
+            </label>
+            {{else}}
+            <label class="user-checkbox-block">
+              <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user user-checkbox-block__checbox">
+              <span class="user-checkbox-block__checkmark"></span>
+            </label>
+            {{/if}}              
+          <button class="friend-list__delete-user">Delete</button>
         </div>
-        <label> Make admin: 
-          {{#if admin}}
-            <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn" checked>
-          {{else}}
-            <input type="checkbox" id="{{member_id}}" class="friend-list__select-btn">
-          {{/if}}
-        </label>
-        <label> Approve User: 
-          {{#if isApproved}}
-            <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user" checked>
-          {{else}}
-            <input type="checkbox" id="{{member_id}}" class="friend-list__approve--user">
-          {{/if}}
-        </label>      
-        <button class="friend-list__delete-user">Delete</button>
       </div>
       {{/each}}
     {{else}}
@@ -53,4 +69,4 @@
 <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
     <div id="notify"></div>
-</div>
+    </div>

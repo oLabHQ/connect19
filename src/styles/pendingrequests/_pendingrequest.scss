@@ -5,12 +5,14 @@
 }
 .pending-request{
     align-items: center;
-    border-bottom: 1px solid rgba(137,169,253,0.2);
+    background: $color__primary--white;
+    border-bottom: 1px solid rgba(137,169,253,0.35);
+    border-top: 1px solid rgba(137,169,253,0.35);
     display: flex;
-    justify-content: space-between;     
-    margin: 10px;
-    padding-bottom: 10px;    
+    justify-content: space-between;    
+    padding: 10px;    
 }
+
 .pending-request__profile-pic{ 
     box-shadow: 0 3px 9px 0 rgba(99,120,201,0.45);
     border-radius: 100px;   
@@ -20,9 +22,21 @@
 }
 .pending-request__profile-pic img{
     max-width: 100%;
+    border-radius: 100px;
+    height: 50px;
+    width: 50px;
 }
 .pending-request__title{
-    @extend %common-title;
+    color: $color__purple;
+    font-size: em(14px);
     font-weight: 900;
+    margin-bottom: 0;
     text-transform: capitalize;
+}
+.pending-request__accept-btn{
+    background: transparent;
+    border: none;
+    color: $color__purple;
+    font-size: em(12px);
+    font-weight: 900
 }

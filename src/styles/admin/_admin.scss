@@ -1,0 +1,122 @@
+.friend-list__delete-user{
+    background: transparent;
+    border: none;
+    color: $color__primary;
+}
+.friend-list-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.admin-list{
+    border-bottom: 1px solid rgba(137,169,253,.35);
+    margin: 15px;
+    padding-bottom: 15px;
+}
+
+//  Checkbox Stylize Make Admin
+
+.admin-checkbox-block{
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.admin-checkbox-block__checbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.admin-checkbox-block__checkmark{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+ /*   background-color: $color__purple; */
+}
+
+.admin-checkbox-block__checbox:checked ~ .admin-checkbox-block__checkmark:after {
+    display: block;
+}
+.admin-checkbox-block__checbox:checked ~ .admin-checkbox-block__checkmark::before{
+    display: none;
+}
+.admin-checkbox-block__checkmark:after {
+    content: "Undo Admin";
+    color: $color__purple;
+    position: absolute;
+    display: none;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.admin-checkbox-block__checkmark:before {
+    content: "Make Admin";
+    color: $color__purple;
+    position: absolute;
+    display: block;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
+//  Checkbox Stylize Make Admin
+
+.user-checkbox-block{
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.user-checkbox-block__checbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.user-checkbox-block__checkmark{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+ /*   background-color: $color__purple; */
+}
+
+.user-checkbox-block__checbox:checked ~ .user-checkbox-block__checkmark:after {
+    display: block;
+}
+.user-checkbox-block__checbox:checked ~ .user-checkbox-block__checkmark::before{
+    display: none;
+}
+.user-checkbox-block__checkmark:after {
+    content: "Undo User";
+    color: $color__purple;
+    position: absolute;
+    display: none;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.user-checkbox-block__checkmark:before {
+    content: "Approve User";
+    color: $color__purple;
+    position: absolute;
+    display: block;
+    font-size: 12px;
+    white-space: nowrap;
+}

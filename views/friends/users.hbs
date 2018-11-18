@@ -10,7 +10,11 @@
     {{#if error}}
       <div class="alert alert-error">{{error}}</div>
     {{/if}}
-          
+  <div class="search-box">
+            <input type="text" class="search-box__input" id="filterUser" onkeyup="filterUser()" placeholder="Search Friends..." title="Type in a name">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <div id="friends-list-block">
   {{#each user_friends}}
     <div class="friend-list">
       <div class="friend-list__profile-pic">
@@ -27,6 +31,7 @@
       <button id="{{member_id}}" type="button" class="request-btn test1"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
     </div>
   {{/each}}
+  </div>
   {{else}}
 <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}

@@ -1,9 +1,14 @@
 <div class="gradient-background">
     {{#if isApproved}}
+    <div class="container">
         {{> header }}
+        <div class="common-title-block">        
+        <i class="fas fa-flag"></i> <h1 class="common-title-block__title">{{this.groupname}}Flag posts</h1>        
+    </div>
         {{#if user}}
             {{#each posts}}
                 <div class="flag-block" id="{{post_id}}">
+                    <div class="flag-block__inner">
                     {{#each flag}}
                         <div class="flag-block__author">
                             {{this.author}}
@@ -16,6 +21,7 @@
                         <div class="flag-block__description">{{this.description}}</div>
                         <a href="javascript:void(0);" class="trash-post">Trash</a>
                     {{/each}}
+                    </div>
                 </div>   
             {{/each}}
         {{else}}
@@ -24,4 +30,5 @@
     {{else}}
 <h2>Admin has not approved you as Connect19 user yet</h2>
     {{/if}}
+</div>
 </div>

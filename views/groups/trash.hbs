@@ -2,7 +2,9 @@
     <div class="container">
     {{#if isApproved}}
     {{> header }}
-        <h1 class="group-title">{{groupname}} Group Trash posts</h1>
+    <div class="common-title-block">        
+        <i class="fas fa-trash"></i> <h1 class="common-title-block__title">{{this.groupname}} Group Trash posts</h1>        
+    </div>         
         {{#compare createdby user operator="=="}}
             {{#each posts}}
 

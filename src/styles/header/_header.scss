@@ -1,4 +1,10 @@
-
+%common-icons{
+        color: $color__dark-blue !important;
+        font-size: em(18px);
+        margin-right: 10px;
+        position: relative !important;
+        top: 0 !important;
+}
 .wall-header{
     box-shadow: 0 2px 4px 0 rgba(197,205,232,0.68);
     display: flex;
@@ -109,10 +115,20 @@ a.profile-block__edit-profile-btn{
     font-size: 36px;
     margin-left: 50px;
 }
-i.fa-volume-down, i.fa-search{
-    color: $color__dark-blue !important;
-    margin-right: 10px;
-    position: relative !important;
-    top: 0 !important;
-
+.menu-link-block{
+    i.fa-volume-down{
+        @extend %common-icons;        
+        } 
+    i.fa-search{
+        @extend %common-icons; 
+    }
+    .fa-calendar{
+        @extend %common-icons; 
+    }
+    .fa-users{
+        @extend %common-icons; 
+    }
+    .fa-cog{
+        @extend %common-icons;
+    }
 }
