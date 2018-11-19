@@ -1,6 +1,6 @@
 (function () {
     // PWA
-    
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .register('../pwa/service-worker.min.js')
@@ -14,9 +14,11 @@
             $("#file").click();
         });
 
-        $(".add-to-homescreen").click(function() {
-            showA2HSPrompt();
+        // Image Not Found
+        $('img').on("error", function () {
+            $(this).attr('src', '/images/placholder.gif');
         });
+
     });
 
     $('.request-btn').on("click", function () {

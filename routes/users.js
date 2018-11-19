@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
 var objectId = require('mongodb').ObjectID;
-var multer  = require('multer');
+var multer = require('multer');
 var upload = multer({ dest: './dist/images' });
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -20,7 +20,7 @@ router.get('/login', function (req, res) {
 });
 
 // Signup User
-router.post('/signup', function (req, res) {	
+router.post('/signup', function (req, res) {
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -42,8 +42,8 @@ router.post('/signup', function (req, res) {
 	}
 	else {
 		//checking for email and username are already taken
-		User.findOne({ username: { "$regex": "^" + username + "\\b", "$options": "i"}}, function (err, user) {
-			User.findOne({ email: { "$regex": "^" + email + "\\b", "$options": "i"}}, function (err, mail) {
+		User.findOne({ username: { "$regex": "^" + username + "\\b", "$options": "i" } }, function (err, user) {
+			User.findOne({ email: { "$regex": "^" + email + "\\b", "$options": "i" } }, function (err, mail) {
 				//console.log(user);
 				if (user || mail) {
 					res.render('signup', {
@@ -54,18 +54,18 @@ router.post('/signup', function (req, res) {
 				}
 				else {
 					//console.log('2');
-					var newUser = new User({						
+					var newUser = new User({
 						email: email,
 						username: username,
 						password: password,
-						user_profile:{}
+						user_profile: {}
 					});
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
 						//console.log(user);
 						//console.log('3');
 					});
-         	req.flash('success_msg', 'You are registered and can now login');
+					req.flash('success_msg', 'You are registered and can now login');
 					res.redirect('/users/login');
 				}
 			});
@@ -82,49 +82,54 @@ router.post('/signup', function (req, res) {
 //	});	
 //});
 
-router.get('/profile', ensureAuthenticated, function(req, res){
-	User.findOne({username:req.user.username}, function(err, user){		
+router.get('/profile', ensureAuthenticated, function (req, res) {
+	User.findOne({ username: req.user.username }, function (err, user) {
 		//console.log(user)
 		//console.log(user.user_profile[0].profilepic)		
-		if(err) throw err;
-		res.render('profile', {user:user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved});
+		if (err) throw err;
+		res.render('profile', { user: user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved });
 	});
 });
 
 // Get profile profile
-router.get('/editprofile', ensureAuthenticated, function(req, res){
-	User.findOne({username:req.user.username}, function(err, user){				
+router.get('/editprofile', ensureAuthenticated, function (req, res) {
+	User.findOne({ username: req.user.username }, function (err, user) {
 		console.log(user);
-		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved});
+		res.render('editprofile', { user: user, user_description: user.user_profile[0].description, user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved });
 	});
 });
 
 
 // Update profile
-router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), function(req, res){
-		var username = req.body.mata;
-		var description = req.body.description;
-		var file = req.body.profilepic;
-	
+router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), function (req, res) {
+	var username = req.body.mata;
+	var description = req.body.description;
+	var file = req.body.profilepic;
+
 	var id = req.body.id;
-	//console.log(username);
-	//console.log(description);
-	if(req.file.filename){
-		var profilepic = req.file.filename;
+
+	// We assume here that this will be always called with user having a user_profile
+	// console.log(req.user.user_profile[0]);
+
+	if (req.file && req.file.filename) { // If there is a file, it means that user wants to change his profile pic
+		req.user.user_profile[0].profilepic = req.file.filename;
 	}
-	//console.log(profilepic);
-	
+
+	req.user.user_profile[0].description = description;
+
+	User.updateOne({ username: req.user.username }, { $set: { "username": username, "user_profile": req.user.user_profile } }, function (err, user) {
+		//console.log(user);
+		if (err) throw err;
+		res.redirect('profile');
+	});
+
 	//if(req.file){
 	//	var profileimage = req.file.filename;
 	//}else{
 	//	var profileimage = "dummy.jpg";
 	//}
- 
-	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description, "profilepic": profilepic}]}},function(err, user){
-		//console.log(user);
-		if (err) throw err;		
-		res.redirect('profile');
-	});
+
+
 });
 
 
@@ -172,18 +177,18 @@ router.get('/logout', function (req, res) {
 });
 
 //chat
-router.get('/chat/:id', ensureAuthenticated, function(req, res){
-	User.findOne({member_id:req.params.id},{member_id:1}, function(err, chat_friend){		
-		res.render('chat/chat', {chat_friend:chat_friend});
+router.get('/chat/:id', ensureAuthenticated, function (req, res) {
+	User.findOne({ member_id: req.params.id }, { member_id: 1 }, function (err, chat_friend) {
+		res.render('chat/chat', { chat_friend: chat_friend });
 	});
 });
 
-function ensureAuthenticated(req, res, next){
-	if(req.isAuthenticated()){
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
 		return next();
 	} else {
 		//req.flash('error_msg','You are not logged in');
 		res.redirect('/users/login');
 	}
-} 
+}
 module.exports = router;
