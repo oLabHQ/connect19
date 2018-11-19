@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+/*
+rgba(137,169,255,1)
+color: rgba(8,16,155,1);
+color: rgba(137,169,255,1);
+color: rgba(137,0,255,1);
+color: rgba(78,26,175,1);
+color: rgba(74,171,239,1);
+*/
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #FFFFFF;
@@ -68,8 +76,7 @@ body {
 
 .image-background {
   background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
-  min-height: 700px;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 }
 
@@ -94,7 +101,11 @@ body {
 .container {
   max-width: 750px;
   margin: 0 auto;
-  padding: 0 15px;
+}
+
+.container-login {
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 .alert {
@@ -222,9 +233,6 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 .wall-header__connect-tab {
@@ -232,7 +240,7 @@ body {
   color: #4e1aaf;
   font-weight: 800;
   font-size: 10px;
-  padding: 25px;
+  padding: 15px 25px;
   text-align: center;
   text-decoration: none;
   width: 41%;
@@ -244,7 +252,7 @@ body {
   font-weight: 800;
   font-size: 10px;
   letter-spacing: 0.14px;
-  padding: 25px;
+  padding: 15px 25px;
   text-align: center;
   text-decoration: none;
   width: 40%;
@@ -254,7 +262,7 @@ body {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  margin: 10px 5px 0px;
+  margin: 13px 5px 0 50px;
 }
 
 .profile-block {
@@ -422,6 +430,11 @@ a.profile-block__edit-profile-btn {
   top: 5px;
 }
 
+.background-color--blue {
+  background-color: #4e1aaf;
+  border: none;
+}
+
 .form-group__forgot-password {
   color: white;
   float: right;
@@ -435,7 +448,6 @@ a.profile-block__edit-profile-btn {
   background-color: white;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
-  margin-top: 10px;
   padding: 13px;
 }
 
@@ -492,7 +504,6 @@ a.profile-block__edit-profile-btn {
   color: white;
   font-size: 15px;
   line-height: 20px;
-  padding: 20px 0px;
 }
 
 .post-block__description {
@@ -840,8 +851,7 @@ a.profile-block__edit-profile-btn {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 10px;
-  padding-bottom: 10px;
+  padding: 15px;
 }
 .group-block i {
   color: #e5eafc;
@@ -871,15 +881,16 @@ a.profile-block__edit-profile-btn {
 }
 
 .group-name-block {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  padding: 15px;
 }
 
 .group-name-block__title {

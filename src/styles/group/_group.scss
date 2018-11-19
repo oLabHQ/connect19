@@ -48,9 +48,8 @@ input:-ms-input-placeholder { /* IE 10+ */
     align-items: center;
     border-bottom: 1px solid rgba(137,169,253,0.2);
     display: flex;
-    justify-content: space-between;     
-    margin: 10px;
-    padding-bottom: 10px;
+    justify-content: space-between;    
+    padding: 15px;
     i{
         color: $color__primary--light;
         text-align: right;
@@ -78,9 +77,10 @@ input:-ms-input-placeholder { /* IE 10+ */
     width: 72%;
 }
 .group-name-block{
-    display: flex;
     align-items: center;
+    display: flex;    
     justify-content: space-between;
+    padding: 15px;
 }
 .group-name-block__title{
     color: $color__dark-blue;

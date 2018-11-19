@@ -7,33 +7,32 @@
 }
 .wall-header{
     box-shadow: 0 2px 4px 0 rgba(197,205,232,0.68);
-    display: flex;
-    justify-content: space-between;    
+    display: flex;        
 }
 .wall-header__connect-tab{
     background-color: $color__primary--white;    
     color: $color__dark-blue;
     font-weight: 800;
     font-size: 10px;
-    padding: 25px;
+    padding: 15px 25px;
     text-align: center;
     text-decoration: none;
     width: 41%;
 }
 .wall-header__chat-tab{
     background-color: rgba(229,234,252,1);
-    color: rgba(74,171,239,1);
+    color: $color__blue;
     font-weight: 800;
     font-size: 10px;
     letter-spacing: 0.14px;
-    padding: 25px;
+    padding: 15px 25px;
     text-align: center;
     text-decoration: none;
     width: 40%;
 }
 .drop-menu{
     justify-content: flex-end;
-    margin: 10px 5px 0px;
+    margin: 13px 5px 0 50px;
 }
 
 .profile-block{  
