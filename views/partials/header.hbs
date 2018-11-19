@@ -1,7 +1,7 @@
 
  <div class="wall-header">
-        <a href="/" class="wall-header__connect-tab">The Wall</a>
-        <a href="/friends" class="wall-header__chat-tab">Chat</a>
+        <a href="/" class="wall-header__connect-tab loader-click">The Wall</a>
+        <a href="/friends" class="wall-header__chat-tab loader-click">Chat</a>
         <div class="drop-menu">
             <a href="javascript:void(0)" onclick="openNav()"><img src="/images/menu-new.svg" class="drop-menu__button" /></a>
         </div> 
@@ -28,19 +28,19 @@
                     <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" />
                     <div class="profile-block__right">
                         <h3 class="profile-block__username">{{../this.username}}</h3>
-                        <a class="profile-block__edit-profile-btn" href="/users/editprofile">Edit Profile</a>
+                        <a class="profile-block__edit-profile-btn loader-click" href="/users/editprofile">Edit Profile</a>
                     </div>
                 </div>
             {{/each}}
         {{/each}}
 
         <div class="menu-link-block">
-            <a href="/conference-schedule" class="menu-link-block__link"><i class="fas fa-calendar"></i> Conference Schedule</a>
-            <a href="/announcement" class="menu-link-block__link"><i class="fas fa-volume-down"></i> Announcements</a>
-            <a href="/friends/users" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
-            <a href="/groups" class="menu-link-block__link"><i class="fas fa-users"></i>  Groups</a>
+            <a href="/conference-schedule" class="menu-link-block__link loader-click"><i class="fas fa-calendar"></i> Conference Schedule</a>
+            <a href="/announcement" class="menu-link-block__link loader-click"><i class="fas fa-volume-down"></i> Announcements</a>
+            <a href="/friends/users" class="menu-link-block__link loader-click"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
+            <a href="/groups" class="menu-link-block__link loader-click"><i class="fas fa-users"></i>  Groups</a>
             {{~#if isAdmin}}
-                <a href="/admin" class="menu-link-block__link"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>
+                <a href="/admin" class="menu-link-block__link loader-click"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>
             {{~/if~}}
         </div>  
     </div>

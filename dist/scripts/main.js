@@ -15,10 +15,16 @@
         });
 
         // Image Not Found
-        $('img').on("error", function () {
+        $('.post-block__featured-image img').on("error", function () {
             $(this).attr('src', '/images/placholder.gif');
         });
 
+        // Loader
+        $(".loading").hide();
+
+        $('.loader-click').click(function() {
+            $(".loading").show();
+        });
     });
 
     $('.request-btn').on("click", function () {

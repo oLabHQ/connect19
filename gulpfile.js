@@ -47,7 +47,7 @@ gulp.task('images', function () {
   return gulp.src('src/images/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('dist/images'));
-    // .pipe(notify({ message: 'Images task complete' }));
+    .pipe(notify({ message: 'Images task complete' }));
 });
 
 // PWA Service Worker
