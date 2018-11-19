@@ -50,6 +50,13 @@ gulp.task('images', function() {
     .pipe(notify({ message: 'Images task complete' }));
 });
 
+// PWA Manifest
+gulp.task('manifest', function() {
+  return gulp.src('src/manifest.json')
+    .pipe(gulp.dest('dist/'))
+    .pipe(notify({ message: 'Manifest task complete' }));
+});
+
 // Clean
 gulp.task('clean', function() {
   return del(['dist/styles', 'dist/scripts', 'dist/images']);
@@ -57,7 +64,7 @@ gulp.task('clean', function() {
 
 // Default task
 gulp.task('default', ['clean'], function() {
-  gulp.start('styles', 'scripts', 'images');
+  gulp.start('styles', 'scripts', 'images', 'manifest');
 });
 
 // Watch
@@ -71,6 +78,9 @@ gulp.task('watch', function() {
 
   // Watch image files
   gulp.watch('src/images/**/*', ['images']);
+
+  // Watch Manifest file
+  gulp.watch('src/manifest.json', ['manifest']);
 
   // Create LiveReload server
   livereload.listen();
