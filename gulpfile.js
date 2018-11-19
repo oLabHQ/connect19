@@ -46,7 +46,7 @@ gulp.task('scripts', function () {
 gulp.task('images', function () {
   return gulp.src('src/images/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('dist/images'))
     .pipe(notify({ message: 'Images task complete' }));
 });
 
@@ -68,6 +68,13 @@ gulp.task('pwa-manifest', function () {
     .pipe(notify({ message: 'pwa-manifest task complete' }));
 });
 
+// Ajax Templates
+gulp.task('ajax-templates', function () {
+  return gulp.src('views/ajax-templates/**/*.hbs')
+    .pipe(gulp.dest('dist/ajax-templates'))
+    .pipe(notify({ message: 'ajax-templates task complete' }));
+});
+
 // Clean
 gulp.task('clean', function () {
   return del(['dist/styles', 'dist/scripts', 'dist/images']);
@@ -75,7 +82,7 @@ gulp.task('clean', function () {
 
 // Default task
 gulp.task('default', ['clean'], function () {
-  gulp.start('styles', 'scripts', 'images', 'pwa-service-worker', 'pwa-manifest');
+  gulp.start('styles', 'scripts', 'images', 'pwa-service-worker', 'pwa-manifest', 'ajax-templates');
 });
 
 // Watch
@@ -87,11 +94,15 @@ gulp.task('watch', function () {
   // Watch .js files
   gulp.watch('src/scripts/**/*.js', ['scripts']);
 
+  // Watch Ajax Templates files
+  gulp.watch('views/ajax-templates/**/*.hbs', ['ajax-templates']);
+
   // Watch image files
   gulp.watch('src/images/**/*', ['images']);
 
-  // Watch Manifest file
-  gulp.watch('src/manifest.json', ['manifest']);
+  // Watch PWA Files
+  gulp.watch('src/pwa/manifest.json', ['pwa-manifest']);
+  gulp.watch('src/pwa/service-worker.js', ['pwa-service-worker']);
 
   // Create LiveReload server
   livereload.listen();

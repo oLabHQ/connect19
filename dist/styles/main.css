@@ -74,6 +74,18 @@ body {
   padding: 0;
 }
 
+/* Posts Loader */
+.posts-loader {
+  background: none !important;
+}
+
+.posts-loader img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: -10px auto 20px auto;
+}
+
 /* Absolute Center Spinner */
 .loading {
   position: fixed;

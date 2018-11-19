@@ -1,30 +1,95 @@
 (function () {
     // PWA
-
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .register('../pwa/service-worker.min.js')
             .then(function () { console.log('Service Worker Registered'); });
     }
-
     // END PWA
+
+    // Frontend HandleBars Needed Setup
+    Handlebars.registerHelper('date-format', function (context, block) {
+        if (window.moment && context !== null && context !== '') {
+            var format = block.hash.format || "DD-MM-YYYY";
+            return moment(context).format(format);
+        }
+
+        // Moment not present or the date is empty-ish, show the default value or nothing
+        return (block.hash.default ? block.hash.default : context);
+    });
+
+    // Image Not Found
+    function refreshImageNotFound() {
+        $('.post-block__featured-image img').on("error", function () {
+            $(this).attr('src', '/images/placholder.gif');
+        });
+    }
 
     $(document).ready(function () {
         $("#img").click(function () {
             $("#file").click();
         });
 
-        // Image Not Found
-        $('.post-block__featured-image img').on("error", function () {
-            $(this).attr('src', '/images/placholder.gif');
-        });
+        refreshImageNotFound();
 
         // Loader
         $(".loading").hide();
 
-        $('.loader-click').click(function() {
+        $('.loader-click').click(function () {
             $(".loading").show();
         });
+
+        // Infinite List Loader
+        $("#infinite-loader").hide();
+    });
+
+    // Infinite Scrolling Load Posts
+    var _currentPostsPage = 1;
+    var _isLoadingPosts = false;
+    var _postsTemplate = null;
+    var _reachedEndOfList = false;
+
+    function addPosts(postsRootData) {
+        if (!_postsTemplate) {
+            $.get("/ajax-templates/posts.hbs", function (resp) {
+                _postsTemplate = Handlebars.compile(resp);
+                var html = _postsTemplate(postsRootData);
+                $(".posts-container").append(html);
+                refreshImageNotFound();
+            });
+        }
+    }
+
+    $(".gradient-background").scroll(function () {
+        // console.log($(".gradient-background").scrollTop() + " | " + $(document).height());
+        if ($(this).scrollTop() >= $(document).height() - $(window).height() + 200) {
+            if ($(".posts-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
+
+                console.log("Getting Posts");
+                _isLoadingPosts = true;
+                $("#infinite-loader").show();
+
+                $.ajax({
+                    method: "GET",
+                    url: "/posts?page=" + (_currentPostsPage + 1),
+                    contentType: "application/json",
+                    success: function (result) {
+                        _isLoadingPosts = false;
+                        _currentPostsPage++;
+                        console.log("Current Page: ", _currentPostsPage);
+                        var postsResult = JSON.parse(result);
+
+                        if (postsResult && postsResult.posts && postsResult.posts.length > 0) {
+                            addPosts(postsResult);
+                        } else {
+                            _reachedEndOfList = true;
+                        }
+
+                        $("#infinite-loader").hide();
+                    }
+                });
+            }
+        }
     });
 
     $('.request-btn').on("click", function () {
@@ -486,7 +551,7 @@
 
 }());
 
-// Filte User
+// Filter User
 function filterUser() {
     var input, filter, table, tr, td, i;
     input = document.getElementById("filterUser");

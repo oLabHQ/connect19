@@ -1,0 +1,35 @@
+{{#posts}}
+<div class="post-main-block" id="{{post_id}}">
+    <div class="post-top-blck">
+        <div class="img-block">
+            {{#each user_details}}
+            {{#each user_profile}}
+            <img src="/images/{{this.profilepic}}" alt="" />
+            {{/each}}
+            {{/each}}
+        </div>
+        <div class="post-rt-block">
+            <div class="author-block">
+                {{#each user_details}}
+                <div class="author-block__name">{{this.username}}</div>
+                {{/each}}
+            </div>
+            <div class="author-block__date">{{date-format date format="DD-MM-YYYY"}}</div>
+        </div>
+        <ul class="flag-dropdown">
+            <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                <ul class="flag-dropdown__submenu">
+                    <li id="{{this.post_id}}">
+                        <i class="fa fa-flag" aria-hidden="true"></i> <a href="javascript:void(0);" class="flag-post">Flag
+                            Post</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="post-block">
+        <div class="post-block__description">{{this.description}}</div>
+        {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
+    </div>
+</div>
+{{/posts}}
