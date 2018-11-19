@@ -268,7 +268,7 @@ body {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  margin: 13px 5px 0 50px;
+  margin: 13px 15px 0 35px;
 }
 
 .profile-block {
@@ -455,6 +455,7 @@ a.profile-block__edit-profile-btn {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   padding: 13px;
+  margin-bottom: 10px;
 }
 
 .post-top-blck {
@@ -1568,6 +1569,12 @@ a.profile-block__edit-profile-btn {
   padding-bottom: 20px;
   margin: 30px auto 30px;
   width: 80%;
+}
+
+.conference-back-btn {
+  display: block;
+  font-size: 22px;
+  margin: 12px;
 }
 
 .accordion-block {
