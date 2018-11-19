@@ -102,6 +102,7 @@ body{
     border: none;
     border-bottom: 1px solid rgba(137,169,253,.35);
     color: $color__primary;
+    font-size: em(14px);
     padding: 10px;
     width: 100%;
 }
@@ -109,21 +110,26 @@ body{
 //Placeholder stylize
 .search-box__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: $color__primary;
-    font-size: em(12px);
+    font-size: em(13px);
     opacity: 0.5;
   }
 .search-box__input::-moz-placeholder { /* Firefox 19+ */
     color: $color__primary;
-    font-size: em(12px);
+    font-size: em(13px);
     opacity: 0.5;
   }
 .search-box__input::-ms-input-placeholder { /* IE 10+ */
     color: $color__primary;
-    font-size: em(12px);
+    font-size: em(13px);
     opacity: 0.5;
   }
 .search-box__input::-moz-placeholder { /* Firefox 18- */
     color: $color__primary;
-    font-size: em(12px);
+    font-size: em(13px);
     opacity: 0.5;
+  }
+  .not-approved-text{
+      color: $color__purple;
+      font-size: 16px;
+      text-align: center;
   }

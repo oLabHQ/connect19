@@ -94,7 +94,7 @@ router.get('/profile', ensureAuthenticated, function(req, res){
 // Get profile profile
 router.get('/editprofile', ensureAuthenticated, function(req, res){
 	User.findOne({username:req.user.username}, function(err, user){				
-		console.log(user);
+		//console.log(user);
 		res.render('editprofile',{user:user, user_description: user.user_profile[0].description,  user_pic: user.user_profile[0].profilepic, isApproved: user.isApproved});
 	});
 });

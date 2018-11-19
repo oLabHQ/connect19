@@ -1,15 +1,21 @@
 <div class="profile-background">
-    {{#if isApproved}}
-    <a href="/"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a>       
-    <div class="profile-image">        
-        <img src="../images/{{{user_pic}}}" alt="" /><a href="/users/editprofile" class="edit-ico"><i class="far fa-edit"></i></a>
-    </div>    
-    <div class="profile-detail">
-        <h2 class="profile-detail__title">{{user.username}}</h2><a href="/users/editprofile" class="edit-ico"><i class="far fa-edit"></i></a>
-        <p class="profile-detail__description">{{{user_description}}} </p>
+    <div class="container">
+        {{#if isApproved}}
+            <div class="container">
+                <a href="/" class="conference-back-btn"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a>       
+                <div class="profile-image">        
+                    <img src="../images/{{{user_pic}}}" alt="" /><a href="/users/editprofile" class="edit-ico"><i class="far fa-edit"></i></a>
+                </div>    
+                <div class="profile-detail">
+                    <h2 class="profile-detail__title">{{user.username}}</h2><a href="/users/editprofile" class="edit-ico"><i class="far fa-edit"></i></a>
+                    <p class="profile-detail__description">{{{user_description}}} </p>
+                </div>
+            </div>
+        {{else}}
+            <div class="header">        
+      <img src="../images/logo-new.svg" alt="" />
+    </div> 
+    <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
+        {{/if}}
     </div>
-    {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
-    {{/if}}
 </div>
-

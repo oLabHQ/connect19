@@ -13,9 +13,11 @@
         {{#each users}}
             {{#each user_profile}}
                 <div class="profile-block">
-                    <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" />
+                   <a href="/users/profile"> <img src="../images/{{this.profilepic}}" alt="" class="profile-block__profile-pic" /></a>
                     <div class="profile-block__right">
-                        <h3 class="profile-block__username">{{../this.username}}</h3>
+                        <a href="/users/profile">
+                            <h3 class="profile-block__username">{{../this.username}}</h3>
+                        </a>
                         <a class="profile-block__edit-profile-btn" href="/users/editprofile">Edit Profile</a>
                     </div>
                 </div>
@@ -25,9 +27,12 @@
         <div class="menu-link-block">
             <a href="/conference-schedule" class="menu-link-block__link"><i class="fas fa-calendar"></i> Conference Schedule</a>
             <a href="/announcement" class="menu-link-block__link"><i class="fas fa-volume-down"></i> Announcements</a>
-            <a href="/friends/users" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>
+            <a href="/friends/users" class="menu-link-block__link"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>            
+            <a href="/friends/friend-requests" class="menu-link-block__link"><i class="fas fa-user"></i>  Friend Requests</a>
             <a href="/groups" class="menu-link-block__link"><i class="fas fa-users"></i>  Groups</a>
-            <a href="/admin" class="menu-link-block__link"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>
+            <a href="/groups/invitations" class="menu-link-block__link"><i class="fas fa-users"></i>  Groups Invitations</a>
+            
+           {{#if isAdmin}} <a href="/admin" class="menu-link-block__link"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>{{/if}}
         </div>  
     </div>
 </div>

@@ -187,6 +187,7 @@ body {
   border: none;
   border-bottom: 1px solid rgba(137, 169, 253, 0.35);
   color: #8eb2f1;
+  font-size: 1em;
   padding: 10px;
   width: 100%;
 }
@@ -194,29 +195,35 @@ body {
 .search-box__input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #8eb2f1;
-  font-size: 0.8571428571em;
+  font-size: 0.9285714286em;
   opacity: 0.5;
 }
 
 .search-box__input::-moz-placeholder {
   /* Firefox 19+ */
   color: #8eb2f1;
-  font-size: 0.8571428571em;
+  font-size: 0.9285714286em;
   opacity: 0.5;
 }
 
 .search-box__input::-ms-input-placeholder {
   /* IE 10+ */
   color: #8eb2f1;
-  font-size: 0.8571428571em;
+  font-size: 0.9285714286em;
   opacity: 0.5;
 }
 
 .search-box__input::-moz-placeholder {
   /* Firefox 18- */
   color: #8eb2f1;
-  font-size: 0.8571428571em;
+  font-size: 0.9285714286em;
   opacity: 0.5;
+}
+
+.not-approved-text {
+  color: #c27bff;
+  font-size: 16px;
+  text-align: center;
 }
 
 .header {
@@ -225,7 +232,7 @@ body {
   margin-bottom: 3.5714285714em;
 }
 
-.menu-link-block i.fa-volume-down, .menu-link-block i.fa-search, .menu-link-block .fa-calendar, .menu-link-block .fa-users, .menu-link-block .fa-cog {
+.menu-link-block i.fa-volume-down, .menu-link-block i.fa-search, .menu-link-block .fa-calendar, .menu-link-block .fa-users, .menu-link-block .fa-cog, .menu-link-block .fa-user {
   color: #4e1aaf !important;
   font-size: 1.2857142857em;
   margin-right: 10px;
@@ -233,7 +240,17 @@ body {
   top: 0 !important;
 }
 
+.wall-header__connect-tab, .wall-header__chat-tab {
+  color: #4e1aaf;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+}
+
 .wall-header {
+  background: #FFFFFF;
   -webkit-box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
           box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
   display: -webkit-box;
@@ -243,24 +260,11 @@ body {
 
 .wall-header__connect-tab {
   background-color: #FFFFFF;
-  color: #4e1aaf;
-  font-weight: 800;
-  font-size: 10px;
-  padding: 15px 25px;
-  text-align: center;
-  text-decoration: none;
   width: 41%;
 }
 
 .wall-header__chat-tab {
   background-color: #e5eafc;
-  color: #4aabef;
-  font-weight: 800;
-  font-size: 10px;
-  letter-spacing: 0.14px;
-  padding: 15px 25px;
-  text-align: center;
-  text-decoration: none;
   width: 40%;
 }
 
@@ -572,6 +576,7 @@ a.profile-block__edit-profile-btn {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   margin-top: 170px;
+  position: relative;
 }
 .profile-image img {
   border: 2px solid #FFFFFF;
@@ -582,6 +587,7 @@ a.profile-block__edit-profile-btn {
 
 .profile-detail {
   padding: 0 30px;
+  position: relative;
 }
 
 .profile-detail__title {
