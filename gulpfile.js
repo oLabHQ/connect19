@@ -5,21 +5,21 @@
 
 // Load plugins
 var gulp = require('gulp'),
-    sass = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssnano = require('gulp-cssnano'),
-    jshint = require('gulp-jshint'),
-    uglify = require('gulp-uglify'),
-    imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat'),
-    notify = require('gulp-notify'),
-    cache = require('gulp-cache'),
-    livereload = require('gulp-livereload'),
-    del = require('del');
+  sass = require('gulp-ruby-sass'),
+  autoprefixer = require('gulp-autoprefixer'),
+  cssnano = require('gulp-cssnano'),
+  jshint = require('gulp-jshint'),
+  uglify = require('gulp-uglify'),
+  imagemin = require('gulp-imagemin'),
+  rename = require('gulp-rename'),
+  concat = require('gulp-concat'),
+  notify = require('gulp-notify'),
+  cache = require('gulp-cache'),
+  livereload = require('gulp-livereload'),
+  del = require('del');
 
 // Styles
-gulp.task('styles', function() {
+gulp.task('styles', function () {
   return sass('src/styles/main.scss', { style: 'expanded' })
     .pipe(autoprefixer('last 2 version'))
     .pipe(gulp.dest('dist/styles'))
@@ -30,7 +30,7 @@ gulp.task('styles', function() {
 });
 
 // Scripts
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
   return gulp.src('src/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
@@ -43,32 +43,43 @@ gulp.task('scripts', function() {
 });
 
 // Images
-gulp.task('images', function() {
+gulp.task('images', function () {
   return gulp.src('src/images/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('dist/images'))
     .pipe(notify({ message: 'Images task complete' }));
 });
 
+// PWA Service Worker
+gulp.task('pwa-service-worker', function () {
+  return gulp.src('src/pwa/service-worker.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('default'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/pwa'))
+    .pipe(notify({ message: 'pwa-service-worker task complete' }));
+});
+
 // PWA Manifest
-gulp.task('manifest', function() {
-  return gulp.src('src/manifest.json')
-    .pipe(gulp.dest('dist/'))
-    .pipe(notify({ message: 'Manifest task complete' }));
+gulp.task('pwa-manifest', function () {
+  return gulp.src('src/pwa/manifest.json')
+    .pipe(gulp.dest('dist/pwa'))
+    .pipe(notify({ message: 'pwa-manifest task complete' }));
 });
 
 // Clean
-gulp.task('clean', function() {
+gulp.task('clean', function () {
   return del(['dist/styles', 'dist/scripts', 'dist/images']);
 });
 
 // Default task
-gulp.task('default', ['clean'], function() {
-  gulp.start('styles', 'scripts', 'images', 'manifest');
+gulp.task('default', ['clean'], function () {
+  gulp.start('styles', 'scripts', 'images', 'pwa-service-worker', 'pwa-manifest');
 });
 
 // Watch
-gulp.task('watch', function() {
+gulp.task('watch', function () {
 
   // Watch .scss files
   gulp.watch('src/styles/**/*.scss', ['styles']);
