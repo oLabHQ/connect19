@@ -711,7 +711,7 @@ a.profile-block__edit-profile-btn {
   width: 100%;
 }
 
-.edit-profile-form__save-button, .edit-profile-form__change-password {
+.edit-profile-form__save-button, .edit-profile-form__change-password, .profile-pic-input-file + label {
   background-color: #4aabef;
   border: none;
   border-radius: 27px;
@@ -737,12 +737,17 @@ a.profile-block__edit-profile-btn {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   margin-top: 100px;
+  margin-bottom: 10px;
 }
 .edit-profile__profile-image img {
   border: 2px solid #FFFFFF;
   border-radius: 100px;
   width: 100px;
   height: 100px;
+}
+
+.edit-profile-form__username {
+  margin-top: 10px;
 }
 
 .edit-profile-form__description {
@@ -757,6 +762,39 @@ a.profile-block__edit-profile-btn {
   text-decoration: none;
   margin-top: 22px;
   text-align: center;
+}
+
+/* Custom Profile Picture Upload Input */
+.profile-pic-input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.profile-pic-input-file + label {
+  font-size: 9px;
+  color: white;
+  display: block;
+  padding: 10;
+  width: 120px;
+  margin: 0 auto;
+  background-color: #72e2ff;
+}
+
+.profile-pic-input-file:focus + label,
+.profile-pic-input-file + label:hover {
+  background-color: #4aabef;
+}
+
+.profile-pic-input-file + label {
+  cursor: pointer;
+}
+
+.profile-pic-input-file + label * {
+  pointer-events: none;
 }
 
 .group-post-block__name, .group-invitation-block__group-text {

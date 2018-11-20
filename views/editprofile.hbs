@@ -1,24 +1,26 @@
 <div class="profile-background">
     <div class="container">
         {{#if isApproved}}
-            <a href="/" class="conference-back-btn"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> 
-            <div class="edit-profile">      
-                <form method="post" action="/users/editprofile" enctype="multipart/form-data" class="edit-profile-form">
-                    <div class="edit-profile__profile-image">
-                        <img src="../images/{{{user_pic}}}" alt="" />
-                    </div>
-                    <input type="file" name="profilepic"/> 
-                    <input type="text" name ="mata" value="{{user.username}}" class="edit-profile-form__username" />
-                    <input type="text" name="description" value="{{{user_description}}}" class="edit-profile-form__description" placeholder="Tell about Yourself.."/>
-                    <input type="submit" value="save changes" class="edit-profile-form__save-button" />
-                </form>
+        <a href="/" class="conference-back-btn"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a>
+        <div class="edit-profile">
+            <form method="post" action="/users/editprofile" enctype="multipart/form-data" class="edit-profile-form">
+                <div class="edit-profile__profile-image">
+                    <img class="handled-profile-picture" src="../images/{{{user_pic}}}" alt="" />
+                </div>
+                <input type="file" name="profile-pic-input" id="profile-pic-input" class="profile-pic-input-file" accept="image/*" />
+                <label for="profile-pic-input">Change Picture</label>
+                <input type="text" name="mata" value="{{user.username}}" class="edit-profile-form__username" />
+                <input type="text" name="description" value="{{{user_description}}}" class="edit-profile-form__description"
+                    placeholder="Tell about Yourself.." />
+                <input type="submit" value="save changes" class="edit-profile-form__save-button" />
+            </form>
             <a href="#" class="edit-profile-form__change-password">change password</a>
-            </div>
+        </div>
         {{else}}
-            <div class="header">        
-      <img src="../images/logo-new.svg" alt="" />
-    </div> 
-    <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
+        <div class="header">
+            <img src="../images/logo-new.svg" alt="" />
+        </div>
+        <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
         {{/if}}
     </div>
 </div>

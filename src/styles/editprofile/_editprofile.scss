@@ -34,8 +34,10 @@
         width: 100px;
         height: 100px;        
     }
+    margin-bottom: 10px;
 }
 .edit-profile-form__username{
+    margin-top: 10px;
     @extend %input-edit-profile;
 }
 .edit-profile-form__description{
@@ -53,3 +55,37 @@
     text-align: center;
 }
 
+/* Custom Profile Picture Upload Input */
+.profile-pic-input-file {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.profile-pic-input-file + label {
+    font-size: 9px;
+    color: white;
+    display: block;
+    padding: 10;
+    width: 120px;
+    margin: 0 auto;
+
+    background-color: rgba(114,226,255,1);
+    @extend %edit-form-button;   
+}
+
+.profile-pic-input-file:focus + label,
+.profile-pic-input-file + label:hover {
+    background-color: rgba(74,171,239,1);
+}
+
+.profile-pic-input-file + label {
+	cursor: pointer;
+}
+
+.profile-pic-input-file + label * {
+	pointer-events: none;
+}
