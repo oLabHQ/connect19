@@ -2,7 +2,7 @@
     // PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-            .register('../pwa/service-worker.min.js')
+            .register('/pwa/service-worker.min.js')
             .then(function () { console.log('Service Worker Registered'); });
     }
     // END PWA
@@ -35,7 +35,7 @@
         handlePostImageAttachmentNotFound();
         handleProfilePictureNotFound();
     }
-    
+
     $(document).ready(function () {
         $("#img").click(function () {
             $("#file").click();
@@ -519,7 +519,7 @@
             });
             socket.on("message_from_server", function (received_msg) {
                 // console.log("received_msg", received_msg);
-                $(".all_Cha_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>" + received_msg.user_name + ":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>");
+                $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>" + received_msg.user_name + ":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>")
             });
         });
     });
@@ -533,7 +533,7 @@
 }());
 
 // Filter User
-function filterUser() {    
+function filterUser() {
     var input, filter, table, tr, td, i;
     input = document.getElementById("filterUser");
     filter = input.value.toUpperCase();
@@ -541,27 +541,27 @@ function filterUser() {
     tr = table.getElementsByTagName("a");
     tp = table.getElementsByTagName("div");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("h2")[0];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("h2")[0];
+        if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }       
     }
     for (i = 0; i < tp.length; i++) {
         td = tp[i].getElementsByTagName("h2")[0];
         if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tp[i].style.display = "";
-          } else {
-            tp[i].style.display = "none";
-          }
-        }       
-      }
-  }
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tp[i].style.display = "";
+            } else {
+                tp[i].style.display = "none";
+            }
+        }
+    }
+}
 
 
 
-  
+
