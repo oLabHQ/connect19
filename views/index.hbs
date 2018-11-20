@@ -1,29 +1,29 @@
 <div class="gradient-background">
     {{#if isApproved}}
-    <div class="container posts-container">
-        {{> header }}
-        {{#posts}}
-        <div class="post-main-block" id="{{post_id}}">
-            <div class="post-top-blck">
-                <div class="img-block">
-                    {{#each user_details}}
-                    {{#each user_profile}}
-                    <img class="handled-profile-picture" src="/images/{{this.profilepic}}" alt="" />
-                    {{/each}}
-                    {{/each}}
-                </div>
-                <div class="post-rt-block">
-                    <div class="author-block">
-                        {{#each user_details}}
-                        <div class="author-block__name">{{this.username}}</div>
-                        {{/each}}
-                    </div>
-                    <div class="author-block__date">{{moment date format="DD-MM-YYYY"}}</div>
-                </div>
-                <ul class="flag-dropdown">
-                    <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
-                        <ul class="flag-dropdown__submenu">
-                            <!--        {{#if ../isAdmin}}
+        <div class="container">
+            {{> header }}                   
+            {{#posts}}     
+                <div class="post-main-block" id="{{post_id}}"> 
+                    <div class="post-top-blck">
+                        <div class="img-block">
+                            {{#each user_details}}
+                                {{#each user_profile}}
+                                    <img class="handled-profile-picture" src="/images/{{this.profilepic}}" alt="" />
+                                {{/each}}
+                            {{/each}}
+                        </div>
+                        <div class="post-rt-block">
+                            <div class="author-block">
+                                {{#each user_details}}                                    
+                                    <div class="author-block__name">{{this.username}}</div>                                                            
+                                {{/each}}                           
+                            </div>
+                            <div class="author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>                
+                        </div>  
+                        <ul class="flag-dropdown">
+                        <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                            <ul class="flag-dropdown__submenu" >                                
+                        <!--        {{#if ../isAdmin}}
                                     <li id="{{this.post_id}}">                                     
                                             {{#if ispinned}}
                                                 <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" checked/> Pinned
@@ -32,32 +32,31 @@
                                             {{/if}}                                   
                                     </li>
                                  {{/if}}  -->
-                            <li id="{{this.post_id}}">
-                                <i class="fa fa-flag" aria-hidden="true"></i> <a href="javascript:void(0);" class="flag-post">Flag
-                                    Post</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!--  <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>  -->
-            </div>
-            <div class="post-block">
-                <div class="post-block__description">{{this.description}}</div>
-                {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
-            </div>
-        </div>
-        {{/posts}}
-    </div>
-    <div id="infinite-loader" class="post-main-block posts-loader">
+                                <li id="{{this.post_id}}">
+                                 <i class="fa fa-flag" aria-hidden="true"></i>   <a href="javascript:void(0);" class="flag-post">Flag Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>            
+                      <!--  <a href="javascript:void(0);" class="flag-post"><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i></a>  -->
+                    </div>
+                    <div class="post-block">
+                        <div class="post-block__description">{{this.description}}</div>    
+                        {{#if postimage}}<div class="post-block__featured-image"><img src="/images/{{this.postimage}}" /></div>{{/if}}
+                    </div>
+                </div>            
+            {{/posts}}
+        </div>  
+        <div id="infinite-loader" class="post-main-block posts-loader">
         <img src="images/loader.gif" alt="Loading . . ." />
-    </div>
-    <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
-        <input type="text" name="description" placeholder="Post..." class="post-form__description" />
-        <img src="images/attachment.svg" id="img" />
-        <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
-        <input name="submit" type="submit" value="send" class="post-form__button loader-click" />
-    </form>
-
+    </div>   
+            <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
+                <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+                <img src="images/attachment.svg" id="img"/>
+                <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
+                <input name="submit" type="submit" value="send" class="post-form__button"/>
+            </form>
+                 
     {{else}}
     <div class="header">        
       <img src="../images/logo-new.svg" alt="" />
