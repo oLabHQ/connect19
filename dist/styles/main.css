@@ -232,7 +232,7 @@ body {
   margin-bottom: 3.5714285714em;
 }
 
-.menu-link-block i.fa-volume-down, .menu-link-block i.fa-search, .menu-link-block .fa-calendar, .menu-link-block .fa-users, .menu-link-block .fa-cog, .menu-link-block .fa-user {
+.menu-link-block i.fa-volume-down, .menu-link-block i.fa-search, .menu-link-block .fa-calendar, .menu-link-block .fa-users, .menu-link-block .fa-cog, .menu-link-block .fa-user, .menu-link-block .fa-sign-out-alt {
   color: #4e1aaf !important;
   font-size: 1.2857142857em;
   margin-right: 10px;

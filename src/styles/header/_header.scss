@@ -138,4 +138,7 @@ a.profile-block__edit-profile-btn{
     .fa-user{
         @extend %common-icons;
     }
+    .fa-sign-out-alt{
+        @extend %common-icons;
+    }
 }
