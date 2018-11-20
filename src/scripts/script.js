@@ -42,6 +42,7 @@
         });
 
         handlePostImagesNotFound();
+        getPostsOnListEnd(); // Check if end of list is in view then load more posts
 
         // Loader
         $(".loading").hide();
@@ -54,7 +55,7 @@
         $("#infinite-loader").hide();
 
         // Edit Profile Input Handler
-        $(".profile-pic-input-file").on("change", function(e) {
+        $(".profile-pic-input-file").on("change", function (e) {
             var fileName = e.target.value;
             if (fileName) {
                 $(".profile-pic-input-label").text(fileName);
@@ -82,9 +83,7 @@
         }
     }
 
-    $(".gradient-background").scroll(function () {
-        // console.log($(this).scrollTop(),  $(document).height() - $(window).height() + 200);
-        // console.log($(".gradient-background").scrollTop() + " | " + $(document).height());
+    function getPostsOnListEnd() {
         if ($(this).scrollTop() >= $(document).height() - $(window).height() + 200) {
             if ($(".post-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
 
@@ -113,6 +112,12 @@
                 });
             }
         }
+    }
+
+    $(".gradient-background").scroll(function () {
+        // console.log($(this).scrollTop(),  $(document).height() - $(window).height() + 200);
+        // console.log($(".gradient-background").scrollTop() + " | " + $(document).height());
+        getPostsOnListEnd();
     });
 
     $('.request-btn').on("click", function () {
