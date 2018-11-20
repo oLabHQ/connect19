@@ -32,11 +32,6 @@ router.get('/posts', ensureAuthenticated, function (req, res) {
 
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
 		Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $skip: ( (page - 1) * POSTS_RETURN_LIMIT ) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT } ]).exec(function (err, posts) {
-			//	Post.find({trashed:"N"},function(err, posts){
-			//console.log(req.user.user_profile[0].profilepic);
-			//console.log(user);
-			//if(err) throw err;
-			//console.log(user.admin);
 			res.send(JSON.stringify({ posts: posts }));
 		});
 	});
@@ -44,28 +39,28 @@ router.get('/posts', ensureAuthenticated, function (req, res) {
 
 
 // Add Posts
-router.post('/posts', ensureAuthenticated, upload.single('postimage'), function (req, res) {
-	var description = req.body.description;
-	var author = req.user.member_id;
+router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(req, res){	
+	var description = req.body.description;	
+	var	author = req.user.member_id;
 	var date = new Date();
-	if (req.file) {
+	if(req.file){
 		var postimage = req.file.filename;
 	}
+	
 
-
-	var newPost = new Post({
+	var newPost = new Post({						
 		description: description,
 		date: date,
 		postimage: postimage,
-		author: author
+		author: author		
 	});
 
-	Post.createPost(newPost, function (err, post) {
-		if (err) throw err;
+	Post.createPost(newPost, function(err, post){
+		if(err) throw err;
 		req.flash('success', 'Your post is published');
-		res.redirect('/');
+			res.redirect('/');					
 	});
-
+	 
 });
 
 // Forgot-Password template

@@ -11,35 +11,41 @@
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
-          <div class="search-box">
-            <input type="text" class="search-box__input" id="filterUser" onkeyup="filterUser()" placeholder="Search Friends..." title="Type in a name">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </div>
-<div id="friends-list-block">
-{{#each user}}
-  {{#each user_details}}
-  
-    <a href="/users/chat/{{member_id}}.{{../this.member_id}}" id="{{member_id}}" class="chat_button">
-    <div class="friend-list" id="{{member_id}}">
-      <div class="friend-list__profile-pic">
-        {{#each user_profile}}
-        <img src="../images/{{profilepic}}" />
-        {{/each}}
-      </div>
-      <div class="friend-list__detail">
-      <h2 class="friend-list__username">{{username}}</h2>
-        {{#each user_profile}}
-          <p class="friend-list__description">{{{description}}}</p>
-        {{/each}}
-      </div>
-      <div id="chat_section_wrapper"></div>      
-     <!-- <button id="{{member_id}}" class="chat_button">Chat</button>  -->       
+  <div class="container">
+    <div class="search-box">
+      <input type="text" class="search-box__input" id="filterUser" onkeyup="filterUser()" placeholder="Search Friends..." title="Type in a name">
+      <i class="fa fa-search" aria-hidden="true"></i>
     </div>
-    </a> 
-    
-  {{/each}}
-{{/each}}
-</div>
+
+    <div id="friends-list-block">
+      {{#each user}}
+        {{#each user_details}}
+        
+          <a href="/users/chat/{{member_id}}.{{../this.member_id}}" id="{{member_id}}" class="chat_button">
+            <div class="friend-list" id="{{member_id}}">
+              <div class="friend-list__profile-pic">
+                {{#each user_profile}}
+                <img src="../images/{{profilepic}}" />
+                {{/each}}
+              </div>
+              <div class="friend-list__detail">
+              <h2 class="friend-list__username">{{username}}</h2>
+                {{#each user_profile}}
+                  <p class="friend-list__description">{{{description}}}</p>
+                {{/each}}
+              </div>
+              <div id="chat_section_wrapper"></div>      
+            <!-- <button id="{{member_id}}" class="chat_button">Chat</button>  -->       
+            </div>
+          </a>         
+        {{/each}}
+      {{/each}}
+    </div>
+  </div>
 {{else}}
-<h2>Admin has not approved you as Connect19 user yet</h2>
-    {{/if}}
+  <div class="header">        
+                <img src="../images/logo-new.svg" alt="" />
+            </div> 
+            <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
+{{/if}}
+  

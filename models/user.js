@@ -8,8 +8,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 // Userprofile Schema
 var userProfileSchema = mongoose.Schema({
 	description: {
-		type: String,
-		default: "Please enter some description.."
+		type: String,		
 	},
 	interests: {
 		type: String,
@@ -17,7 +16,7 @@ var userProfileSchema = mongoose.Schema({
 	},
 	profilepic: {
 		type: String,
-		default: 'prof-img.png'
+		default: 'default.png'
 	}
 })
 

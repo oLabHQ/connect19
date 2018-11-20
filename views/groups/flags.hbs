@@ -49,10 +49,16 @@
         </div>
     {{/each}}
    {{else}}
-   <h1>You are not authorised to see this page</h1>
+   <div class="header">        
+          <img src="../images/logo-new.svg" alt="" />
+        </div> 
+   <h1 class="not-approved-text">You are not authorised to see this page</h1>
    {{/compare}}
    {{else}}
-    <h2>Admin has not approved you as Connect19 user yet</h2>
+    <div class="header">        
+          <img src="../images/logo-new.svg" alt="" />
+        </div> 
+        <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>    
     {{/if}}
     </div>
 </div>
