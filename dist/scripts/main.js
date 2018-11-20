@@ -73,18 +73,20 @@
     function addPosts(postsRootData) {
         if (!_postsTemplate) {
             $.get("/ajax-templates/posts.hbs", function (resp) {
+                console.log("Loading template");
                 _postsTemplate = Handlebars.compile(resp);
                 var html = _postsTemplate(postsRootData);
-                $(".posts-container").append(html);
+                $(".post-container").append(html);
                 handlePostImagesNotFound();
             });
         }
     }
 
     $(".gradient-background").scroll(function () {
+        // console.log($(this).scrollTop(),  $(document).height() - $(window).height() + 200);
         // console.log($(".gradient-background").scrollTop() + " | " + $(document).height());
         if ($(this).scrollTop() >= $(document).height() - $(window).height() + 200) {
-            if ($(".posts-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
+            if ($(".post-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
 
                 console.log("Getting Posts");
                 _isLoadingPosts = true;
@@ -529,7 +531,7 @@
             });
             socket.on("message_from_server", function (received_msg) {
                 // console.log("received_msg", received_msg);
-                $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>" + received_msg.user_name + ":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>")
+                $(".all_Chat_messages").append("<div class='usr_msg'>" + "<span class='user_with_message'>" + received_msg.user_name + ":</span>" + "<div class='usr_msg_box'><p>" + received_msg.msg + "</p>" + "</div>" + "</div>");
             });
         });
     });
