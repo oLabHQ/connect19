@@ -458,6 +458,8 @@ a.profile-block__edit-profile-btn {
 .background-color--blue {
   background-color: #4e1aaf;
   border: none;
+  border: #4e1aaf solid 1px;
+  padding: 11px 20px;
 }
 
 .form-group__forgot-password {
