@@ -178,7 +178,7 @@ router.get('/:id', ensureAuthenticated, function(req, res){
         User.find({member_id:req.user.member_id}, function(err, user){
             //console.log(user[0].user_profile[0].profilepic);
        // Groupposts.find({group_id:req.params.id}).sort({ispinned:-1}).exec( function(err, groupposts){        
-            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}]).sort({ispinned:-1}).exec(function(err, user_details){
+            Groupposts.aggregate([{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}]).sort({ispinned:-1, date:-1}).exec(function(err, user_details){
             //console.log(user_details);
             //res.render("groups/posts", {groupposts: user_details});
             res.render("groups/posts", {groupposts: user_details,groupcreatedby:group.createdby, group: group, user: user[0].member_id, isprivate: group.isprivate, users: user, isApproved: user[0].isApproved});

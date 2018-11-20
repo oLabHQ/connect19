@@ -27,7 +27,7 @@
                             {{#each user_details}}                                    
                                 <div class="post-author-block__name">{{this.username}}</div>                                                            
                             {{/each}}                                                       
-                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY"}}</div>   
+                            <div class="post-author-block__date">{{moment date format="DD-MM-YYYY HH:mm"}}</div>   
                         </div>             
                     </div>
                     <ul class="flag-dropdown">
@@ -80,7 +80,7 @@
         </div>
 
             {{else}}
-            <h1>This is private Group. You need to join this page to see the content</h1>
+            <h1 class="not-approved-text">This is private Group. You need to join this page to see the content</h1>
         {{/comparegroup}}
     {{/group}}
 {{else}}

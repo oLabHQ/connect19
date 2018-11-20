@@ -32,7 +32,13 @@
     justify-content: flex-end;
     margin: 13px 15px 0 35px;
 }
-
+.logout-btn{
+    color: $color__dark-blue;
+    font-size: 20px;
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
 .profile-block{  
     align-content: space-between;
     display: flex;    
@@ -106,10 +112,11 @@ a.profile-block__edit-profile-btn{
 }
 
 .sidenav .closebtn {
+    color: $color__dark-blue;
     position: absolute;
     top: 0;
-    right: 25px;
-    font-size: 36px;
+    right: 15px;
+    font-size: 30px;
     margin-left: 50px;
 }
 .menu-link-block{

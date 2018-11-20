@@ -275,6 +275,14 @@ body {
   margin: 13px 15px 0 35px;
 }
 
+.logout-btn {
+  color: #4e1aaf;
+  font-size: 20px;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+}
+
 .profile-block {
   -ms-flex-line-pack: justify;
       align-content: space-between;
@@ -358,10 +366,11 @@ a.profile-block__edit-profile-btn {
 }
 
 .sidenav .closebtn {
+  color: #4e1aaf;
   position: absolute;
   top: 0;
-  right: 25px;
-  font-size: 36px;
+  right: 15px;
+  font-size: 30px;
   margin-left: 50px;
 }
 
