@@ -19,18 +19,29 @@
     });
 
     // Image Not Found
-    function refreshImageNotFound() {
+    function handlePostImageAttachmentNotFound() {
         $('.post-block__featured-image img').on("error", function () {
             $(this).attr('src', '/images/placholder.gif');
         });
     }
 
+    function handleProfilePictureNotFound() {
+        $('img.handled-profile-picture').on("error", function () {
+            $(this).attr('src', '/images/default.png');
+        });
+    }
+
+    function handlePostImagesNotFound() {
+        handlePostImageAttachmentNotFound();
+        handleProfilePictureNotFound();
+    }
+    
     $(document).ready(function () {
         $("#img").click(function () {
             $("#file").click();
         });
 
-        refreshImageNotFound();
+        handlePostImagesNotFound();
 
         // Loader
         $(".loading").hide();
@@ -55,7 +66,7 @@
                 _postsTemplate = Handlebars.compile(resp);
                 var html = _postsTemplate(postsRootData);
                 $(".posts-container").append(html);
-                refreshImageNotFound();
+                handlePostImagesNotFound();
             });
         }
     }
