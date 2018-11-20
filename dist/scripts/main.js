@@ -52,6 +52,16 @@
 
         // Infinite List Loader
         $("#infinite-loader").hide();
+
+        // Edit Profile Input Handler
+        $(".profile-pic-input-file").on("change", function(e) {
+            var fileName = e.target.value;
+            if (fileName) {
+                $(".profile-pic-input-label").text(fileName);
+            } else {
+                $(".profile-pic-input-label").text("Change Picture");
+            }
+        });
     });
 
     // Infinite Scrolling Load Posts
