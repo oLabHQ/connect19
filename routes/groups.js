@@ -19,7 +19,7 @@ router.get('/', ensureAuthenticated, function(req,res){
         //console.log(group[0].createdby);
        // console.log(group[0].ispinned)
         if(err) throw err;
-        res.render('groups/index', {group: group, ispinned: group[0].ispinned, isprivate: group[0].isprivate, createdby: group[0].createdby, user: user.member_id, isadmin: user.admin, users: user, isApproved: user.isApproved});
+        res.render('groups/index', {group: group, ispinned: group.ispinned, isprivate: group.isprivate, createdby: group.createdby, user: user.member_id, isadmin: user.admin, users: user, isApproved: user.isApproved});
     }); 
 });
 });
