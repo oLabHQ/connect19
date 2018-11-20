@@ -15,6 +15,7 @@
             <i class="fa fa-search" aria-hidden="true"></i>
           </div>
           <div id="friends-list-block">
+            
   {{#each user_friends}}
     <div class="friend-list">
       <div class="friend-list__profile-pic">
@@ -26,9 +27,17 @@
         <h2 class="friend-list__username">{{this.username}}</h2>
         {{#each user_profile}}
           <p class="friend-list__description">{{{description}}}</p>
-        {{/each}}
-      </div>
-      <button id="{{member_id}}" type="button" class="request-btn test1"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+        {{/each}}        
+      </div>              
+        {{#comparegroup friends ../user_id}}
+            <div class="friend-list__friends">Friends </div><i class="fas fa-check-circle"></i>
+             {{else}}
+        {{#comparegroup friend_requests ../user_id}}
+           <div class="friend-list__friends">Friend Request Sent</div><i class="fas fa-check-circle"></i>
+           {{else}}
+            <button id="{{member_id}}" type="button" class="request-btn test1"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+        {{/comparegroup}}
+         {{/comparegroup}}
     </div>
   {{/each}}
   </div>

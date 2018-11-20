@@ -24,7 +24,7 @@
     $(".pending-request__accept-btn").on("click", function(){
         var friend_member_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(friend_member_id);
+        console.log(friend_member_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({"member_id": friend_member_id}),

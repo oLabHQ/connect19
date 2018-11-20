@@ -14,18 +14,20 @@
     text-decoration: none;
 }
 .wall-header{
-    background: $color__primary--white;
+    background-color: rgba(229,234,252,1);    
     box-shadow: 0 2px 4px 0 rgba(197,205,232,0.68);
     display: flex;        
 }
 .wall-header__connect-tab{
     @extend %common-tab;
     background-color: $color__primary--white;    
+    box-shadow: 0px -3px 5px 0 rgba(0,0,0,0.5);
     width: 41%;
 }
 .wall-header__chat-tab{
     @extend %common-tab;
     background-color: rgba(229,234,252,1);
+    box-shadow: 0px -3px 5px 0 rgba(0,0,0,0.5);
     width: 40%;
 }
 .drop-menu{
@@ -75,8 +77,8 @@ a.profile-block__edit-profile-btn{
     color: $color__purple;
     border-bottom: 1.33px solid rgba(137,169,253,1);
     font-size: em(13px);
-    padding-bottom: 25px;
-    margin-top: 25px;
+    padding-bottom: 20px;
+    margin-top: 20px;
     &:first-child{
         margin-top: 60px;
     }

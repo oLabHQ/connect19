@@ -109,7 +109,7 @@ router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), fu
 	var id = req.body.id;
 	//console.log(username);
 	//console.log(description);
-	if(req.file.filename){
+	if(req.file){
 		var profilepic = req.file.filename;
 	}
 	//console.log(profilepic);
@@ -119,12 +119,20 @@ router.post('/editprofile', ensureAuthenticated, upload.single('profilepic'), fu
 	//}else{
 	//	var profileimage = "dummy.jpg";
 	//}
- 
+ if(req.file){
 	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description, "profilepic": profilepic}]}},function(err, user){
-		//console.log(user);
+		console.log('heloo');
 		if (err) throw err;		
 		res.redirect('profile');
 	});
+} 
+else{
+	User.updateOne({username: req.user.username},{$set: {"username":username, "user_profile": [{"description":description}]}},function(err, user){
+        console.log('hi');
+        if (err) throw err;     
+        res.redirect('profile');
+    });
+}
 });
 
 
