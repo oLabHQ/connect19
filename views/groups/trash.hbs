@@ -1,7 +1,8 @@
 <div class="gradient-background">
-    <div class="container">
-    {{#if isApproved}}
+       {{#if isApproved}}  
     {{> header }}
+    <div class="container">
+  
     <div class="common-title-block">        
         <i class="fas fa-trash"></i> <h1 class="common-title-block__title">{{this.groupname}} Group Trash posts</h1>        
     </div>         
@@ -62,10 +63,7 @@
        <h1 class="not-approved-text">You are not authorised to see this page</h1>
    {{/compare}}
        {{else}}
-<div class="header">        
-          <img src="../images/logo-new.svg" alt="" />
-        </div> 
-        <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>  
-    {{/if}}
+    {{> thanks }}
     </div>    
+    {{/if}}
 </div>

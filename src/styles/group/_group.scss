@@ -83,8 +83,10 @@ input:-ms-input-placeholder { /* IE 10+ */
     padding: 15px;
 }
 .group-name-block__title{
+    align-items: center;
     color: $color__dark-blue;
     display: flex;
+    margin: 0;
     i{
         color: $color__dark-blue;
         position: relative;

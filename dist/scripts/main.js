@@ -467,5 +467,31 @@ function filterUser() {
   }
 
 
+// Show hide menu
+var modal2 = document.getElementById("modal2");
+
+  function openNav() {        
+    document.getElementById("mySidenav").style.width = "250px";
+    console.log(modal2);
+    modal2.style.display = "block";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        document.getElementById("mySidenav").style.width = "0";
+        modal2.style.display = "none";
+    }
+};
+ 
+  // Refresh a page
+  function Refresh() {
+    window.parent.location = window.parent.location.href;
+}
 
   

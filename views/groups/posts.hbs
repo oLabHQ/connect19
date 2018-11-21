@@ -1,8 +1,7 @@
 <div class="gradient-background">
     {{#if isApproved}}
-      <div class="container">
     {{> header }}
- 
+      <div class="container">
 {{#if isprivate}}
    <!-- List down all Posts-->
     {{#group}}
@@ -164,8 +163,5 @@
  {{/if}}
 
  {{else}}
-<div class="header">        
-          <img src="../images/logo-new.svg" alt="" />
-        </div> 
-        <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>  
+    {{> thanks }}
 {{/if}}

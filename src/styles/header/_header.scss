@@ -13,26 +13,40 @@
     text-align: center;
     text-decoration: none;
 }
+#modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
 .wall-header{
     background-color: rgba(229,234,252,1);    
     box-shadow: 0 2px 4px 0 rgba(197,205,232,0.68);
-    display: flex;        
+    position: fixed;
+    width: 100%;
 }
 .wall-header__connect-tab{
     @extend %common-tab;
-    background-color: $color__primary--white;    
-    box-shadow: 0px -3px 5px 0 rgba(0,0,0,0.5);
-    width: 41%;
+    background-color: $color__primary--white;        
+    display: inline-block;
+    width: 41%;    
 }
 .wall-header__chat-tab{
     @extend %common-tab;
-    background-color: rgba(229,234,252,1);
-    box-shadow: 0px -3px 5px 0 rgba(0,0,0,0.5);
-    width: 40%;
+    background-color: rgba(229,234,252,1);    
+    display: inline-block;
+    width: 38%;
 }
 .drop-menu{
-    justify-content: flex-end;
-    margin: 13px 15px 0 35px;
+    display: inline-block;
+    margin: 13px 15px 0 15px;
 }
 .logout-btn{
     color: $color__dark-blue;

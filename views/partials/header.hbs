@@ -3,12 +3,12 @@
         <a href="/" class="wall-header__connect-tab">The Wall</a>
         <a href="/friends" class="wall-header__chat-tab">Chat</a>
         <div class="drop-menu">
-            <a href="javascript:void(0)" onclick="openNav()"><img src="/images/menu-new.svg" class="drop-menu__button" /></a>
+            <a href="javascript:void(0)" onclick="openNav()" id="myBtn2"><img src="/images/menu-new.svg" class="drop-menu__button" /></a>
         </div> 
-
+<div id="modal2"></div>
     <div id="mySidenav" class="sidenav">
         <div class="sidenav__in">            
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" id="close2">&times;</a>
 
         {{#each users}}
             {{#each user_profile}}
@@ -35,15 +35,6 @@
            <a href="/users/logout" class="menu-link-block__link"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>  
     </div>
-</div>
+    </div>
 </div>
 
-<script>
-     function openNav() {        
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-    
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>

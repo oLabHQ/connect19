@@ -1,7 +1,8 @@
 <div class="gradient-background">
     {{#if isApproved}}
+    {{> header }} 
         <div class="container">
-            {{> header }}                   
+                              
             {{#posts}}     
                 <div class="post-main-block" id="{{post_id}}"> 
                     <div class="post-top-blck">
@@ -46,8 +47,14 @@
                     </div>
                 </div>            
             {{/posts}}
+            <form method="post" action="/add" enctype="multipart/form-data" class="post-form post-form--desktop">
+                <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
+                <img src="images/attachment.svg" id="img"/>
+                <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
+                <input name="submit" type="submit" value="send" class="post-form__button"/>
+            </form>
         </div>     
-            <form method="post" action="/add" enctype="multipart/form-data" class="post-form">
+            <form method="post" action="/add" enctype="multipart/form-data" class="post-form post-form--mobile">
                 <input type="text" name="description" placeholder="Post..." class="post-form__description"/>
                 <img src="images/attachment.svg" id="img"/>
                 <input type="file" name="postimage" class="post-form__file" id="file" placeholder="Write post...">
@@ -55,9 +62,6 @@
             </form>
                  
     {{else}}
-    <div class="header">        
-      <img src="../images/logo-new.svg" alt="" />
-    </div> 
-    <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
+     {{> thanks }}
     {{/if}}
 </div>
