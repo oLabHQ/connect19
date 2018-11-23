@@ -9,8 +9,9 @@ var bcrypt = require('bcryptjs');
 
 var Post = require('../models/post');
 var User = require('../models/user');
+var Flag = require('../models/postflags');
 
-var POSTS_RETURN_LIMIT = 2;
+var POSTS_RETURN_LIMIT = 5;
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
@@ -224,7 +225,7 @@ router.post('/reset-password/:token', function (req, res) {
 });
 
 
-
+/*
 // Post flags
 router.post('/', function (req, res) {
 	Post.findOne({ 'post_id': req.body.flag_post_id }, function (err, post) {
@@ -247,6 +248,35 @@ router.get('/flags', ensureAuthenticated, function (req, res) {
 			res.render('flags/index', { posts: posts, user: user[0].admin, users: user, isApproved: user[0].isApproved });
 		});
 	});
+});
+
+*/
+
+// Post Flags
+router.post('/', function(req, res){
+		var flagid =  req.body.flag_post_id;	
+		console.log(flagid);
+		var newFlag = new Flag({						
+			post_id: flagid				
+		});
+	
+		Flag.createFlag(newFlag, function(err, flag){
+			if(err) throw err;
+			req.flash('success', 'Your post is published');
+				res.redirect('/');					
+		});
+
+});
+
+
+
+// Get Flags
+router.get('/flags', ensureAuthenticated, function(req, res){
+	User.find({username: req.user.username}, function(err, user){
+	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"post_details"}},{$sort:{date:-1}}]).exec(function(err, posts){  
+		res.render('flags/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});					
+	});
+});
 });
 
 

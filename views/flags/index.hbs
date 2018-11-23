@@ -5,24 +5,26 @@
         <div class="common-title-block">        
         <i class="fas fa-flag"></i> <h1 class="common-title-block__title">{{this.groupname}}Flag posts</h1>        
     </div>
+    
         {{#if user}}
-            {{#each posts}}
-                <div class="flag-block" id="{{post_id}}">
-                    <div class="flag-block__inner">
-                    {{#each flag}}
-                        <div class="flag-block__author">
-                            {{this.author}}
+            {{#each posts}}                
+                {{#each post_details}}
+                    {{this.post_id}}
+                    <div class="flag-block" id="{{post_id}}">
+                        <div class="flag-block__inner">                      
+                            <div class="flag-block__author">
+                                {{this.author}}
+                            </div>
+                                {{#if postimage}}
+                                    <div class="flag-block__featured-image">
+                                        <img src="/images/{{this.postimage}}" />
+                                    </div>
+                                {{/if}}
+                            <div class="flag-block__description">{{this.description}}</div>
+                            <a href="javascript:void(0);" class="trash-post">Trash</a>                        
                         </div>
-                            {{#if postimage}}
-                                <div class="flag-block__featured-image">
-                                    <img src="/images/{{this.postimage}}" />
-                                </div>
-                            {{/if}}
-                        <div class="flag-block__description">{{this.description}}</div>
-                        <a href="javascript:void(0);" class="trash-post">Trash</a>
-                    {{/each}}
                     </div>
-                </div>   
+                {{/each}}
             {{/each}}
         {{else}}
         <div class="header">        

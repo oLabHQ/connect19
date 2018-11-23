@@ -444,8 +444,8 @@ body {
 
 .wall-header {
   background-color: #e5eafc;
-  -webkit-box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
-          box-shadow: 0 2px 4px 0 rgba(197, 205, 232, 0.68);
+  -webkit-box-shadow: 0 2px 8px 0 rgba(197, 205, 232, 0.68);
+          box-shadow: 0 2px 8px 0 rgba(197, 205, 232, 0.68);
   position: fixed;
   width: 100%;
 }

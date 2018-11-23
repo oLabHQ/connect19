@@ -111,8 +111,9 @@ var admin = require('./routes/admin');
 var group = require('./routes/groups');
 var announcement = require('./routes/announcement');
 
-Handlebars.registerHelper('user_profile', function () {
-  console.log('this istest')
+
+Handlebars.registerHelper('user_profile', function() {
+  //console.log('this istest')
   //var emotion = Handlebars.escapeExpression(this.emotion),
   //   name = Handlebars.escapeExpression(this.name);
 });
