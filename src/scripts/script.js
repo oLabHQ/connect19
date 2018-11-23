@@ -43,7 +43,7 @@
     $(".flag-post").on("click", function(){
         var flag_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(flag_post_id);
+        console.log(flag_post_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({"flag_post_id": flag_post_id}),

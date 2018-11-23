@@ -20,16 +20,7 @@ var PostSchema = mongoose.Schema({
 	post_id:{
 		type: String,
 		default: shortid.generate
-	},
-	flag:[
-		{
-			"post_id": String,
-			"description": String,
-			"postimage": String,
-			"author":String,
-			"date": Date
-		}
-	],
+	},	
 	trash:[
 		{
 			"post_id": String,
