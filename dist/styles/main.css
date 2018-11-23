@@ -425,7 +425,7 @@ body {
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
-  z-index: 1;
+  z-index: 99;
   /* Sit on top */
   padding-top: 100px;
   /* Location of the box */
@@ -449,6 +449,7 @@ body {
           box-shadow: 0 2px 8px 0 rgba(197, 205, 232, 0.68);
   position: fixed;
   width: 100%;
+  z-index: 99;
 }
 
 .wall-header__connect-tab {
