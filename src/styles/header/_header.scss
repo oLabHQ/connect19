@@ -34,13 +34,17 @@
 }
 .wall-header__connect-tab{
     @extend %common-tab;
-    background-color: $color__primary--white;        
+    background-color: $color__primary--white;  
+    box-shadow: 1px -6px 14px 0 rgba(0,0,0,0.5);
+    z-index: 9;
+    position: relative;      
     display: inline-block;
     width: 41%;    
 }
 .wall-header__chat-tab{
     @extend %common-tab;
-    background-color: rgba(229,234,252,1);    
+    background-color: rgba(229,234,252,1);
+    border-right: rgba(255,255,255, 0.7) solid 1px; 
     display: inline-block;
     width: 38%;
 }
@@ -110,7 +114,7 @@ a.profile-block__edit-profile-btn{
     top: 0;
     transition: 0.5s;
     width: 0;  
-    z-index: 1;    
+    z-index: 99;    
 }
 .sidenav__in{
     padding:45px 35px;

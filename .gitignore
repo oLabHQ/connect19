@@ -38,6 +38,7 @@ jspm_packages/
 data/
 .sass-cache/
 log/
+dist/
 
 # TypeScript v1 declaration files
 typings/

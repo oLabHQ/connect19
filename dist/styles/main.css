@@ -318,13 +318,14 @@ body {
   display: block;
   list-style: none;
   white-space: nowrap;
-  padding: 10px;
+  padding: 10px 30px 10px 20px;
 }
 .flag-dropdown:hover .flag-dropdown__submenu li:hover {
   background-color: #08109b;
 }
 .flag-dropdown:hover .flag-dropdown__submenu li:hover i {
   color: #FFFFFF;
+  margin-right: 15px;
 }
 .flag-dropdown:hover .flag-dropdown__submenu li:hover a {
   color: #FFFFFF;
@@ -452,12 +453,17 @@ body {
 
 .wall-header__connect-tab {
   background-color: #FFFFFF;
+  -webkit-box-shadow: 1px -6px 14px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 1px -6px 14px 0 rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  position: relative;
   display: inline-block;
   width: 41%;
 }
 
 .wall-header__chat-tab {
   background-color: #e5eafc;
+  border-right: rgba(255, 255, 255, 0.7) solid 1px;
   display: inline-block;
   width: 38%;
 }
@@ -538,7 +544,7 @@ a.profile-block__edit-profile-btn {
   -webkit-transition: 0.5s;
   transition: 0.5s;
   width: 0;
-  z-index: 1;
+  z-index: 99;
 }
 
 .sidenav__in {
@@ -734,11 +740,18 @@ a.profile-block__edit-profile-btn {
 
 .post-form {
   border: #e5eafc solid 5px;
+  -webkit-box-shadow: 0 0px 10px 0 rgba(197, 205, 232, 0.68);
+          box-shadow: 0 0px 10px 0 rgba(197, 205, 232, 0.68);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   position: fixed;
-  bottom: 42px;
+  bottom: 0px;
   background-color: white;
   width: 100%;
 }
@@ -748,7 +761,7 @@ a.profile-block__edit-profile-btn {
   border: none;
   color: #89a9ff;
   outline: none;
-  padding: 10px;
+  padding: 6px;
   width: 80%;
 }
 
@@ -757,12 +770,18 @@ a.profile-block__edit-profile-btn {
 }
 
 .post-form__button {
-  background: url(../images/send.svg);
+  background: url(../images/arrow-btn.png);
+  background-repeat: no-repeat;
   border: none;
   text-indent: -99999;
   font-size: 0px;
-  height: 50px;
-  width: 50px;
+  height: 11px;
+  width: 11px;
+}
+
+#img {
+  color: #08109b;
+  width: 32px;
 }
 
 .flag-block__inner {
