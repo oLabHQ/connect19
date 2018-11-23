@@ -42,7 +42,7 @@
         });
 
         handlePostImagesNotFound();
-        getPostsOnListEnd(); // Check if end of list is in view then load more posts
+        getPostsOnListEnd(true); // Check if end of list is in view then load more posts
 
         // Loader
         $(".loading").hide();
@@ -71,43 +71,68 @@
     var _postsTemplate = null;
     var _reachedEndOfList = false;
 
-    function addPosts(postsRootData) {
+    function addPosts(postsRootData, callback) {
         if (!_postsTemplate) {
             $.get("/ajax-templates/posts.hbs", function (resp) {
                 console.log("Loading template");
                 _postsTemplate = Handlebars.compile(resp);
-                var html = _postsTemplate(postsRootData);
-                $(".post-container").append(html);
-                handlePostImagesNotFound();
+
+                addPostsFromTemplate(postsRootData, callback);
             });
+        } else {
+            addPostsFromTemplate(postsRootData, callback);
         }
     }
 
-    function getPostsOnListEnd() {
-        if ($(this).scrollTop() >= $(document).height() - $(window).height() + 200) {
+    function addPostsFromTemplate(postsRootData, callback) {
+        var html = _postsTemplate(postsRootData);
+        $(".container").append(html);
+        handlePostImagesNotFound();
+        if (callback) {
+            callback();
+        }
+    }
+
+    function getPostsOnListEnd(isFirstRun) {
+        var scrollReference = $(".gradient-background");
+        var scrollContainer = $(".container");
+        console.log(scrollReference.scrollTop(), scrollContainer.height(), $(window).height())
+        var isScrolledBottom = (scrollReference.scrollTop() + $(window).height()) >= scrollContainer.height()
+        var isNotScrolledButHitBottom = $(document).height() == $(window).height() && isFirstRun == true;
+        console.log(isScrolledBottom, isNotScrolledButHitBottom);
+        console.log("!_reachedEndOfList", !_reachedEndOfList);
+        console.log("!_isLoadingPosts", !_isLoadingPosts);
+        console.log("$('.post-container').length > 0", $(".post-container").length > 0);
+        if (isScrolledBottom) {
             if ($(".post-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
 
                 console.log("Getting Posts");
                 _isLoadingPosts = true;
-                $("#infinite-loader").show();
+                $(".infinite-loader").show();
 
                 $.ajax({
                     method: "GET",
                     url: "/posts?page=" + (_currentPostsPage + 1),
                     contentType: "application/json",
                     success: function (result) {
-                        _isLoadingPosts = false;
+
                         _currentPostsPage++;
                         console.log("Current Page: ", _currentPostsPage);
                         var postsResult = JSON.parse(result);
 
                         if (postsResult && postsResult.posts && postsResult.posts.length > 0) {
-                            addPosts(postsResult);
+                            addPosts(postsResult, function () {
+                                _isLoadingPosts = false;
+                                $(".infinite-loader").hide();
+
+                                getPostsOnListEnd(); // Recursively Call until it doesn't satisfy loading issues;
+                            });
                         } else {
                             _reachedEndOfList = true;
+                            _isLoadingPosts = false;
+                            $(".infinite-loader").hide();
                         }
-
-                        $("#infinite-loader").hide();
+                        
                     }
                 });
             }
@@ -115,8 +140,6 @@
     }
 
     $(".gradient-background").scroll(function () {
-        // console.log($(this).scrollTop(),  $(document).height() - $(window).height() + 200);
-        // console.log($(".gradient-background").scrollTop() + " | " + $(document).height());
         getPostsOnListEnd();
     });
 

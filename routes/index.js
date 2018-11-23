@@ -10,7 +10,7 @@ var bcrypt = require('bcryptjs');
 var Post = require('../models/post');
 var User = require('../models/user');
 
-var POSTS_RETURN_LIMIT = 5;
+var POSTS_RETURN_LIMIT = 2;
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
@@ -32,7 +32,6 @@ router.get('/posts', ensureAuthenticated, function (req, res) {
 
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
 		Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $skip: ( (page - 1) * POSTS_RETURN_LIMIT ) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT } ]).exec(function (err, posts) {
-			console.log(JSON.stringify({ posts: posts }))
 			res.send(JSON.stringify({ posts: posts }));
 		});
 	});
