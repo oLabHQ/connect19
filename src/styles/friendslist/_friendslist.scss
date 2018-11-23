@@ -12,6 +12,11 @@
     padding-bottom: 15px;
     justify-content: space-between;    
 }
+.friend-list__friends{
+    color: $color__purple;
+    font-size: em(14px);
+    margin-right: 5px;
+}
 .friend-list-top{
     align-items: center;
     display: flex;

@@ -1,7 +1,6 @@
 {{#if isApproved}}
-<div class="container">
-    {{> header }}
-
+{{> header }}
+<div class="container">    
     {{#if success_msg}}
             <div class="alert alert-success">{{success_msg}}</div>
           {{/if}}
@@ -69,10 +68,7 @@
           <h2 class="not-approved-text">You are not authorised to see this page</h2>
     {{/if}}
    {{else}}
-            <div class="header">        
-                <img src="../images/logo-new.svg" alt="" />
-            </div> 
-            <h2 class="not-approved-text">Admin has not approved you as Connect19 user yet</h2>
+     {{> thanks }}
     {{/if}}
     <div id="notify"></div>
     </div>

@@ -1,7 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Open Sans";
+  margin: 0;
+  padding: 0;
+}
+
 /* Posts Loader */
 .posts-loader {
   background: none !important;
 }
+
+%common-btn{
+    background: $color__dark-blue;
+    border: none;
+    border-radius: 27px;
+    box-shadow: 0 4px 5px 0 rgba(78,26,175,.26);
+    color: #fff;
+    display: block;
+    font-size: .8571428571em;
+    font-weight: 400;
+    margin-top: 50px;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+}
+.image-background{
+    background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
+    height: 100vh;
+    width: 100%;
+}
+.image-background-signup{
+    background: linear-gradient(225deg, #C27BFF 0%, #97B3FF 100%);
+    width: 100%;    
+}
+.gradient-background{
+    background: linear-gradient(0deg, rgba(229,249,255,0.24) 0%, rgba(97,134,240,0.28) 100%);    
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;    
+    width: 100%;
+}
+.profile-background{
+    background: linear-gradient(180deg, rgba(208,233,249,1) 0%, rgba(98,136,240,1) 100%);
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;    
+    width: 100%;
+}
+.container{
+    max-width: 750px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+.container-login{
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 15px;
+}
+.header{
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+.alert{
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-error{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.alert-success{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.flag-post{
+    font-size: 12px;
+    text-decoration: none;    
+}
+.btn-blue-common{
+    @extend %common-btn;
+}
+.common-title-block{
+    background: $color__primary--white;
+    text-align: center;
+    padding: 10px 0;
+    i{
+        color: $color__dark-blue;
+    }
+}
+.common-title-block__title{
+    color: $color__purple;
+    display: inline-block;
+    font-size: em(12px);
+    font-weight: 600;
+    line-height: 17px;
+    margin-left: 5px;
+}
+.search-box{
+    position: relative;
+    .fa-search{
+         color: $color__primary;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+}
+.search-box__input{
+    border: none;
+    border-bottom: 1px solid rgba(137,169,253,.35);
+    color: $color__primary;
+    font-size: em(14px);
+    padding: 10px;
+    width: 100%;
+}
+.post-form--desktop{
+    display: none;
+}
+.refresh-btn{
+    border-color: $color__dark-blue !important;
+    color: $color__dark-blue !important;
+    margin-bottom: 30px;
+    margin-top: 15px !important;
+}
+
 
 .posts-loader img {
   display: block;
@@ -89,6 +218,61 @@
     transform: rotate(360deg);
   }
 }
+.flag-dropdown{
+    list-style: none;
+    position: relative;
+    right: 0px;
+    color: $color__primary;
+}
+.flag-dropdown__submenu{
+    display: none;    
+    position: absolute;
+    padding: 0;
+    margin: 0;  
+    right: 0;
+    font-size: 14px;
+    a{
+        color: $color__purple;
+        text-decoration: none;
+    }
+    i{
+        color: $color__dark-blue;
+    }
+    input{
+        position: absolute;
+        width: 100%;        
+    }
+}
+.flag-dropdown:hover{
+    .flag-dropdown__submenu{
+    display: block;
+    background-color: #e5eafc;
+    li{
+          display: block;
+          list-style: none;
+          white-space: nowrap;
+          padding: 10px;
+          &:hover{
+            background-color: $color__dark-blue;        
+            i{
+                color: $color__primary--white;
+            }
+            a{
+                color: $color__primary--white;
+            }
+            button{
+                color: $color__primary--white;
+            }
+        }
+  }
+}
+}
+//Placeholder stylize
+.search-box__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $color__primary;
+    font-size: em(13px);
+    opacity: 0.5;
+  }
 @-moz-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -136,105 +320,6 @@
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  font-family: "Open Sans";
-  margin: 0;
-  padding: 0;
-}
-.image-background {
-  background: linear-gradient(225deg, #c27bff 0%, #97b3ff 100%);
-  height: 100vh;
-  width: 100%;
-}
-.image-background-signup {
-  background: linear-gradient(225deg, #c27bff 0%, #97b3ff 100%);
-  width: 100%;
-}
-.gradient-background {
-  background: linear-gradient(
-    0deg,
-    rgba(229, 249, 255, 0.24) 0%,
-    rgba(97, 134, 240, 0.28) 100%
-  );
-  height: 100%;
-  overflow-y: scroll;
-  position: fixed;
-  width: 100%;
-}
-.profile-background {
-  background: linear-gradient(
-    180deg,
-    rgba(208, 233, 249, 1) 0%,
-    rgba(98, 136, 240, 1) 100%
-  );
-  height: 100%;
-  overflow-y: scroll;
-  position: fixed;
-  width: 100%;
-}
-.container {
-  max-width: 750px;
-  margin: 0 auto;
-}
-.container-login {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 15px;
-}
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-.alert-error {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-}
-.alert-success {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
-.flag-post {
-  font-size: 12px;
-  text-decoration: none;
-}
-.btn-blue-common {
-  background: $color__dark-blue;
-  border: none;
-  border-radius: 27px;
-  box-shadow: 0 4px 5px 0 rgba(78, 26, 175, 0.26);
-  color: #fff;
-  display: block;
-  font-size: 0.8571428571em;
-  font-weight: 400;
-  margin-top: 50px;
-  padding: 10px 20px;
-  text-decoration: none;
-  text-align: center;
-  width: 100%;
-}
-.common-title-block {
-  background: $color__primary--white;
-  text-align: center;
-  padding: 10px 0;
-  i {
-    color: $color__dark-blue;
-  }
-}
-.common-title-block__title {
-  color: $color__purple;
-  display: inline-block;
-  font-size: em(12px);
-  font-weight: 600;
-  line-height: 17px;
-  margin-left: 5px;
 }
 .search-box {
   position: relative;

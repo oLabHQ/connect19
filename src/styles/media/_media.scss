@@ -6,4 +6,15 @@
     .group-invitation-block__accept-invitation{
         width: auto;
     }
+    .post-form--desktop{
+        display: flex;
+        width: 750px;
+    }
+    .post-form__description{
+        width: 85%;
+    }
+    .post-form--mobile{
+        display: none;
+    }
+    
 }

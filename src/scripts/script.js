@@ -86,7 +86,7 @@
 
     function addPostsFromTemplate(postsRootData, callback) {
         var html = _postsTemplate(postsRootData);
-        $(".container").append(html);
+        $(".all-post-container").append(html);
         handlePostImagesNotFound();
         if (callback) {
             callback();
@@ -96,13 +96,12 @@
     function getPostsOnListEnd(isFirstRun) {
         var scrollReference = $(".gradient-background");
         var scrollContainer = $(".container");
-        console.log(scrollReference.scrollTop(), scrollContainer.height(), $(window).height())
-        var isScrolledBottom = (scrollReference.scrollTop() + $(window).height()) >= scrollContainer.height()
-        var isNotScrolledButHitBottom = $(document).height() == $(window).height() && isFirstRun == true;
-        console.log(isScrolledBottom, isNotScrolledButHitBottom);
-        console.log("!_reachedEndOfList", !_reachedEndOfList);
-        console.log("!_isLoadingPosts", !_isLoadingPosts);
-        console.log("$('.post-container').length > 0", $(".post-container").length > 0);
+        var isScrolledBottom = (scrollReference.scrollTop() + $(window).height()) >= scrollContainer.height();
+        // var isNotScrolledButHitBottom = $(document).height() == $(window).height() && isFirstRun == true;
+        // console.log(isScrolledBottom, isNotScrolledButHitBottom);
+        // console.log("!_reachedEndOfList", !_reachedEndOfList);
+        // console.log("!_isLoadingPosts", !_isLoadingPosts);
+        // console.log("$('.post-container').length > 0", $(".post-container").length > 0);1
         if (isScrolledBottom) {
             if ($(".post-container").length > 0 && !_isLoadingPosts && !_reachedEndOfList) { // Check if posts container exists
 
@@ -162,7 +161,7 @@
     $(".pending-request__accept-btn").on("click", function () {
         var friend_member_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(friend_member_id);
+        console.log(friend_member_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "member_id": friend_member_id }),
@@ -604,4 +603,30 @@ function filterUser() {
 
 
 
+// Show hide menu
+var modal2 = document.getElementById("modal2");
+
+  function openNav() {        
+    document.getElementById("mySidenav").style.width = "250px";
+    console.log(modal2);
+    modal2.style.display = "block";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        document.getElementById("mySidenav").style.width = "0";
+        modal2.style.display = "none";
+    }
+};
+ 
+  // Refresh a page
+  function Refresh() {
+    window.parent.location = window.parent.location.href;
+}
 

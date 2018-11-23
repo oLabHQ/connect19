@@ -1,0 +1,24 @@
+.footer{
+    align-items: center;
+    background-color: $color__primary--light;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+}
+.footer__list{
+    list-style: none;
+    text-align: center;
+    width: 33%;
+    a{
+        color: $color__blue;
+        display: inline-block;
+        font-size: em(10px);
+        font-weight: 800;
+        padding: 13px;
+        text-decoration: none;
+    }
+}

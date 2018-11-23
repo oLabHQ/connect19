@@ -3,12 +3,12 @@
         <a href="/" class="wall-header__connect-tab loader-click">The Wall</a>
         <a href="/friends" class="wall-header__chat-tab loader-click">Chat</a>
         <div class="drop-menu">
-            <a href="javascript:void(0)" onclick="openNav()"><img src="/images/menu-new.svg" class="drop-menu__button" /></a>
+            <a href="javascript:void(0)" onclick="openNav()" id="myBtn2"><img src="/images/menu-new.svg" class="drop-menu__button" /></a>
         </div> 
-
+<div id="modal2"></div>
     <div id="mySidenav" class="sidenav">
         <div class="sidenav__in">            
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" id="close2">&times;</a>
 
         {{!-- {{#each users}}
             {{#each user_profile}}
@@ -37,25 +37,16 @@
         {{/each}}
 
         <div class="menu-link-block">
-            <a href="/conference-schedule" class="menu-link-block__link  loader-click"><i class="fas fa-calendar"></i> Conference Schedule</a>
-            <a href="/announcement" class="menu-link-block__link  loader-click"><i class="fas fa-volume-down"></i> Announcements</a>
-            <a href="/friends/users" class="menu-link-block__link  loader-click"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>            
-            <a href="/friends/friend-requests" class="menu-link-block__link  loader-click"><i class="fas fa-user"></i>  Friend Requests</a>
-            <a href="/groups" class="menu-link-block__link  loader-click"><i class="fas fa-users"></i>  Groups</a>
-            <a href="/groups/invitations" class="menu-link-block__link  loader-click"><i class="fas fa-users"></i>  Groups Invitations</a>            
-           {{#if isAdmin}} <a href="/admin" class="menu-link-block__link  loader-click"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>{{/if}}
-           <a href="/users/logout" class="menu-link-block__link  loader-click"><i class="fas fa-sign-out-alt"></i> Logut</a>
+            <a href="/conference-schedule" class="menu-link-block__link loader-click"><i class="fas fa-calendar"></i> Conference Schedule</a>
+            <a href="/announcement" class="menu-link-block__link loader-click"><i class="fas fa-volume-down"></i> Announcements</a>
+            <a href="/friends/users" class="menu-link-block__link loader-click"><i class="fa fa-search" aria-hidden="true"></i> Discover People</a>            
+            <a href="/friends/friend-requests" class="menu-link-block__link loader-click"><i class="fas fa-user"></i>  Friend Requests</a>
+            <a href="/groups" class="menu-link-block__link loader-click"><i class="fas fa-users"></i>  Groups</a>
+            <a href="/groups/invitations" class="menu-link-block__link loader-click"><i class="fas fa-users"></i>  Groups Invitations</a>            
+           {{#if isAdmin}} <a href="/admin" class="menu-link-block__link loader-click"><i class="fa fa-cog" aria-hidden="true"></i>  Admin</a>{{/if}}
+           <a href="/users/logout" class="menu-link-block__link loader-click"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>  
     </div>
-</div>
+    </div>
 </div>
 
-<script>
-     function openNav() {        
-        document.getElementById("mySidenav").style.width = "250px";
-    }
-    
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>

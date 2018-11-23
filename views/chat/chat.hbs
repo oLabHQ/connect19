@@ -1,13 +1,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 <div class="gradient-background">
     {{> header }}
+    <div class="container">
     <a href="/friends"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a>    
     <div id="chat_section_wrapper" data-id="{{chat_friend.member_id}}" data-name="{{user.username}}">
         <div class="all_Chat_messages"></div>
     </div>
     <input id="send_message_input" type="text" class="post-form__description" placeholder="Send message..">
 </div>  <!-- Gradient Background -->
-
+</div>
 <script>
   var socket = io();
   socket.emit('attach_user_info', {"member_id": "{{user.member_id}}", "user_name":"{{user.username}}"});

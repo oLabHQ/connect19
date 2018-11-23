@@ -52,12 +52,12 @@ var UserSchema = mongoose.Schema({
 	},
 	friends:[
 		{
-			"member_id": String,		
+			type: String,		
 		}
 	],
 	friend_requests: [
 		{
-			"member_id": String,			
+			type: String,			
 		}
 	],
 	group_invitation:[

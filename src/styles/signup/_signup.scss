@@ -39,6 +39,7 @@
 .signup-btn{
     @extend %login-signup-button;
     background: $color__dark-blue;    
+    border: $color__dark-blue solid 1px;
     display: block;    
     font-weight: normal;
     margin-top: 10px;
@@ -69,4 +70,6 @@
 .background-color--blue{
     background-color: $color__dark-blue;
     border: none;
+    border: $color__dark-blue solid 1px;
+    padding: 12px 20px;
 }
