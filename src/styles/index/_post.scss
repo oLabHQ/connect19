@@ -58,16 +58,16 @@
     max-width: 100%;
 }
 .post-form{
+    border: $color__primary--light solid 5px ;
     display: flex;
     position: fixed;
-    bottom: 0;
+    bottom:42px;
     background-color: rgba(255,255,255,1);
     width: 100%;
 }
 .post-form__description{
     background-color: transparent;
-    border: none;
-    border-top: 2px solid rgba(137,169,253, 1);
+    border: none;    
     color: $color__primary;
     outline: none;    
     padding: 10px;

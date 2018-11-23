@@ -625,11 +625,12 @@ a.profile-block__edit-profile-btn {
 }
 
 .post-form {
+  border: #e5eafc solid 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: fixed;
-  bottom: 0;
+  bottom: 42px;
   background-color: white;
   width: 100%;
 }
@@ -637,7 +638,6 @@ a.profile-block__edit-profile-btn {
 .post-form__description {
   background-color: transparent;
   border: none;
-  border-top: 2px solid #89a9fd;
   color: #89a9ff;
   outline: none;
   padding: 10px;
@@ -1764,6 +1764,37 @@ a.profile-block__edit-profile-btn {
 */
 .usr_msg_box p {
   margin: 0;
+}
+
+.footer {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #e5eafc;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.footer__list {
+  list-style: none;
+  text-align: center;
+  width: 33%;
+}
+.footer__list a {
+  color: #4aabef;
+  display: inline-block;
+  font-size: 0.7142857143em;
+  font-weight: 800;
+  padding: 13px;
+  text-decoration: none;
 }
 
 .modal {
