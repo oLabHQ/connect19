@@ -298,12 +298,16 @@ body {
   right: 0;
   font-size: 14px;
 }
+.flag-dropdown__submenu li {
+  padding: 10px 30px 10px 20px;
+}
 .flag-dropdown__submenu a {
   color: #8900ff;
   text-decoration: none;
 }
 .flag-dropdown__submenu i {
   color: #08109b;
+  margin-right: 15px;
 }
 .flag-dropdown__submenu input {
   position: absolute;
@@ -782,7 +786,6 @@ a.profile-block__edit-profile-btn {
 
 #img {
   color: #08109b;
-  width: 32px;
 }
 
 .flag-block__inner {

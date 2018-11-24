@@ -231,12 +231,16 @@ body {
     margin: 0;  
     right: 0;
     font-size: 14px;
+    li{
+      padding: 10px 30px 10px 20px;
+    }
     a{
         color: $color__purple;
         text-decoration: none;
     }
     i{
         color: $color__dark-blue;
+        margin-right: 15px;
     }
     input{
         position: absolute;

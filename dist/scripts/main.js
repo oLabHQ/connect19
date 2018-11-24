@@ -570,6 +570,10 @@
         input[value_2] = temp;
     }
 
+    $(".flag-dropdown li i").click(function(){
+        $(this).closest('.flag-dropdown__submenu').slideToggle();
+    })
+
 }());
 
 // Filter User
