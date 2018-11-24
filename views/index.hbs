@@ -20,19 +20,26 @@
                             {{/each}}
                         </div>
                         <div class="author-block__date">{{moment date format="HH:mm"}}</div>
-                    </div>
+                    </div>                 
                     <ul class="flag-dropdown">
-                        <li><i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
+                        <li>   {{#if ispinned}}<i class="fa fa-map-pin" aria-hidden="true"></i> {{/if}}<i class="fa fa-ellipsis-h" aria-hidden="true" title="flag this post"></i>
                             <ul class="flag-dropdown__submenu">
-                                <!--        {{#if ../isAdmin}}
-                                    <li id="{{this.post_id}}">                                     
-                                            {{#if ispinned}}
-                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" checked/> Pinned
+                                       {{#if ../isAdmin}}
+                                    <li id="{{this.post_id}}" class="{{#if ispinned}}pinned {{/if}}">    
+                                                              
+                                            {{#if ispinned}} 
+                                            <label class="pin-checkbox-block"  id="{{this.post_id}}">
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpostwall" class="pinpostwall pin-checkbox-block__checbox" checked/> 
+                                                <span class="pin-checkbox-block__checkmark"></span>
+                                                </label>
                                             {{else}}
-                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpost" class="pinpost" /> Pin post
+                                                <label class="pin-checkbox-block"  id="{{this.post_id}}">
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i> <input type="checkbox" name="pinpostwall" class="pinpostwall pin-checkbox-block__checbox" /> 
+                                                <span class="pin-checkbox-block__checkmark"></span>
+                                                </label>
                                             {{/if}}                                   
                                     </li>
-                                 {{/if}}  -->
+                                 {{/if}}  
                                 <li id="{{this.post_id}}">
                                     <i class="fa fa-flag" aria-hidden="true"></i> <a href="javascript:void(0);" class="flag-post">Flag
                                         Post</a>

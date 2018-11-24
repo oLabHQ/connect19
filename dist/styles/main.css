@@ -289,17 +289,33 @@ body {
   right: 0px;
   color: #89a9ff;
 }
+.flag-dropdown li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.flag-dropdown li i {
+  margin-left: 8px;
+  font-size: 12px;
+}
 
 .flag-dropdown__submenu {
+  background-color: #e5eafc;
   display: none;
+  font-size: 14px;
   position: absolute;
   padding: 0;
   margin: 0;
   right: 0;
-  font-size: 14px;
+  top: 20px;
 }
 .flag-dropdown__submenu li {
-  padding: 10px 30px 10px 20px;
+  list-style: none;
+  white-space: nowrap;
+  padding: 10px 30px 10px 15px;
 }
 .flag-dropdown__submenu a {
   color: #8900ff;
@@ -315,14 +331,7 @@ body {
 }
 
 .flag-dropdown:hover .flag-dropdown__submenu {
-  display: block;
   background-color: #e5eafc;
-}
-.flag-dropdown:hover .flag-dropdown__submenu li {
-  display: block;
-  list-style: none;
-  white-space: nowrap;
-  padding: 10px 30px 10px 20px;
 }
 .flag-dropdown:hover .flag-dropdown__submenu li:hover {
   background-color: #08109b;
@@ -338,6 +347,103 @@ body {
   color: #FFFFFF;
 }
 
+.pinned {
+  background-color: #08109b;
+}
+.pinned i {
+  color: #FFFFFF;
+}
+.pinned .pin-checkbox-block__checkmark:after {
+  color: #FFFFFF;
+}
+
+.pin-checkbox-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+.pin-checkbox-block:hover input ~ .pin-checkbox-block__checkmark {
+  background-color: $color__purple;
+}
+*/
+.pin-checkbox-block__checbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/*
+.pin-checkbox-block__checkmark{ 
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+   background-color: $color__purple; 
+}*/
+/*
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark {
+  background-color: $color__purple;
+}
+*/
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark:after {
+  display: block;
+}
+
+.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark::before {
+  display: none;
+}
+
+.pin-checkbox-block__checkmark:after {
+  content: "Pinned";
+  color: #8900ff;
+  position: absolute;
+  display: none;
+  font-size: 12px;
+  top: -3px;
+}
+
+/*
+.pin-checkbox-block__checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+*/
+.pin-checkbox-block__checkmark:before {
+  content: "Pin Post";
+  color: #8900ff;
+  position: absolute;
+  display: block;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/*
+.pin-checkbox-block__checkmark:before {
+  left: 8px;
+  top: 8px;    
+  border: solid white;
+  border-width: 5px;    
+}
+*/
 .search-box__input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #89a9ff;
@@ -1276,92 +1382,6 @@ a.profile-block__edit-profile-btn {
   width: 100%;
 }
 
-.pin-checkbox-block {
-  display: inline-block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/*
-.pin-checkbox-block:hover input ~ .pin-checkbox-block__checkmark {
-    background-color: $color__purple;
-}
-*/
-.pin-checkbox-block__checbox {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.pin-checkbox-block__checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  /*   background-color: $color__purple; */
-}
-
-/*
-.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark {
-    background-color: $color__purple;
-}
-*/
-.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark:after {
-  display: block;
-}
-
-.pin-checkbox-block__checbox:checked ~ .pin-checkbox-block__checkmark::before {
-  display: none;
-}
-
-.pin-checkbox-block__checkmark:after {
-  content: "Pinned";
-  color: #8900ff;
-  position: absolute;
-  display: none;
-  font-size: 12px;
-}
-
-/*
-.pin-checkbox-block__checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-*/
-.pin-checkbox-block__checkmark:before {
-  content: "Pin Post";
-  color: #8900ff;
-  position: absolute;
-  display: block;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-/*
-.pin-checkbox-block__checkmark:before {
-    left: 8px;
-    top: 8px;    
-    border: solid white;
-    border-width: 5px;    
-}
-*/
 .group-block__invite {
   color: #08109b;
   text-decoration: none;

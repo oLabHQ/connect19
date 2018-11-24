@@ -16,7 +16,7 @@ var POSTS_RETURN_LIMIT = 5;
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
-		Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+		Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: {ispinned:-1, date: -1 } }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
 			//	Post.find({trashed:"N"},function(err, posts){
 			//console.log(req.user.user_profile[0].profilepic);
 			//console.log(user);
@@ -62,6 +62,19 @@ router.post('/add', ensureAuthenticated,  upload.single('postimage'), function(r
 			res.redirect('/');					
 	});
 	 
+});
+
+
+// Pin Wall Posts
+router.post('/pinpostwall', function(req, res){
+    var post_id = req.body.post_id;
+    var pin_value = req.body.pin_value;
+     console.log(post_id);
+    console.log(pin_value);    
+    Post.update({post_id:post_id},{$set:{ispinned:pin_value}}, function(err, pinned){
+     
+        res.render('index', {isPinned: pinned});    
+    });
 });
 
 // Forgot-Password template

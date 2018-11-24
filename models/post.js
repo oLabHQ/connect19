@@ -20,7 +20,11 @@ var PostSchema = mongoose.Schema({
 	post_id:{
 		type: String,
 		default: shortid.generate
-	},	
+	},
+	ispinned:{
+		type: Boolean,
+		default: 'false'
+	},
 	trash:[
 		{
 			"post_id": String,

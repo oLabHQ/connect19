@@ -181,17 +181,17 @@
     $(".flag-post").on("click", function () {
         var flag_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        console.log(flag_post_id);
+       // console.log(flag_post_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "flag_post_id": flag_post_id }),
             contentType: 'application/json',
             url: "/",
             success: function () {
-                console.log('This post has been flagged');
+               // console.log('Flagged');
             },
             complete: function (data) {
-                clicked_button.html('This post has been flagged').attr("disabled", "disabled");
+                clicked_button.html('Flagged').attr("disabled", "disabled");
             }
         });
     });
@@ -208,10 +208,10 @@
             contentType: 'application/json',
             url: "/flags",
             success: function () {
-                console.log('This post has been trashed');
+             //   console.log('This post has been trashed');
             },
             complete: function (data) {
-                clicked_button.html('This post has been trashed').attr("disabled", "disabled");
+                clicked_button.html('Trashed').attr("disabled", "disabled");
             }
         });
     });
@@ -227,10 +227,10 @@
             contentType: 'application/json',
             url: "/trash",
             success: function () {
-                console.log('This post has been untrashed');
+                //console.log('Untrashed');
             },
             complete: function (data) {
-                clicked_button.html('This post has been untrashed').attr("disabled", "disabled");
+                clicked_button.html('Untrashed').attr("disabled", "disabled");
             }
         });
     });
@@ -247,11 +247,11 @@
             contentType: 'application/json',
             url: "/trash/delete",
             success: function () {
-                console.log('This post has been Deleted');
+              //  console.log('This post has been Deleted');
                 $('.trash-block').hide();
             },
             complete: function () {
-                clicked_button.html('This post has been Deleted').attr("disabled", "disabled");
+                clicked_button.html('Deleted').attr("disabled", "disabled");
             }
         });
     });
@@ -314,10 +314,10 @@
             contentType: 'application/json',
             url: "/groups/" + group_id,
             success: function () {
-                console.log('This group post has been flagged');
+              //  console.log('This group post has been flagged');
             },
             complete: function (data) {
-                clicked_button.html('This post has been flagged').attr("disabled", "disabled");
+                clicked_button.html('Flagged').attr("disabled", "disabled");
             }
         });
     });
@@ -328,18 +328,18 @@
         var group_id = $("#group-id").attr("data-id");
         var trash_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        console.log(trash_post_id);
-        console.log(group_id);
+        // console.log(trash_post_id);
+        // console.log(group_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "trash_post_id": trash_post_id }),
             contentType: 'application/json',
             url: "/groups/" + group_id + "/flags",
             success: function () {
-                console.log('This post has been trashed');
+              //  console.log('This post has been trashed');
             },
             complete: function (data) {
-                clicked_button.html('This post has been trashed').attr("disabled", "disabled");
+                clicked_button.html('Trashed').attr("disabled", "disabled");
             }
         });
     });
@@ -357,10 +357,10 @@
             contentType: 'application/json',
             url: "/groups/" + group_id + "/trash",
             success: function () {
-                console.log('This Group post has been untrashed');
+             //   console.log('This Group post has been untrashed');
             },
             complete: function (data) {
-                clicked_button.html('This post has been untrashed').attr("disabled", "disabled");
+                clicked_button.html('Untrashed').attr("disabled", "disabled");
             }
         });
     });
@@ -378,11 +378,11 @@
             contentType: 'application/json',
             url: "/groups/" + group_id + "/trash/delete",
             success: function () {
-                console.log('This group post has been Deleted');
+             //   console.log('This group post has been Deleted');
                 $('.trash-block').hide();
             },
             complete: function () {
-                clicked_button.html('This post has been Deleted').attr("disabled", "disabled");
+                clicked_button.html('Deleted').attr("disabled", "disabled");
             }
         });
     });
@@ -409,21 +409,43 @@
     });
 
 
+     // Pin  Post  
+     $(".pinpostwall").on("change", function () {
+        var pin_value = $(this).is(":checked");
+        //var admin_user_id = $(this).attr("id");
+        var post_id = $(this).parent().attr("id");
+      //  console.log(pin_value);
+      //  console.log(post_id);
+        $.ajax({
+            method: "POST",
+            data: JSON.stringify({ "post_id": post_id, "pin_value": pin_value }),
+            contentType: 'application/json',
+            url: "/pinpostwall",
+            success: function () {
+                $('#notify').show().html("Pinned");
+              //  console.log('This post has pinned');
+            },
+            complete: function () {
+
+            }
+        });
+    });
+
     // Pin Group
     $(".pingroup").on("change", function () {
         var pin_value = $(this).is(":checked");
         //var admin_user_id = $(this).attr("id");
         var group_id = $(this).parent().attr("id");
-        console.log(pin_value);
-        console.log(group_id);
+       // console.log(pin_value);
+       // console.log(group_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "group_id": group_id, "pin_value": pin_value }),
             contentType: 'application/json',
             url: "/groups/pingroup",
             success: function () {
-                $('#notify').show().html("This group has pinned");
-                console.log('This group has pinned');
+                $('#notify').show().html("Pinned");
+               // console.log('This group has pinned');
             },
             complete: function () {
 
@@ -436,22 +458,23 @@
         var pin_value = $(this).is(":checked");
         //var admin_user_id = $(this).attr("id");
         var post_id = $(this).parent().attr("id");
-        console.log(pin_value);
-        console.log(post_id);
+       // console.log(pin_value);
+       // console.log(post_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "post_id": post_id, "pin_value": pin_value }),
             contentType: 'application/json',
             url: "/groups/pinpost",
             success: function () {
-                $('#notify').show().html("This group has pinned");
-                console.log('This group has pinned');
+                $('#notify').show().html("Pinned");
+            //    console.log('This group has pinned');
             },
             complete: function () {
 
             }
         });
     });
+    
 
 
     // Delete User from Connect19
@@ -465,7 +488,7 @@
             contentType: 'application/json',
             url: "/admin/delete-user",
             success: function () {
-                console.log('This User has been Deleted');
+              //  console.log('This User has been Deleted');
                 $('.trash-block').hide();
             },
             complete: function () {
@@ -571,7 +594,7 @@
     }
 
     $(".flag-dropdown li i").click(function(){
-        $(this).closest('.flag-dropdown__submenu').slideToggle();
+        $(this).next('.flag-dropdown__submenu').slideToggle();
     })
 
 }());
