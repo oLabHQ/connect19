@@ -297,9 +297,13 @@ body {
       -ms-flex-align: center;
           align-items: center;
 }
+.flag-dropdown li i.fa-map-pin {
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
+}
 .flag-dropdown li i {
-  margin-left: 8px;
   font-size: 12px;
+  margin-left: 8px;
 }
 
 .flag-dropdown__submenu {
@@ -316,6 +320,7 @@ body {
   list-style: none;
   white-space: nowrap;
   padding: 10px 30px 10px 15px;
+  width: 120px;
 }
 .flag-dropdown__submenu a {
   color: #8900ff;

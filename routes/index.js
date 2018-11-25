@@ -267,17 +267,20 @@ router.get('/flags', ensureAuthenticated, function (req, res) {
 
 // Post Flags
 router.post('/', function(req, res){
-		var flagid =  req.body.flag_post_id;	
+		var flagid =  req.body.flag_post_id;
+		var authorid = req.body.author_id;
 		console.log(flagid);
+		console.log(authorid);
 		var newFlag = new Flag({						
-			post_id: flagid				
+			post_id: flagid,
+			author_id:	authorid
 		});
 	
 		Flag.createFlag(newFlag, function(err, flag){
 			if(err) throw err;
 			req.flash('success', 'Your post is published');
 				res.redirect('/');					
-		});
+		}); 
 
 });
 
@@ -286,7 +289,8 @@ router.post('/', function(req, res){
 // Get Flags
 router.get('/flags', ensureAuthenticated, function(req, res){
 	User.find({username: req.user.username}, function(err, user){
-	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"post_details"}},{$sort:{date:-1}}]).exec(function(err, posts){  
+	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"post_details"}},{$sort:{date:-1}},{$lookup:{from:"users",localField:"author_id", foreignField:"member_id", as:"author_details"}}]).exec(function(err, posts){				
+		console.log(posts);
 		res.render('flags/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});					
 	});
 });

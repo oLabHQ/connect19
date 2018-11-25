@@ -226,9 +226,12 @@ body {
     li{
       display: flex;
       align-items: center;
+      i.fa-map-pin{
+        transform: rotate(30deg);
+      }
       i{
-        margin-left: 8px;
         font-size: 12px;
+        margin-left: 8px;        
       }
     }
 }
@@ -244,7 +247,8 @@ body {
     li{
       list-style: none;
       white-space: nowrap;
-      padding: 10px 30px 10px 15px;      
+      padding: 10px 30px 10px 15px;  
+      width: 120px;    
     }
     a{
         color: $color__purple;
@@ -268,7 +272,7 @@ body {
             background-color: $color__dark-blue;        
             i{
                 color: $color__primary--white;
-                margin-right: 15px;
+                margin-right: 15px;                
             }
             a{
                 color: $color__primary--white;

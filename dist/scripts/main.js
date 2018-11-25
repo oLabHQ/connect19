@@ -180,11 +180,13 @@
     // flag-post
     $(".flag-post").on("click", function () {
         var flag_post_id = $(this).parent().attr("id");
+        var author_id = $(this).attr("id"); 
+        console.log(author_id);
         var clicked_button = $(this);
        // console.log(flag_post_id);
         $.ajax({
             method: "POST",
-            data: JSON.stringify({ "flag_post_id": flag_post_id }),
+            data: JSON.stringify({ "flag_post_id": flag_post_id , "author_id": author_id}),
             contentType: 'application/json',
             url: "/",
             success: function () {
@@ -201,14 +203,14 @@
     $(".trash-post").on("click", function () {
         var trash_post_id = $(this).parent().attr("id");
         var clicked_button = $(this);
-        //console.log(trash_post_id);
+        console.log(trash_post_id);
         $.ajax({
             method: "POST",
             data: JSON.stringify({ "trash_post_id": trash_post_id }),
             contentType: 'application/json',
             url: "/flags",
             success: function () {
-             //   console.log('This post has been trashed');
+                console.log('This post has been trashed');
             },
             complete: function (data) {
                 clicked_button.html('Trashed').attr("disabled", "disabled");
@@ -421,9 +423,10 @@
             data: JSON.stringify({ "post_id": post_id, "pin_value": pin_value }),
             contentType: 'application/json',
             url: "/pinpostwall",
-            success: function () {
+            success: function () {                
                 $('#notify').show().html("Pinned");
               //  console.log('This post has pinned');
+              $('.flag-dropdown__submenu li').removeClass('pinned');
             },
             complete: function () {
 

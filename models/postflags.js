@@ -5,7 +5,10 @@ var shortid = require('shortid');
 var FlagSchema = mongoose.Schema({
     post_id:{
 			type: String,		
-		}    
+        },
+    author_id:{
+            type: String
+        }
 });
 
 var Flag = module.exports = mongoose.model('Flag', FlagSchema);
