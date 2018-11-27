@@ -25,15 +25,6 @@ var PostSchema = mongoose.Schema({
 		type: Boolean,
 		default: 'false'
 	},
-	trash:[
-		{
-			"post_id": String,
-			"description": String,
-			"postimage": String,
-			"author":String,
-			"date": Date
-		}
-	],
 	trashed: {
 		type: String,
 		default: "N"

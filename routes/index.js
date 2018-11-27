@@ -10,6 +10,7 @@ var bcrypt = require('bcryptjs');
 var Post = require('../models/post');
 var User = require('../models/user');
 var Flag = require('../models/postflags');
+var Trash = require('../models/posttrash');
 
 var POSTS_RETURN_LIMIT = 5;
 
@@ -290,13 +291,34 @@ router.post('/', function(req, res){
 router.get('/flags', ensureAuthenticated, function(req, res){
 	User.find({username: req.user.username}, function(err, user){
 	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"post_details"}},{$sort:{date:-1}},{$lookup:{from:"users",localField:"author_id", foreignField:"member_id", as:"author_details"}}]).exec(function(err, posts){				
-		console.log(posts);
+		//console.log(posts);
 		res.render('flags/index', {posts:posts, user: user[0].admin, users: user, isApproved: user[0].isApproved});					
 	});
 });
 });
 
 
+
+// Post Wall Trash
+router.post('/flags', function(req, res){
+	var trashid =  req.body.trash_post_id;
+	var authorid = req.body.author_id;
+	console.log(trashid);
+	console.log(authorid);
+	var newTrash = new Trash({	
+		post_id: trashid,
+		author_id:	authorid
+	});
+
+	Trash.createTrash(newTrash, function(err, trash){
+		if(err) throw err;
+		req.flash('success', 'Your post is published');
+			res.redirect('/');					
+	}); 
+
+});
+
+/*
 // Post Trash
 router.post('/flags', function (req, res) {
 	Post.findOne({ 'post_id': req.body.trash_post_id }, function (err, post) {
@@ -306,7 +328,7 @@ router.post('/flags', function (req, res) {
 		})
 	});
 });
-
+*/
 
 // Get Trash
 router.get('/trash', ensureAuthenticated, function (req, res) {

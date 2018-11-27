@@ -202,15 +202,17 @@
     // Trash-post
     $(".trash-post").on("click", function () {
         var trash_post_id = $(this).parent().attr("id");
-        var clicked_button = $(this);
+        var author_id = $(this).attr("id");      
         console.log(trash_post_id);
+        console.log(author_id);
+        var clicked_button = $(this);
         $.ajax({
             method: "POST",
-            data: JSON.stringify({ "trash_post_id": trash_post_id }),
+            data: JSON.stringify({ "trash_post_id": trash_post_id, "author_id": author_id }),
             contentType: 'application/json',
             url: "/flags",
-            success: function () {
-                console.log('This post has been trashed');
+            success: function () {                
+                console.log('This post has been trashed'); 
             },
             complete: function (data) {
                 clicked_button.html('Trashed').attr("disabled", "disabled");

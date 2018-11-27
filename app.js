@@ -203,8 +203,20 @@ app.use('/announcement', announcement);
 // API
 var apiHomepage = require('./routes/api/homepage');
 var apiPost = require('./routes/api/posts');
+var apiFlag = require('./routes/api/flags');
+var apiTrash = require('./routes/api/trashs');
+var apiAnnouncement = require('./routes/api/announcements');
+var apiUsers = require('./routes/api/users');
+var apiFriends = require('./routes/api/friends');
+var apiGroups = require('./routes/api/groups');
 app.use('/api/homepage', apiHomepage);
 app.use('/api/posts', apiPost);
+app.use('/api/flags', apiFlag);
+app.use('/api/trashs', apiTrash);
+app.use('/api/announcements', apiAnnouncement);
+app.use('/api/users', apiUsers);
+app.use('/api/friends', apiFriends);
+app.use('/api/groups', apiGroups);
 // app.use('/api/homepage', apiHomepage);
 // app.use('/api/posts', apiPosts);
 
