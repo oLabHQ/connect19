@@ -44,7 +44,8 @@ router.get('/username', function (req, res) {
 
 router.post('/signup', function (req, res) {
     if (!req.body.username || !req.body.password || !req.body.email) {
-        res.json({ success: false, msg: 'Missing Registration Details (Username / Password / Email)' });
+        res.status(400).json({ success: false, msg: 'Missing Registration Details (Username / Password / Email)' });
+        return;
     } else {
         var newUser = new User({
             username: req.body.username,
@@ -54,7 +55,8 @@ router.post('/signup', function (req, res) {
         // save the user
         newUser.save(function (err) {
             if (err) {
-                return res.json({ success: false, msg: 'Username already exists.' });
+                res.status(400).json({ success: false, msg: 'Username already exists.' });
+                return;
             }
             res.json({ success: true, msg: 'Successful created new user.' });
         });
