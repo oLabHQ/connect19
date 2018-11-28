@@ -74,48 +74,9 @@ var UserSchema = new Schema({
 	user_profile: [UserProfileSchema]
 });
 
-// UserSchema.plugin(passportLocalMongoose)
-
-// var User = module.exports = mongoose.model('User', UserSchema);
+UserSchema.plugin(passportLocalMongoose)
 
 
-//module.exports.createPassword = function(newpassword, callback){
-//	bcrypt.genSalt(10, function(err, salt) {
-//	    bcrypt.hash(newpassword.password, salt, function(err, hash) {
-//	        newpassword.password = hash;
-//	        newpassword.save(callback);
-///	    });
-//	});
-//}
-
-// Retaining it here for legacy code
-
-module.exports.createUser = function(newUser, callback){
-	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newUser.password, salt, function(err, hash) {
-			if (err) throw err;
-
-	        newUser.password = hash;
-	        newUser.save(callback);
-	    });
-	});
-}
-
-module.exports.getUserByUsername = function(username, callback){
-	var query = {username: username};
-	User.findOne(query, callback);
-}
-
-module.exports.getUserById = function(id, callback){
-	User.findById(id, callback);
-}
-
-module.exports.comparePassword = function(candidatePassword, hash, callback){
-	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    	if(err) throw err;
-    	callback(null, isMatch);
-	});
-}
 
 
 // New UserSchema Methods
@@ -132,7 +93,12 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 
 UserSchema.methods.getUserByUsername = function(username, callback){
 	var query = {username: username};
-	User.findOne(query, callback);
+	UserSchema.findOne(query, callback);
+}
+
+UserSchema.methods.getUserById = function(member_id, callback){
+	var query = {member_id: member_id};
+	UserSchema.findOne(query, callback);
 }
 
 UserSchema.methods.comparePassword = function (passw, cb) {
@@ -164,6 +130,48 @@ UserSchema.pre('save', function (next) {
         return next();
     }
 });
+
+// Legacy
+// var User = module.exports = mongoose.model('User', UserSchema);
+
+
+//module.exports.createPassword = function(newpassword, callback){
+//	bcrypt.genSalt(10, function(err, salt) {
+//	    bcrypt.hash(newpassword.password, salt, function(err, hash) {
+//	        newpassword.password = hash;
+//	        newpassword.save(callback);
+///	    });
+//	});
+//}
+
+// Retaining it here for legacy code
+
+module.exports.createUser = function(newUser, callback){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+			if (err) throw err;
+
+	        newUser.password = hash;
+	        newUser.save(callback);
+	    });
+	});
+}
+
+module.exports.getUserByUsername = function(username, callback){
+	var query = {username: username};
+	UserSchema.findOne(query, callback);
+}
+
+module.exports.getUserById = function(id, callback){
+	UserSchema.findById(id, callback);
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+    	if(err) throw err;
+    	callback(null, isMatch);
+	});
+}
 
 module.exports = mongoose.model('User', UserSchema);
 
