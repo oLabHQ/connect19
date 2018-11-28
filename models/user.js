@@ -102,6 +102,7 @@ UserSchema.methods.getUserById = function(member_id, callback){
 }
 
 UserSchema.methods.comparePassword = function (passw, cb) {
+	console.log("Compare Password: ", this.password);
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
             return cb(err);
@@ -114,14 +115,16 @@ UserSchema.methods.comparePassword = function (passw, cb) {
 UserSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
+		console.log("Hashing Password");
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
                 return next(err);
             }
-            bcrypt.hash(user.password, salt, null, function (err, hash) {
+            bcrypt.hash(user.password, salt, function (err, hash) {
                 if (err) {
                     return next(err);
-                }
+				}
+				console.log("New Hashed Password: ", hash);
                 user.password = hash;
                 next();
             });

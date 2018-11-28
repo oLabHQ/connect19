@@ -74,6 +74,9 @@ router.post('/signin', function (req, res) {
         } else {
             // check if password matches
             user.comparePassword(req.body.password, function (err, isMatch) {
+                console.log(req.body.password);
+                console.log("IsMatch ", isMatch);
+                console.log("err", err);
                 if (isMatch && !err) {
                     // if user is found and password is right create a token
                     var token = jwt.sign(user.toJSON(), config.secret);
