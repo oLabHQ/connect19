@@ -7,28 +7,25 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
+// require('../config/passport')(passport);
 var LocalStrategy = require('passport-local').Strategy;
 var Handlebars = require("handlebars");
 var hbsHelpers = require('handlebars-helpers');
-var MomentHandler = require("handlebars.moment");
-MomentHandler.registerHelpers(Handlebars);
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var mongo = require('mongodb');
 var objectId = require('mongodb').ObjectID;
 var mongoose = require('mongoose');
 var config = require('./config/database');
+var cors = require('cors');
+var morgan = require('morgan');
+var jwt = require('jsonwebtoken');
+var MomentHandler = require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
 
 Handlebars.registerHelper('with', function (context, options) {
   return options.fn(context);
 });
-/*
-Handlebars.registerHelper('formatName', function(property) {
-  //console.log('hi')
-  return property;
-});
-*/
-
 
 Handlebars.registerHelper('comparegroup', function (array1, gvalue, options) {
 
@@ -75,24 +72,6 @@ Handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
 
 });
 
-
-// hbsHelpers.register(hbs.handlebars, {});
-
-// For Production
-//mongoose.connect('mongodb://c19:connect19@ds215502.mlab.com:15502/connect19', { useNewUrlParser: true });
-
-// For Development
-//mongoose.connect('mongodb://localhost:27017/connect19', { useNewUrlParser: true });
-//var db = mongoose.connection;
-
-//MONGO_URL = "mongodb://connect19:connect19@ds215502.mlab.com:15502/connect19";
-//mongoose.connect(MONGO_URL, {
-//  auth: {
-//    user: c19,
-//    password: connect19
-//  }
-//})
-
 // Connect To Database (OLD CODE)
 mongoose.connect(config.database, { useNewUrlParser: true });
 // On Connection
@@ -112,11 +91,7 @@ var group = require('./routes/groups');
 var announcement = require('./routes/announcement');
 
 
-Handlebars.registerHelper('user_profile', function() {
-  //console.log('this istest')
-  //var emotion = Handlebars.escapeExpression(this.emotion),
-  //   name = Handlebars.escapeExpression(this.name);
-});
+Handlebars.registerHelper('user_profile', function() {});
 
 // Init App
 var app = express();
@@ -126,20 +101,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'layout' }));
 app.set('view engine', 'hbs');
 
-
-//Handlebars.registerPartial('layout', Handlebars.template['layout']);
-
-//hbs.registerPartials(__dirname+"/views/partials")
-//var hbs = exphbs.create({
-//  helpers: {
-//    user_profile: function(something) {
-//      console.log(something);
-//      return ''+something;
-//    }
-// },
-//  defaultLayout: 'layout'
-//})
-
+// Cors
+app.use(cors());
 
 // BodyParser Middleware
 app.use(bodyParser.json());
@@ -156,10 +119,6 @@ app.use(session({
   saveUninitialized: true,
   resave: true
 }));
-
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
@@ -217,8 +176,10 @@ app.use('/api/announcements', apiAnnouncement);
 app.use('/api/users', apiUsers);
 app.use('/api/friends', apiFriends);
 app.use('/api/groups', apiGroups);
-// app.use('/api/homepage', apiHomepage);
-// app.use('/api/posts', apiPosts);
+
+// Passport init
+app.use(passport.initialize());
+// app.use(passport.session());
 
 
 // Set Port

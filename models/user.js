@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var shortid = require('shortid');
 var bcrypt = require('bcryptjs');
 var Handlebars = require("handlebars");
@@ -6,7 +7,7 @@ var hbsHelpers = require('handlebars-helpers');
 var passportLocalMongoose = require("passport-local-mongoose");
 
 // Userprofile Schema
-var userProfileSchema = mongoose.Schema({
+var UserProfileSchema = new Schema({
 	description: {
 		type: String,		
 	},
@@ -16,12 +17,12 @@ var userProfileSchema = mongoose.Schema({
 	},
 	profilepic: {
 		type: String,
-		default: 'default.png'
+		default: 'https://i.imgur.com/SK8VYHe.png'
 	}
 })
 
 // User Schema
-var UserSchema = mongoose.Schema({
+var UserSchema = new Schema({
 	username: {
 		type: String,
 		index:true
@@ -70,12 +71,12 @@ var UserSchema = mongoose.Schema({
 			type: String
 		}
 	],
-	user_profile: [userProfileSchema]
+	user_profile: [UserProfileSchema]
 });
 
-UserSchema.plugin(passportLocalMongoose)
+// UserSchema.plugin(passportLocalMongoose)
 
-var User = module.exports = mongoose.model('User', UserSchema);
+// var User = module.exports = mongoose.model('User', UserSchema);
 
 
 //module.exports.createPassword = function(newpassword, callback){
@@ -87,11 +88,13 @@ var User = module.exports = mongoose.model('User', UserSchema);
 //	});
 //}
 
-
+// Retaining it here for legacy code
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+			if (err) throw err;
+
 	        newUser.password = hash;
 	        newUser.save(callback);
 	    });
@@ -114,5 +117,54 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 	});
 }
 
+
+// New UserSchema Methods
+// UserSchema.methods.createUser = function(newUser, callback){
+// 	bcrypt.genSalt(10, function(err, salt) {
+// 	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+// 			if (err) throw err;
+
+// 	        newUser.password = hash;
+// 	        newUser.save(callback);
+// 	    });
+// 	});
+// }
+
+UserSchema.methods.getUserByUsername = function(username, callback){
+	var query = {username: username};
+	User.findOne(query, callback);
+}
+
+UserSchema.methods.comparePassword = function (passw, cb) {
+    bcrypt.compare(passw, this.password, function (err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+};
+
+
+UserSchema.pre('save', function (next) {
+    var user = this;
+    if (this.isModified('password') || this.isNew) {
+        bcrypt.genSalt(10, function (err, salt) {
+            if (err) {
+                return next(err);
+            }
+            bcrypt.hash(user.password, salt, null, function (err, hash) {
+                if (err) {
+                    return next(err);
+                }
+                user.password = hash;
+                next();
+            });
+        });
+    } else {
+        return next();
+    }
+});
+
+module.exports = mongoose.model('User', UserSchema);
 
 
