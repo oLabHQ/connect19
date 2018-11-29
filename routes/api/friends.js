@@ -1,24 +1,29 @@
 var express = require('express');
 var router = express.Router();
-
+var authenticateFirst = require('../../utilities/auth').authenticateFirst;
 var User = require('../../models/user');
 
 
 
 // Get friends list
-router.get('/', function(req, res){
-    if (!req.query.member_id) {
-        res.status(404).json({error: "Member Id does not Exists"});
-        return;
-    } 
-    var user_id = req.query.member_id;
-	
-	User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends", foreignField:"member_id", as:"user_details"}},{$match:{member_id:user_id}},{$project:{"user_details.isApproved": 1, "user_details.username": 1,"user_details.member_id": 1,"username":1, "member_id":1}}]).exec(function(err, friends){                
-        if(err) throw err;    
-        var friends = {
-                friends: friends
-            }
-        res.send(JSON.stringify({ friends: friends }));
+// router.get('/', function(req, res){
+// 	User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends", foreignField:"member_id", as:"user_details"}},{$match:{member_id:user_id}},{$project:{"user_details.isApproved": 1, "user_details.username": 1,"user_details.member_id": 1,"username":1, "member_id":1}}]).exec(function(err, friends){                
+//         if(err) throw err;    
+//         var friends = {
+//                 friends: friends
+//             }
+//         res.send(JSON.stringify({ friends: friends }));
+// 		//res.render('friends/index',{user:users, users: user, isApproved: user.isApproved})
+// 		});	
+// });
+
+router.get('/', authenticateFirst, function(req, res){
+	User.aggregate([{$unwind: "$friends"},{$lookup:{from:"users",localField:"friends", foreignField:"member_id", as:"user_details"}},{$match:{member_id: req.user.member_id}},{$project:{"user_details.isApproved": 1, "user_details.username": 1,"user_details.member_id": 1, "user_details.user_profile.profilepic": 1, "username":1, "member_id":1}}]).exec(function(err, friends){                
+        if(err) {
+            res.status(500).send(JSON.stringify({ success: false, msg: "Error Getting Friends." }));
+        } else {
+            res.send(JSON.stringify({ success: true, friends: friends }));
+        }
 		//res.render('friends/index',{user:users, users: user, isApproved: user.isApproved})
 		});	
 });
