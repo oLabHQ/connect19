@@ -31,9 +31,8 @@ router.get('/', authenticateFirst, function(req, res){
 
 
 // Post friend Request
-router.post('/send-friend-request', function(req, res){
-    //console.log(req.payload);
-    var sender_user_id = req.body.sender_member_id;
+router.post('/send-friend-request', authenticateFirst, function(req, res){
+    var sender_user_id = req.user.member_id;
     var receiver_user_id = req.body.receiver_member_id;
 
 	User.findOne({"member_id": sender_user_id}, function(err, sending_user){ 
@@ -46,8 +45,6 @@ router.post('/send-friend-request', function(req, res){
                 //console.log(friend_requests);
                 res.send(JSON.stringify({ friendrequests: friend_requests }));
             })				
-			
-					//res.send({memberid: potential_friend[0].friend_requests[0].member_id});
 		});
 	});
 });

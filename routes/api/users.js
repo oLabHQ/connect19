@@ -12,13 +12,13 @@ var User = require('../../models/user');
 // Get Users
 router.get('/', authenticateFirst, function (req, res) {
     User.findOne({ member_id: req.user.member_id }, function (err, user) {
-        User.find({ "member_id": { $ne: req.user.member_id } }, { "password": 0, "group_invitation": 0, "friend_requests": 0 }, function (err, users) {
+        User.find({ "member_id": { $ne: req.user.member_id } }, {"user_details.email": 1, "friend_requests": 1, "user_profile": 1, "username":1, "member_id":1}, function (err, users) {
             if (err) throw err;
             var userData = {
                 user: user,
                 users: users
             }
-            res.send(JSON.stringify({ users: userData }));
+            res.send(JSON.stringify( userData ));
             //res.render('friends/users', {user_friends: users, users: user, isApproved: user.isApproved, user_id: user.member_id, friend_requests: user.friend_requests, friends: user.friends});	
         });
     });
