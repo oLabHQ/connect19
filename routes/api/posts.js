@@ -15,32 +15,44 @@ var POSTS_RETURN_LIMIT = 5;
 
 router.get('/', authenticateFirst, function (req, res) {
 	var page = parseInt(req.query.page, 10) || 1;
-	console.log("Got Page: ", req.query.page);
+
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
-		Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $skip: ( (page - 1) * POSTS_RETURN_LIMIT ) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT } ]).exec(function (err, posts) {
-			//console.log(JSON.stringify({ posts: posts }))
-			res.send(JSON.stringify({ posts: posts }));
-		});
+		if (page <= 1) {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+				res.send(JSON.stringify({ posts: posts }));
+			});
+		} else {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $skip: ((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+				res.send(JSON.stringify({ posts: posts }));
+			});
+		}
 	});
 });
 
 
 // Add Posts
-router.post('/add', function(req, res){	
-	var description = req.body.description;	
-	var	author = req.body.member_id;
-	var date = new Date();
-	
-	
+router.post('/add', authenticateFirst, function (req, res) {
+	console.log(req.user.username);
+	console.log(req.user.member_id);
+	if (!req.body.description || req.body.description.trim() == "") {
+		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+		return;
+	}
 
-	var newPost = new Post({						
-		description: description,
-		date: date,		
-		author: author		
-	});
+	var post = {
+		description: req.body.description,
+		date: new Date(),
+		author: req.user.member_id
+	}
 
-	res.send(JSON.stringify({ post: newPost }));
-	 
+	if (req.body.imageUrl) {
+		post.postimage = req.body.imageUrl;
+	}
+
+	var newPost = new Post(post);
+	Post.createPost(newPost, function (err, post) {
+		res.send(JSON.stringify({ post: post }));
+	})
 });
 
 
@@ -57,7 +69,7 @@ function ensureAuthenticated(req, res, next) {
 		return next();
 	} else {
 		//req.flash('error_msg','You are not logged in');
-		res.status(403).json({error: "Access Denied"});
+		res.status(403).json({ error: "Access Denied" });
 	}
 }
 

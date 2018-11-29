@@ -15,7 +15,7 @@ module.exports = function (passport) {
         ignoreExpiration: true
     };
     passport.use(new JwtStrategy(opts, function (req, jwt_payload, done) {
-        User.findOne({ id: jwt_payload.id }, function (err, user) {
+        User.findOne({ member_id: jwt_payload.member_id }, function (err, user) {
             if (err) {
                 return done(err, false);
             }

@@ -153,7 +153,7 @@ app.use(function (req, res, next) {
 
 // Static Serving
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
 app.use('/friends', friends);
 app.use('/admin', admin);
 app.use('/groups', group);

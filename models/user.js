@@ -74,7 +74,7 @@ var UserSchema = new Schema({
 	user_profile: [UserProfileSchema]
 });
 
-UserSchema.plugin(passportLocalMongoose)
+// UserSchema.plugin(passportLocalMongoose)
 
 
 
