@@ -32,7 +32,6 @@ router.get('/username', function (req, res) {
         return;
     }
     User.find({ "username": { $ne: req.query.username } }, { "password": 0, "group_invitation": 0, "friend_requests": 0 }, function (err, users) {
-        console.log(users);
         if (err) throw err;
         var userData = {
             users: users
@@ -74,9 +73,6 @@ router.post('/signin', function (req, res) {
         } else {
             // check if password matches
             user.comparePassword(req.body.password, function (err, isMatch) {
-                console.log(req.body.password);
-                console.log("IsMatch ", isMatch);
-                console.log("err", err);
                 if (isMatch && !err) {
                     // if user is found and password is right create a token
                     var token = jwt.sign(user.toJSON(), config.secret);
