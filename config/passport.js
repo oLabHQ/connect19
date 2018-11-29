@@ -11,7 +11,8 @@ module.exports = function (passport) {
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
         // Telling Passport where to find the secret
         secretOrKey: config.secret,
-        passReqToCallback: true
+        passReqToCallback: true,
+        ignoreExpiration: true
     };
     passport.use(new JwtStrategy(opts, function (req, jwt_payload, done) {
         User.findOne({ id: jwt_payload.id }, function (err, user) {
