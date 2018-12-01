@@ -168,6 +168,7 @@ var apiAnnouncement = require('./routes/api/announcements');
 var apiUsers = require('./routes/api/users');
 var apiFriends = require('./routes/api/friends');
 var apiGroups = require('./routes/api/groups');
+var apiAdmin = require('./routes/api/admins');
 app.use('/api/homepage', apiHomepage);
 app.use('/api/posts', apiPost);
 app.use('/api/flags', apiFlag);
@@ -176,6 +177,7 @@ app.use('/api/announcements', apiAnnouncement);
 app.use('/api/users', apiUsers);
 app.use('/api/friends', apiFriends);
 app.use('/api/groups', apiGroups);
+app.use('/api/admins', apiAdmin);
 
 // Passport init
 app.use(passport.initialize());

@@ -10,7 +10,7 @@ var Group = require('../../models/group');
 var Groupposts = require('../../models/groupposts');
 
 
-// Get Groups
+// Get Specific Group Posts
 router.get('/:id',authenticateFirst, function(req,res){
     var member_id = req.user.member_id;
     if (!member_id) {

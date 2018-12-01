@@ -77,7 +77,7 @@ router.post('/accept-friend-request', authenticateFirst, function (req, res) {
                         return;
                     } else {
                         res.json({success: true});
-                        return
+                        return;
                     }
                 });
             });
