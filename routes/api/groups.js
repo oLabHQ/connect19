@@ -71,8 +71,7 @@ router.get('/',authenticateFirst, function(req,res){
 
 
 
-// Get User By Username
-
+// Get List of Groups
 router.get('/groupname',authenticateFirst,  function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {

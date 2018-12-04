@@ -3,6 +3,7 @@ var router = express.Router();
 var authenticateFirst = require('../../utilities/auth').authenticateFirst;
 
 var User = require('../../models/user');
+var Post = require('../../models/post');
 
 
 // Get Users
@@ -113,13 +114,15 @@ router.delete('/delete-user', authenticateFirst, function (req, res) {
 	}
 
 	User.remove({ 'member_id': req.query.member_id }, function (err, user) {
-		if (err) {
-			res.status(500).send({ success: false, msg: "Unable to Delete user." });
-			return;
-		} else {
-			res.send({ success: true });
-			return;
-		}
+		Post.remove({'author':req.query.member_id}, function(err, post){
+			if (err) {
+				res.status(500).send({ success: false, msg: "Unable to Delete user." });
+				return;
+			} else {
+				res.send({ success: true });
+				return;
+			}
+		});
 	});
 });
 
