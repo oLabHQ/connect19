@@ -31,16 +31,7 @@ var GroupPostSchema = mongoose.Schema({
 	ispinned:{
 		type: Boolean,
 		default: 'false'
-	},
-	flag:[
-		{
-			"post_id": String,
-			"description": String,
-			"postimage": String,
-			"author":String,
-			"date": Date
-		}
-	],
+	},	
 	trash:[
 		{
 			"post_id": String,
