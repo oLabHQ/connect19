@@ -8,6 +8,7 @@ var User = require('../../models/user');
 var Flag = require('../../models/postflags');
 var Group = require('../../models/group');
 var Groupposts = require('../../models/groupposts');
+var Grouppostflags = require('../../models/grouppostflags');
 
 // Get Wall Post Flags
 router.get('/wallflags', authenticateFirst, function(req, res){
@@ -72,6 +73,31 @@ router.get('/:id/grouppostflags', function(req, res){
     });
     });
 });
+
+
+// Group Post flags 
+router.post('/:id', function(req, res){        
+    var flagid =  req.body.post_id;
+    var authorid = req.body.author_id;
+    var groupid = req.params.id;
+
+    var newGroupPostFlag = new Grouppostflags({						
+        post_id: flagid,
+        author_id:	authorid,
+        group_id: groupid
+    });
+
+    Grouppostflags.createGroupPostFlag(newGroupPostFlag, function(err){
+        if(err) throw err;
+        if (err) {
+            res.status(500).send({success: false, msg: "Unable Flag posts."});        
+        } else {
+            res.send(JSON.stringify({ success: true }));            
+        }     	
+    }); 
+});
+
+
 
 
 module.exports = router;
