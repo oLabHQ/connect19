@@ -112,7 +112,7 @@ UserSchema.methods.comparePassword = function (passw, cb) {
 
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+	var user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
@@ -130,6 +130,27 @@ UserSchema.pre('save', function (next) {
         return next();
     }
 });
+
+// UserSchema.pre('update', function (next) {
+// 	var user = this;
+// 	console.log("Updating password");
+//     if (this.isModified('password') || this.isNew) {
+//         bcrypt.genSalt(10, function (err, salt) {
+//             if (err) {
+//                 return next(err);
+//             }
+//             bcrypt.hash(user.password, salt, function (err, hash) {
+//                 if (err) {
+//                     return next(err);
+// 				}
+//                 user.password = hash;
+//                 next();
+//             });
+//         });
+//     } else {
+//         return next();
+//     }
+// });
 
 // Legacy
 // var User = module.exports = mongoose.model('User', UserSchema);
