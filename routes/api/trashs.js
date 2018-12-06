@@ -6,6 +6,7 @@ var Post = require('../../models/post');
 var User = require('../../models/user');
 var Group = require('../../models/group');
 var Trash = require('../../models/posttrash');
+var Groupposts = require('../../models/groupposts');
 var GroupPostTrash = require('../../models/groupposttrashs');
 
 
@@ -39,6 +40,7 @@ router.get('/:id/trash', function(req, res){
             //GroupPostTrash.find({group_id: req.params.id}, function(err, posts){
                // GroupPostTrash.aggregate([{$lookup:{from:"groupposts",localField:"post_id", foreignField:"post_id", as:"trash_details"}},{$lookup:{from:"users",localField:"createdby", foreignField:"member_id", as:"user_details"}},{$match:{group_id:req.params.id}}]).exec(function(err, posts){
                 GroupPostTrash.aggregate([{$lookup:{from:"users",localField:"author_id", foreignField:"member_id", as:"user_details"}},{$lookup:{from:"groupposts",localField:"post_id", foreignField:"post_id", as:"post_details"}},{$match:{group_id:req.params.id}}]).exec(function(err, posts){
+                    if(err) throw err;
                console.log(posts);      
                var groupposttrash = {
                 posts: posts, 
