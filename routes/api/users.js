@@ -87,7 +87,7 @@ router.post('/signup', function (req, res) {
 
 router.post('/signin', function (req, res) {
     User.findOne({
-        username: req.body.username
+        username:  { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") } 
     }, function (err, user) {
         if (err) throw err;
 
