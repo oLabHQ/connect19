@@ -148,7 +148,8 @@ router.post('/forgot-password', function (req, res) {
             });
         },
         function (token, done) {
-            User.findOne({ email: req.body.email }, function (err, user) {
+            var theEmail = req.body.email;
+            User.findOne({ email: {'$regex': theEmail,$options:'i'} }, function (err, user) {
                 if (!user) {
                     res.status(404).send({ success: false, msg: 'No account with that email address exists.' })
                     return;
@@ -156,7 +157,7 @@ router.post('/forgot-password', function (req, res) {
 
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                console.log(user);
+               // console.log(user);
 
                 user.save(function (err) {
                     done(err, token, user);
@@ -186,7 +187,7 @@ router.post('/forgot-password', function (req, res) {
                     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
             smtpTransport.sendMail(mailOptions, function (err) {
-                console.log('mail sent');
+               // console.log('mail sent');
                 // req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
                 done(err, user.email);
             });
@@ -207,7 +208,7 @@ router.post('/reset-password', function (req, res) {
     async.waterfall([
         function (done) {
             User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
-                console.log(user);
+               // console.log(user);
                 if (!user) {
                     res.status(400).send({ success: false, msg: "Password reset token is invalid or has expired." });
                     return;
