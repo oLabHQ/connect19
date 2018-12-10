@@ -90,61 +90,55 @@ router.get('/usergroups', authenticateFirst, function (req, res) {
 router.post('/creategroup', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
-        res.status(404).json({ error: "User Does not Exists" });
+        res.status(404).json({ success: false, msg: "User Does not Exists." });
         return;
     }
-    var title = req.body.title;
+
+    if (!req.body.groupname || req.body.groupname.trim() === "") {
+        res.status(404).json({ success: false, msg: "Title is required!" });
+        return;
+    }
+
+    if (!req.body.description || req.body.description.trim() === "") {
+        res.status(404).json({ success: false, msg: "Description is required!" });
+        return;
+    }
+
+    var title = req.body.groupname;
     var description = req.body.description;
-    var groupstatus = req.body.private;
+    var groupstatus = req.body.isprivate || false;
     var date = new Date();
 
-    // console.log(title);
-    // console.log(description);
-    // console.log(date);
-    console.log(groupstatus);
+    Group.findOne({ groupname: { "$regex": "^" + title + "\\b", "$options": "i" } }, function (err, groupname) {
+        //console.log(groupname)
+        if (groupname) {
+            Group.find({}, function (err, group) {
+                res.status(400).send({ success: false, msg: 'Group name already taken' });
+                return;
+            });
+        } else {
 
-    // validation
-    req.checkBody('title', 'Title is required').notEmpty();
+            var newGroup = new Group({
+                groupname: title,
+                description: description,
+                isprivate: groupstatus,
+                date: date,
+                createdby: req.user.member_id,
+                users_joined: [req.user.member_id]
+            });
 
-    var errors = req.validationErrors();
+            Group.createGroup(newGroup, function (err, group) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send({ success: false, msg: "There was an error creating the group. Please try again." });
+                    return;
+                }
 
-    if (errors) {
-        Group.find({}, function (err, group) {
-            res.status(400).send({ success: false, msg: 'Group name should not be Empty', group: group });
-        });
-    }
-    else {
-        Group.findOne({ groupname: { "$regex": "^" + title + "\\b", "$options": "i" } }, function (err, groupname) {
-            //console.log(groupname)
-            if (groupname) {
-                Group.find({}, function (err, group) {
-                    res.status(400).send({ success: false, msg: 'Group name already taken', group: group, groupname: groupname });
-                });
-            } else {
-
-                var newGroup = new Group({
-                    groupname: title,
-                    description: description,
-                    isprivate: groupstatus,
-                    date: date,
-                    createdby: req.user.member_id,
-                    users_joined: req.user.member_id
-                });
-
-                Group.createGroup(newGroup, function (err, group) {
-                    if (err) throw err;
-                    if (group && !err) {
-                        res.json({ success: true, msg: 'Group Created', group: group });
-                    } else {
-                        res.status(500).send({ success: false, msg: 'Something went wrong!!' });
-                    }
-                });
-
-
-
-            }
-        });
-    }
+                res.json({ success: true, msg: 'Group Created', group: group });
+                return;
+            });
+        }
+    });
 });
 
 
