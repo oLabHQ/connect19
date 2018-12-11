@@ -32,8 +32,6 @@ router.get('/', authenticateFirst, function (req, res) {
 
 // Add Posts
 router.post('/add', authenticateFirst, function (req, res) {
-	console.log(req.user.username);
-	console.log(req.user.member_id);
 	if (!req.body.description || req.body.description.trim() == "") {
 		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
 		return;
@@ -56,10 +54,14 @@ router.post('/add', authenticateFirst, function (req, res) {
 });
 
 
-//  Get Edit Post
-router.get('/editpost', function (req, res) {
-	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {
-		
+//  Get Edit Wall Post
+router.get('/editpost', authenticateFirst, function (req, res) {
+	var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Does not Exists" });
+        return;
+    }
+	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {	
 		if(err) throw err;		
 		if (editPost && !err) {
 			res.json({ success: true, msg: 'Edit Post', post: editPost });
@@ -69,6 +71,32 @@ router.get('/editpost', function (req, res) {
 	});
 })
 
+// Post Edit Wall Post
+router.post('/editpost', authenticateFirst, function (req, res) {
+	var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Does not Exists" });
+        return;
+	}
+	
+	var description = req.body.description;
+
+	if (!description || description.trim() == "") {
+		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+		return;
+	}
+	var post_id = req.body.post_id;
+
+	Post.findOneAndUpdate({ 'post_id': post_id}, {$set : { 'description' : description}}, {new: true}, function (err, post) {
+		if(err) throw err;
+		if(post && !err) {
+			res.json({ success: true, msd: 'Post updated successfully', post: post});
+		} else {
+			res.status(500).send({ success: flase, msg: 'Not able to update post'});
+		}
+	})
+	
+})
 
 // Delete Post
 router.post('/delete', function (req, res) {
