@@ -100,9 +100,12 @@ router.post('/editpost', authenticateFirst, function (req, res) {
 
 // Delete Post
 router.post('/delete', function (req, res) {
-	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
-		console.log(deletePost);
-		res.send(JSON.stringify({ post: deletePost }));
+	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {		
+		if(deletePost && !err) {
+			res.json({ success: true, msd: 'Post Deleted', deletePost: deletePost});
+		} else {
+			res.status(500).send({ success: flase, msg: 'Not able to Delete post'});
+		}
 	});
 });
 
