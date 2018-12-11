@@ -295,19 +295,25 @@ router.post('/pinpost', authenticateFirst, function (req, res) {
 router.get('/:id/getgrouppost', authenticateFirst, function (req, res) {
     var group_id = req.params.id;    
     var member_id = req.user.member_id;
+    var post_id = req.body.post_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
-	}
-        Groupposts.findOne({post_id: req.body.post_id}, function ( err, post) {
-           if (err) throw err;
-           if (post && !err) {
-               res.json({ success: true, msg: 'Post', post: post });
-           } else {
-               res.status(500).send({ success: false, msg: 'Something went wrong!!' });
-           }      
-        })  
-})
+    }
+    
+       // console.log(group);
+       Groupposts.find({ $and: [ { group_id: group_id }, { post_id: post_id } ] } , function(err, post){            
+            Groupposts.findOne({post_id: req.query.post_id}, function ( err, post) {
+                if (err) throw err;
+                if (post && !err) {
+                    res.json({ success: true, msg: 'Post', post: post });
+                } else {
+                    res.status(500).send({ success: false, msg: 'Something went wrong!!' });
+                }
+             });
+        
+    });
+});
 
 
 //  Edit Group Post
@@ -331,7 +337,7 @@ router.post('/:id/editgrouppost', function (req, res) {
 		if(post && !err) {
 			res.json({ success: true, msd: 'Post updated successfully', post: post});
 		} else {
-			res.status(500).send({ success: flase, msg: 'Not able to update post'});
+			res.status(500).send({ success: false, msg: 'Not able to update post'});
 		}
 	})
 	
