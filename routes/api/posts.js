@@ -56,7 +56,21 @@ router.post('/add', authenticateFirst, function (req, res) {
 });
 
 
-// Delete-Trash Post
+//  Get Edit Post
+router.get('/editpost', function (req, res) {
+	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {
+		
+		if(err) throw err;		
+		if (editPost && !err) {
+			res.json({ success: true, msg: 'Edit Post', post: editPost });
+		} else {
+			res.status(500).send({ success: false, msg: 'Something went wrong!!' });
+		}
+	});
+})
+
+
+// Delete Post
 router.post('/delete', function (req, res) {
 	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
 		console.log(deletePost);
