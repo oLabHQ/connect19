@@ -350,7 +350,7 @@ router.post('/:id/deletegrouppost', function (req, res) {
         console.log(deletePost);
         if(err) throw err;	
 		if(deletePost && !err) {
-			res.json({ success: true, msd: 'Post Deleted', deletePost: deletePost});
+			res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost});
 		} else {
 			res.status(500).send({ success: flase, msg: 'Not able to Delete post'});
 		}

@@ -56,6 +56,11 @@ var UserSchema = new Schema({
 			type: String,		
 		}
 	],
+	friend_requests_sent: [
+		{
+			type: String,			
+		}
+	],
 	friend_requests: [
 		{
 			type: String,			

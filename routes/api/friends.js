@@ -31,20 +31,25 @@ router.get('/', authenticateFirst, function (req, res) {
 
 
 // Post friend Request
-router.post('/send-friend-request', authenticateFirst, function (req, res) {
-    var sender_user_id = req.user.member_id;
+router.post('/send-friend-request', function (req, res) {
+    var sender_user_id = req.query.member_id;
     var receiver_user_id = req.body.receiver_member_id;
+    console.log(sender_user_id);
+    console.log(receiver_user_id);
 
     User.findOne({ "member_id": sender_user_id }, function (err, sending_user) {
         if (err) throw err;
+        console.log(sending_user);
         User.findOne({ "member_id": receiver_user_id }, function (err, potential_friend) {
-            //	console.log(potential_friend);
+            	console.log(potential_friend);
             if (err) throw err;
-
-            potential_friend.update({ $push: { "friend_requests": sending_user.member_id } }).exec(function (err, friend_requests) {
-                //console.log(friend_requests);
-                res.send(JSON.stringify({ friendrequests: friend_requests }));
-            })
+            sending_user.update( { $push: { "friend_requests_sent": receiver_user_id } }).exec(function (err, friend_requests_sent) {
+             //   console.log(friend_requests_sent);
+                potential_friend.update({ $push: { "friend_requests": sending_user.member_id } }).exec(function (err, friend_requests) {
+                    //console.log(friend_requests);
+                    res.send(JSON.stringify({ friendrequests: friend_requests, friend_requests_sent: friend_requests_sent }));
+                });
+            });
         });
     });
 });
@@ -66,6 +71,8 @@ router.get('/friend-requests', authenticateFirst, function (req, res) {
     });
 });
 
+
+// Accept Friend request
 router.post('/accept-friend-request', authenticateFirst, function (req, res) {
     User.find({ 'member_id': req.user.member_id }, function (err, user) {
         //console.log(user);
@@ -77,6 +84,29 @@ router.post('/accept-friend-request', authenticateFirst, function (req, res) {
                         return;
                     } else {
                         res.json({success: true});
+                        return;
+                    }
+                });
+            });
+        });
+    });
+});
+
+// Remove Friend Request
+router.post('/remove-friend-request', function (req, res) {    
+    var sentUser = req.body.other_member_id
+    var member_id = req.query.member_id
+    User.findOne({ 'member_id': member_id }, function (err, user) {
+        User.findOne({ 'member_id': sentUser }, function( err, sentuser) {                  
+            user.updateOne({$pull: { "friend_requests": req.body.other_member_id } }, function (err) {
+                if(err) throw err;
+                sentuser.updateOne({ $pull: { 'friend_requests_sent': member_id } }, function (err) {     
+                    if(err) throw err;           
+                    if (err) {
+                        res.status(500).send({success: false, msg: "Unable to remove friend request."});
+                        return;
+                    } else {
+                        res.json({success: true, msg: 'Removed friend successfully'});
                         return;
                     }
                 });
