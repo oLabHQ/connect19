@@ -73,8 +73,8 @@ router.get('/friend-requests', authenticateFirst, function (req, res) {
 
 
 // Accept Friend request
-router.post('/accept-friend-request', function (req, res) {
-    var member_id = req.query.member_id;
+router.post('/accept-friend-request', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
     var other_member_id = req.body.other_member_id;
     User.find({ 'member_id': member_id }, function (err, user) {
         //console.log(user);
@@ -85,7 +85,7 @@ router.post('/accept-friend-request', function (req, res) {
                         res.status(500).send({success: false, msg: "Unable to accept friend request."});
                         return;
                     } else {
-                        res.json({success: true});
+                        res.json({success: true, msg: "Accepted friend request!"});
                         return;
                     }
                 });
@@ -95,12 +95,12 @@ router.post('/accept-friend-request', function (req, res) {
 });
 
 // Remove Friend Request
-router.post('/remove-friend-request', function (req, res) {    
+router.post('/remove-friend-request',authenticateFirst, function (req, res) {    
     var sentUser = req.body.other_member_id
-    var member_id = req.query.member_id
+    var member_id = req.user.member_id
     User.findOne({ 'member_id': member_id }, function (err, user) {
         User.findOne({ 'member_id': sentUser }, function( err, sentuser) {                  
-            user.updateOne({$pull: { "friend_requests": req.body.other_member_id } }, function (err) {
+            user.updateOne({$pull: { "friend_requests": sentUser } }, function (err) {
                 if(err) throw err;
                 sentuser.updateOne({ $pull: { 'friend_requests_sent': member_id } }, function (err) {     
                     if(err) throw err;           
