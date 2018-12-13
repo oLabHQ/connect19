@@ -113,13 +113,14 @@ router.post('/signin', function (req, res) {
 // Update profile
 router.post('/editprofile', authenticateFirst, function (req, res) {
     var username = req.body.username;
+    var lastname = req.body.lastname;
     var description = req.body.description;
     var profilePicUrl = req.body.profilePicUrl;
 
     req.user.user_profile[0].description = description;
 
     if (!username || username.trim() == "") {
-        res.status(500).json({ success: false, msg: 'Username must be not be empty.' });
+        res.status(500).json({ success: false, msg: 'Username must not be empty.' });
         return;
     }
 
@@ -127,7 +128,7 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
         req.user.user_profile[0].profilepic = profilePicUrl;
     }
 
-    User.updateOne({ username: req.user.username }, { $set: { "username": username, "user_profile": req.user.user_profile } }, function (err, user) {
+    User.updateOne({ username: req.user.username }, { $set: { "username": username, "lastname": lastname, "user_profile": req.user.user_profile } }, function (err, user) {
         //console.log(user);
         if (err) {
             res.status(500).json({ success: false, msg: 'Error Updating User.' });
