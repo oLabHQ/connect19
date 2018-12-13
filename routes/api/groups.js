@@ -8,72 +8,95 @@ var authenticateFirst = require('../../utilities/auth').authenticateFirst;
 var User = require('../../models/user');
 var Group = require('../../models/group');
 var Groupposts = require('../../models/groupposts');
+var POSTS_RETURN_LIMIT = 5;
 
 
 // Add Group Post
-router.post('/addpost',authenticateFirst, function(req, res){	
+router.post('/addpost', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
     }
     if (!req.body.description || req.body.description.trim() == "") {
-		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
-		return;
-	}
-	
+        res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+        return;
+    }
+
     var post = {
-        description: req.body.description,	    	    
+        description: req.body.description,
         createdby: member_id,
-        group_id: req.body.group_id ,
+        group_id: req.body.group_id,
         date: new Date()
     }
-    
+
     if (req.body.imageUrl) {
-		post.postimage = req.body.imageUrl;
+        post.postimage = req.body.imageUrl;
     }
-    
+
     var newGroupPosts = new Groupposts(post);
 
-    Groupposts.createGroupPosts(newGroupPosts, function(err, groupposts){
-        if(err) throw err;
-       // console.log('grouppost created');
-       res.send(JSON.stringify({ post: groupposts }));
+    Groupposts.createGroupPosts(newGroupPosts, function (err, groupPost) {
+        if (groupPost && !err) {
+            res.json({ success: true, groupPost: groupPost });
+        } else {
+            res.status(500).json({success: false, msg: "Error creating post. Please try again."});
+        }
     });
 });
 
+router.get('/group-detail', authenticateFirst, function(req, res) {
+    var group_id = req.query.groupId;
+
+    Group.findOne({ group_id: group_id }, function (err, group) {
+        if (group && !err) {
+            res.json({success: true, group: group});
+        } else {
+            res.status(400).json({success: false, msg: "Error occured getting group detail. Please try again."});
+        }
+    });
+});
 
 //Get Specific Group Posts
-router.get('/:id/groupposts',authenticateFirst, function (req, res) {
+router.get('/groupposts', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
-        res.status(404).json({ error: "User Does not Exists" });
+        res.status(404).json({ success: false, msg: "User Does not Exists" });
         return;
     }
-    //if(req.params.id){
-    //    res.send("Get the Group posts");
-    //    return;
-    //}    
 
-    Group.findOne({ group_id: req.params.id }, function (err, group) {
+    var groupId = req.query.groupId;
+
+    if (!groupId) {
+        res.status(404).json({ success: false, msg: "Group ID should not be empty" });
+        return;
+    }
+
+    var page = parseInt(req.query.page, 10) || 1;
+
+    Group.findOne({ group_id: groupId }, function (err, group) {
         //console.log(req.user.member_id);
         // console.log(group.createdby);
         User.find({ member_id: member_id }, function (err, user) {
             //console.log(user[0].user_profile[0].profilepic);
             // Groupposts.find({group_id:req.params.id}).sort({ispinned:-1}).exec( function(err, groupposts){        
-            Groupposts.aggregate([{ $lookup: { from: "users", localField: "createdby", foreignField: "member_id", as: "user_details" } }, { $match: { group_id: req.params.id } }, { $project: { "user_details.password": 0, "user_details.friend_requests": 0, "user_details.group_invitation": 0, "user_details.friends": 0, "user_details.group_joined": 0 } }]).sort({ ispinned: -1, date: -1 }).exec(function (err, groupposts) {
-                if (err) throw err;
-                //console.log(user_details);
-                //res.render("groups/posts", {groupposts: user_details});
-                var groupPosts = {
-                    groupposts: groupposts
-                }
-                if (groupposts && !err) {
-                    res.json({ success: true, msg: 'Posts', groupPosts: groupPosts });
-                } else {
-                    res.status(500).send({ success: false, msg: 'Something went wrong!!' });
-                }
-            });
+            if (page <= 1) {
+                Groupposts.aggregate([{ $lookup: { from: "users", localField: "createdby", foreignField: "member_id", as: "user_details" } }, { $match: { group_id: groupId } }, { $project: { "user_details.password": 0, "user_details.friend_requests": 0, "user_details.group_invitation": 0, "user_details.friends": 0, "user_details.group_joined": 0 } }]).sort({ ispinned: -1, date: -1 }).limit(POSTS_RETURN_LIMIT).exec(function (err, groupposts) {
+                    if (groupposts && !err) {
+                        res.json({ success: true, msg: 'Posts', groupPosts: groupposts });
+                    } else {
+                        res.status(500).send({ success: false, msg: 'Server Error. Please try again.' });
+                    }
+                });
+            } else {
+                Groupposts.aggregate([{ $lookup: { from: "users", localField: "createdby", foreignField: "member_id", as: "user_details" } }, { $match: { group_id: groupId } }, { $project: { "user_details.password": 0, "user_details.friend_requests": 0, "user_details.group_invitation": 0, "user_details.friends": 0, "user_details.group_joined": 0 } }]).sort({ ispinned: -1, date: -1 }).skip(((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0)).limit(POSTS_RETURN_LIMIT).exec(function (err, groupposts) {
+                    if (groupposts && !err) {
+                        res.json({ success: true, msg: 'Posts', groupPosts: groupposts });
+                    } else {
+                        res.status(500).send({ success: false, msg: 'Server Error. Please try again.' });
+                    }
+                });
+            }
         });
     });
 });
@@ -326,68 +349,68 @@ router.post('/pinpost', authenticateFirst, function (req, res) {
 
 // Get Edit post
 router.get('/:id/getgrouppost', authenticateFirst, function (req, res) {
-    var group_id = req.params.id;    
+    var group_id = req.params.id;
     var member_id = req.user.member_id;
     var post_id = req.body.post_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
     }
-    
-       // console.log(group);
-       Groupposts.find({ $and: [ { group_id: group_id }, { post_id: post_id } ] } , function(err, post){            
-            Groupposts.findOne({post_id: req.query.post_id}, function ( err, post) {
-                if (err) throw err;
-                if (post && !err) {
-                    res.json({ success: true, msg: 'Post', post: post });
-                } else {
-                    res.status(500).send({ success: false, msg: 'Something went wrong!!' });
-                }
-             });
-        
+
+    // console.log(group);
+    Groupposts.find({ $and: [{ group_id: group_id }, { post_id: post_id }] }, function (err, post) {
+        Groupposts.findOne({ post_id: req.query.post_id }, function (err, post) {
+            if (err) throw err;
+            if (post && !err) {
+                res.json({ success: true, msg: 'Post', post: post });
+            } else {
+                res.status(500).send({ success: false, msg: 'Something went wrong!!' });
+            }
+        });
+
     });
 });
 
 
 //  Edit Group Post
 router.post('/:id/editgrouppost', function (req, res) {
-	// var member_id = req.user.member_id;
+    // var member_id = req.user.member_id;
     // if (!member_id) {
     //     res.status(404).json({ error: "User Does not Exists" });
     //     return;
-	// }
-	
+    // }
+
     var post_id = req.body.post_id;
     var description = req.body.description;
 
-	if (!description || description.trim() == "") {
-		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
-		return;
-	}
+    if (!description || description.trim() == "") {
+        res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+        return;
+    }
 
-	Groupposts.findOneAndUpdate({ 'post_id': post_id}, {$set : { 'description' : description}}, {new: true}, function (err, post) {
-		if(err) throw err;
-		if(post && !err) {
-			res.json({ success: true, msd: 'Post updated successfully', post: post});
-		} else {
-			res.status(500).send({ success: false, msg: 'Not able to update post'});
-		}
-	})
-	
+    Groupposts.findOneAndUpdate({ 'post_id': post_id }, { $set: { 'description': description } }, { new: true }, function (err, post) {
+        if (err) throw err;
+        if (post && !err) {
+            res.json({ success: true, msd: 'Post updated successfully', post: post });
+        } else {
+            res.status(500).send({ success: false, msg: 'Not able to update post' });
+        }
+    })
+
 });
 
 
 // Delete Post
 router.post('/:id/deletegrouppost', function (req, res) {
-	Groupposts.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {	
+    Groupposts.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
         console.log(deletePost);
-        if(err) throw err;	
-		if(deletePost && !err) {
-			res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost});
-		} else {
-			res.status(500).send({ success: flase, msg: 'Not able to Delete post'});
-		}
-	});
+        if (err) throw err;
+        if (deletePost && !err) {
+            res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost });
+        } else {
+            res.status(500).send({ success: flase, msg: 'Not able to Delete post' });
+        }
+    });
 });
 
 

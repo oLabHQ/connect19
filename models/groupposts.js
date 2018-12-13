@@ -8,8 +8,7 @@ var GroupPostSchema = mongoose.Schema({
 		type: String
 	},
 	description: {
-        type: String,
-        default: "Please enter some description"
+        type: String
     },
     postimage:{
         type: String
@@ -25,9 +24,6 @@ var GroupPostSchema = mongoose.Schema({
 		type: String,
 		default: shortid.generate
     },
-    group_id: {
-        type: String,        
-	},
 	ispinned:{
 		type: Boolean,
 		default: 'false'
