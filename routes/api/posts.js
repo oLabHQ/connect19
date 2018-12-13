@@ -18,11 +18,11 @@ router.get('/', authenticateFirst, function (req, res) {
 
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
 		if (page <= 1) {
-			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { ispinned: -1, date: -1 } }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
 				res.send(JSON.stringify({ posts: posts }));
 			});
 		} else {
-			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1 } }, { $skip: ((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { ispinned: -1, date: -1 } }, { $skip: ((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
 				res.send(JSON.stringify({ posts: posts }));
 			});
 		}
@@ -80,31 +80,61 @@ router.post('/editpost', authenticateFirst, function (req, res) {
 	}
 	
 	var description = req.body.description;
+	console.log(`Description: ${description}`);
 
-	if (!description || description.trim() == "") {
-		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
-		return;
-	}
+	// if (!description || description.trim() == "") {
+	// 	res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+	// 	return;
+	// }
+
 	var post_id = req.body.post_id;
 
+	if (!post_id) {
+		res.status(404).json({ success: false, msg: 'Post ID undefined or cannot be empty.'});
+		return;
+	}
+
 	Post.findOneAndUpdate({ 'post_id': post_id}, {$set : { 'description' : description}}, {new: true}, function (err, post) {
-		if(err) throw err;
 		if(post && !err) {
 			res.json({ success: true, msd: 'Post updated successfully', post: post});
 		} else {
 			res.status(500).send({ success: flase, msg: 'Not able to update post'});
 		}
 	})
+})
+
+//
+router.post('/change-pin-status', authenticateFirst, function (req, res) {
+	var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Does not Exists" });
+        return;
+	}
 	
+	var ispinned = req.body.ispinned || false;
+	var post_id = req.body.post_id;
+
+	if (!post_id) {
+        res.status(404).json({ success: false, msg: "Post Does not Exists" });
+        return;
+	}
+
+	Post.findOneAndUpdate({ 'post_id': post_id}, {$set : { 'ispinned' : ispinned}}, {new: true}, function (err, post) {
+		if(post) {
+			res.json({ success: true, msg: 'Post updated successfully'});
+		} else {
+			res.status(500).send({ success: false, msg: 'Not able to update post / Post does not exists'});
+		}
+	})
 })
 
 // Delete Post
-router.post('/delete', function (req, res) {
+router.post('/delete', authenticateFirst, function (req, res) {
 	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {		
 		if(deletePost && !err) {
-			res.json({ success: true, msd: 'Post Deleted', deletePost: deletePost});
+			res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost});
 		} else {
-			res.status(500).send({ success: flase, msg: 'Not able to Delete post'});
+			res.status(500).send({ success: false, msg: 'Not able to Delete post'});
 		}
 	});
 });
