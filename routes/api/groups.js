@@ -10,9 +10,42 @@ var Group = require('../../models/group');
 var Groupposts = require('../../models/groupposts');
 
 
+// Add Group Post
+router.post('/addpost', function(req, res){	
+    var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Does not Exists" });
+        return;
+    }
+    if (!req.body.description || req.body.description.trim() == "") {
+		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
+		return;
+	}
+	
+    var post = {
+        description: req.body.description,	    	    
+        author: member_id,
+        group_id: req.body.group_id ,
+        date: new Date()
+    }
+    
+    if (req.body.imageUrl) {
+		post.postimage = req.body.imageUrl;
+    }
+    
+    var newGroupPosts = new Groupposts(post);
+
+    Groupposts.createGroupPosts(newGroupPosts, function(err, groupposts){
+        if(err) throw err;
+       // console.log('grouppost created');
+       res.send(JSON.stringify({ post: groupposts }));
+    });
+});
+
+
 //Get Specific Group Posts
-router.get('/:id/groupposts', function (req, res) {
-    var member_id = req.query.member_id;
+router.get('/:id/groupposts', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
