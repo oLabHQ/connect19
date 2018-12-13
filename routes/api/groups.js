@@ -11,7 +11,7 @@ var Groupposts = require('../../models/groupposts');
 
 
 // Add Group Post
-router.post('/addpost', function(req, res){	
+router.post('/addpost',authenticateFirst, function(req, res){	
     var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
@@ -24,7 +24,7 @@ router.post('/addpost', function(req, res){
 	
     var post = {
         description: req.body.description,	    	    
-        author: member_id,
+        createdby: member_id,
         group_id: req.body.group_id ,
         date: new Date()
     }
@@ -44,7 +44,7 @@ router.post('/addpost', function(req, res){
 
 
 //Get Specific Group Posts
-router.get('/:id/groupposts', authenticateFirst, function (req, res) {
+router.get('/:id/groupposts',authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
@@ -69,7 +69,7 @@ router.get('/:id/groupposts', authenticateFirst, function (req, res) {
                     groupposts: groupposts
                 }
                 if (groupposts && !err) {
-                    res.json({ success: true, msg: 'Group Created', groupPosts: groupPosts });
+                    res.json({ success: true, msg: 'Posts', groupPosts: groupPosts });
                 } else {
                     res.status(500).send({ success: false, msg: 'Something went wrong!!' });
                 }
