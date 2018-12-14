@@ -40,7 +40,7 @@ router.post('/addpost', authenticateFirst, function (req, res) {
         if (groupPost && !err) {
             res.json({ success: true, groupPost: groupPost });
         } else {
-            res.status(500).json({success: false, msg: "Error creating post. Please try again."});
+            res.status(500).json({success: false, msg: "Error creating post. Please try again"});
         }
     });
 });
