@@ -117,6 +117,7 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
     var description = req.body.description;
     var profilePicUrl = req.body.profilePicUrl;
 
+    req.user.user_profile[0] = {};
     req.user.user_profile[0].description = description;
 
     if (!username || username.trim() == "") {
