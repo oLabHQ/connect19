@@ -40,19 +40,19 @@ router.post('/addpost', authenticateFirst, function (req, res) {
         if (groupPost && !err) {
             res.json({ success: true, groupPost: groupPost });
         } else {
-            res.status(500).json({success: false, msg: "Error creating post. Please try again"});
+            res.status(500).json({ success: false, msg: "Error creating post. Please try again" });
         }
     });
 });
 
-router.get('/group-detail', authenticateFirst, function(req, res) {
+router.get('/group-detail', authenticateFirst, function (req, res) {
     var group_id = req.query.groupId;
 
     Group.findOne({ group_id: group_id }, function (err, group) {
         if (group && !err) {
-            res.json({success: true, group: group});
+            res.json({ success: true, group: group });
         } else {
-            res.status(400).json({success: false, msg: "Error occured getting group detail. Please try again."});
+            res.status(400).json({ success: false, msg: "Error occured getting group detail. Please try again." });
         }
     });
 });
@@ -190,10 +190,64 @@ router.post('/creategroup', authenticateFirst, function (req, res) {
                     return;
                 }
 
-                res.json({ success: true, msg: 'Group Created', group: group });
-                return;
+                User.findOne({ member_id: member_id }, function (err, user) {
+                    user.update({ $push: { "group_joined": group.group_id } }, function (err, user) {
+                        // if (err) throw err;
+                        if (err) {
+                            res.status(404).json({ success: false, msg: "Updating user error." });
+                            return;
+                        } else {
+                            res.json({ success: true, msg: 'Group Created', group: group });
+                            return;
+                        }
+                    });
+                });
             });
         }
+    });
+});
+
+
+// Add User to Group
+router.post('/add-user-to-group', authenticateFirst, function (req, res) {
+    var member_id = req.body.member_id;
+    var group_id = req.body.group_id;
+    if (!member_id) {
+        res.status(404).json({ success: false, msg: "Member Id should not be empty!" });
+        return;
+    }
+
+    User.findOne({ member_id: member_id }, function (err, user) {
+        var foundUser = user;
+        if (err) {
+            res.status(404).json({ success: false, msg: "User not found" });
+            return;
+        }
+
+        Group.findOne({ group_id: group_id }, function (err, group) {
+            if (err) {
+                res.status(404).json({ success: false, msg: "Group not found" });
+                return;
+            }
+
+            user.update({ $push: { "group_joined": group.group_id } }, function (err, user) {
+                // if (err) throw err;
+                if (err) {
+                    res.status(404).json({ success: false, msg: "Updating user error." });
+                    return;
+                }
+
+                group.update({ $push: { "users_joined": foundUser.member_id } }, function (err, group) {
+                    console.log(JSON.stringify(group));
+                    if (group && !err) {
+                        res.json({ success: true, msg: 'User added to group' });
+                    } else {
+                        res.status(404).json({ success: false, msg: "Updating group error." });
+                        return;
+                    }
+                });
+            });
+        });
     });
 });
 
@@ -324,7 +378,6 @@ router.post('/invitations', authenticateFirst, function (req, res) {
 });
 
 
-
 // Pin Groups Posts
 router.post('/pinpost', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
@@ -415,13 +468,13 @@ router.post('/:id/deletegrouppost', function (req, res) {
 
 // Delete Group
 router.post('/delete-group', authenticateFirst, function (req, res) {
-	Group.remove({ 'group_id': req.body.groupId }, function (err, deletedGroup) {		
-		if(deletedGroup && !err) {
-			res.json({ success: true, msg: 'Group Deleted'});
-		} else {
-			res.status(500).send({ success: false, msg: 'Not able to Delete Group'});
-		}
-	});
+    Group.remove({ 'group_id': req.body.groupId }, function (err, deletedGroup) {
+        if (deletedGroup && !err) {
+            res.json({ success: true, msg: 'Group Deleted' });
+        } else {
+            res.status(500).send({ success: false, msg: 'Not able to Delete Group' });
+        }
+    });
 });
 
 module.exports = router;
