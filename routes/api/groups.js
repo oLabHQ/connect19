@@ -413,5 +413,15 @@ router.post('/:id/deletegrouppost', function (req, res) {
     });
 });
 
+// Delete Group
+router.post('/delete-group', authenticateFirst, function (req, res) {
+	Group.remove({ 'group_id': req.body.groupId }, function (err, deletedGroup) {		
+		if(deletedGroup && !err) {
+			res.json({ success: true, msg: 'Group Deleted'});
+		} else {
+			res.status(500).send({ success: false, msg: 'Not able to Delete Group'});
+		}
+	});
+});
 
 module.exports = router;

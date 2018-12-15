@@ -32,13 +32,13 @@ router.get('/', authenticateFirst, function (req, res) {
 
 // Add Posts
 router.post('/add', authenticateFirst, function (req, res) {
-	if (!req.body.description || req.body.description.trim() == "") {
+	if ((!req.body.description || req.body.description.trim() == "") && !req.body.imageUrl) {
 		res.status(400).json({ success: false, msg: "Missing Post Content Message" });
 		return;
 	}
 
 	var post = {
-		description: req.body.description,
+		description: req.body.description || "",
 		date: new Date(),
 		author: req.user.member_id
 	}
