@@ -31,8 +31,8 @@ router.get('/', authenticateFirst, function (req, res) {
 
 
 // Post friend Request
-router.post('/send-friend-request', function (req, res) {
-    var sender_user_id = req.query.member_id;
+router.post('/send-friend-request', authenticateFirst, function (req, res) {
+    var sender_user_id = req.user.member_id;
     var receiver_user_id = req.body.receiver_member_id;
     console.log(sender_user_id);
     console.log(receiver_user_id);
