@@ -17,7 +17,7 @@ router.get('/wallflags', authenticateFirst, function(req, res){
         res.status(404).json({ error: "User Does not Exists" });
         return;
 	}
-	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"flag_details"}},{$sort:{date:-1}},{$lookup:{from:"users",localField:"author_id", foreignField:"member_id", as:"author_details"}},{$project:{"flag_details":1, "author_details.username":1, "author_details.user_profile":1}}]).exec(function(err, flags){				
+	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"flag_details"}},  { $sort:{ date:-1 } }, { $lookup : { from : "users", localField : "author_id", foreignField : "member_id", as:"author_details" } }, { $project : { "flag_details" : 1, "author_details.username" : 1, "author_details.user_profile" : 1 } }]).exec(function(err, flags){
         //console.log(posts);
         var flagData = {
             posts:flags
@@ -51,9 +51,9 @@ router.post('/', authenticateFirst, function(req, res){
     Flag.createFlag(newFlag, function(err, flag){
         if(err) throw err;
             if (err) {
-                res.status(500).send({success: false, msg: "Unable Flag posts."});
+                res.status(500).send({ success: false, msg: "Unable Flag posts." });
             } else {
-                res.send(JSON.stringify({ success: true, flag: flag }));
+                res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
             }
         });
     });
