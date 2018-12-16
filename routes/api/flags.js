@@ -11,8 +11,8 @@ var Groupposts = require('../../models/groupposts');
 var Grouppostflags = require('../../models/grouppostflags');
 
 // Get Wall Post Flags
-router.get('/wallflags', function(req, res){
-    var member_id = req.query.member_id;
+router.get('/wallflags',authenticateFirst, function(req, res){
+    var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
