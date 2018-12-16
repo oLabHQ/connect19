@@ -11,13 +11,13 @@ var Groupposts = require('../../models/groupposts');
 var Grouppostflags = require('../../models/grouppostflags');
 
 // Get Wall Post Flags
-router.get('/wallflags', authenticateFirst, function(req, res){
-    var member_id = req.user.member_id;
+router.get('/wallflags', function(req, res){
+    var member_id = req.query.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
 	}
-	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"flag_details"}},  { $sort:{ date:-1 } }, { $lookup : { from : "users", localField : "author_id", foreignField : "member_id", as:"author_details" } }, { $project : { "flag_details" : 1, "author_details.username" : 1, "author_details.user_profile" : 1 } }]).exec(function(err, flags){
+	Flag.aggregate([{$lookup:{from:"posts",localField:"post_id", foreignField:"post_id", as:"flag_details"}},  { $sort:{ date:-1 } }, { $lookup : { from : "users", localField : "author_id", foreignField : "member_id", as:"author_details" } }, { $lookup : { from : "users", localField : "flagged_by", foreignField : "member_id", as:"flag_author_details" } }, { $project : { "flag_author_details.username" : 1, "flag_details" : 1, "author_details.username" : 1, "author_details.user_profile" : 1 } }]).exec(function(err, flags){
         //console.log(posts);
         var flagData = {
             posts:flags
