@@ -11,7 +11,7 @@ var PostSchema = mongoose.Schema({
         type: String
 	},
 	author: {
-		type: String,		
+		type: String,
 	},
 	date: {
 		type: Date,
@@ -22,6 +22,10 @@ var PostSchema = mongoose.Schema({
 		default: shortid.generate
 	},
 	ispinned:{
+		type: Boolean,
+		default: 'false'
+	},
+	isFlagged: {
 		type: Boolean,
 		default: 'false'
 	},
