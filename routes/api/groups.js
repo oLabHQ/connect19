@@ -401,7 +401,7 @@ router.post('/pinpost', authenticateFirst, function (req, res) {
     var pin_value = req.body.pin_value;
     //console.log(post_id);
     //console.log(pin_value);    
-    Groupposts.update({ post_id: post_id }, { $set: { ispinned: pin_value } }, function (err, post_pinned) {
+    Groupposts.findOneAndUpdate({ post_id: post_id }, { $set: { ispinned: pin_value } }, {new: true}, function (err, post_pinned) {
         //console.log(post_pinned);
         if (post_pinned && !err) {
             res.json({ success: true, msg: 'Post Pinned', post_pinned: post_pinned });

@@ -21,7 +21,7 @@ router.get('/', authenticateFirst, function (req, res) {
                 res.status(500).send({success: false, msg: "Server error. Please try again."});
                 return;
             }
-            
+
             var userData = {
                 user: user,
                 users: users
@@ -125,6 +125,8 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
     var description = req.body.description;
     var profilePicUrl = req.body.profilePicUrl;
 
+    console.log("FIRSTNAME: ", firstname);
+
     req.user.user_profile[0] = {};
     req.user.user_profile[0].description = description;
 
@@ -137,7 +139,7 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
         req.user.user_profile[0].profilepic = profilePicUrl;
     }
 
-    User.updateOne({ username: req.user.username }, { $set: { "username": username, "firstname": firstname, "lastname": lastname, "user_profile": req.user.user_profile } }, function (err, user) {
+    User.findOneAndUpdate({ username: req.user.username }, { $set: { username: username, firstname: firstname, lastname: lastname, "user_profile": req.user.user_profile }, }, {new: true},  function (err, user) {
         //console.log(user);
         if (err) {
             res.status(500).json({ success: false, msg: 'Error Updating User.' });
