@@ -30,7 +30,8 @@ router.get('/', authenticateFirst, function (req, res) {
 });
 
 //Get posts for specific time
-var lastHour = ("2018-12-17T08:20:44.992Z");
+//var lastHour = ("2018-12-17T08:20:44.992Z");
+  var lastHour = req.body.timestamp;
 router.get('/latestpost', function (req, res) {
 	Post.aggregate([{$match:{"date": {"$gte": new Date(lastHour)}}}, { $sort: { date: -1 } }]).exec(function (err, posts) {
 		console.log(posts);
