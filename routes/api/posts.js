@@ -29,6 +29,14 @@ router.get('/', authenticateFirst, function (req, res) {
 	});
 });
 
+//Get posts for specific time
+var lastHour = ("2018-12-17T08:20:44.992Z");
+router.get('/latestpost', function (req, res) {
+	Post.aggregate([{$match:{"date": {"$gte": new Date(lastHour)}}}, { $sort: { date: -1 } }]).exec(function (err, posts) {
+		console.log(posts);
+		res.send(JSON.stringify({ posts: posts }));
+	})
+});
 
 // Add Posts
 router.post('/add', authenticateFirst, function (req, res) {
@@ -61,8 +69,8 @@ router.get('/editpost', authenticateFirst, function (req, res) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
     }
-	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {	
-		if(err) throw err;		
+	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {
+		if(err) throw err;
 		if (editPost && !err) {
 			res.json({ success: true, msg: 'Edit Post', post: editPost });
 		} else {
@@ -78,7 +86,7 @@ router.post('/editpost', authenticateFirst, function (req, res) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
 	}
-	
+
 	var description = req.body.description;
 	console.log(`Description: ${description}`);
 
@@ -110,7 +118,7 @@ router.post('/change-pin-status', authenticateFirst, function (req, res) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
 	}
-	
+
 	var ispinned = req.body.ispinned || false;
 	var post_id = req.body.post_id;
 
@@ -130,7 +138,7 @@ router.post('/change-pin-status', authenticateFirst, function (req, res) {
 
 // Delete Post
 router.post('/delete', authenticateFirst, function (req, res) {
-	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {		
+	Post.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
 		if(deletePost && !err) {
 			res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost});
 		} else {

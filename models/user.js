@@ -27,8 +27,11 @@ var UserSchema = new Schema({
 		type: String,
 		index:true
 	},
+	firstname: {
+		type: String,
+	},
 	lastname: {
-		type: String,		
+		type: String,
 	},
 	email: {
 		type: String

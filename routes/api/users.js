@@ -88,7 +88,7 @@ router.post('/signup', function (req, res) {
 router.post('/signin', function (req, res) {
     var thename = req.body.username;
     User.findOne({
-        username:  {'$regex': thename,$options:'i'} 
+        username:  {'$regex': thename,$options:'i'}
     }, function (err, user) {
         if (err) throw err;
 
@@ -113,6 +113,7 @@ router.post('/signin', function (req, res) {
 // Update profile
 router.post('/editprofile', authenticateFirst, function (req, res) {
     var username = req.body.username;
+    var firstname = req.body.firstname;
     var lastname = req.body.lastname;
     var description = req.body.description;
     var profilePicUrl = req.body.profilePicUrl;
@@ -129,7 +130,7 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
         req.user.user_profile[0].profilepic = profilePicUrl;
     }
 
-    User.updateOne({ username: req.user.username }, { $set: { "username": username, "lastname": lastname, "user_profile": req.user.user_profile } }, function (err, user) {
+    User.updateOne({ username: req.user.username }, { $set: { "username": username, "firstname": firstname, "lastname": lastname, "user_profile": req.user.user_profile } }, function (err, user) {
         //console.log(user);
         if (err) {
             res.status(500).json({ success: false, msg: 'Error Updating User.' });
@@ -217,7 +218,7 @@ router.post('/reset-password', function (req, res) {
                 }
 
                 if (req.body.password === req.body.confirm) {
-                    //user.setPassword(req.body.password, function(err) {					
+                    //user.setPassword(req.body.password, function(err) {
                     // user.resetPasswordToken = undefined;
                     // user.resetPasswordExpires = undefined;
                     var resetPasswordToken = undefined;
