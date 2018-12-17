@@ -49,7 +49,6 @@ router.post('/:id/trash', function(req, res){
 
     Groupposttrash.createGrouppostTrash(newGroupPostTrash, function(err, trash){
         Groupposts.findOneAndUpdate({post_id:flagid},{$set: {"trashed":"Y"}}, function(err){
-            if(err) throw err;
             if (err) {
                 res.status(500).send({success: false, msg: "Unable Trash posts."});        
             } else {

@@ -38,13 +38,20 @@ router.post('/send-friend-request', authenticateFirst, function (req, res) {
     console.log(receiver_user_id);
 
     User.findOne({ "member_id": sender_user_id }, function (err, sending_user) {
-        if (err) throw err;
+        if (err) {
+            res.status(500).send({ success: false, msg: "Server error. Please try again." });
+            return;
+        }
         console.log(sending_user);
         User.findOne({ "member_id": receiver_user_id }, function (err, potential_friend) {
-            	console.log(potential_friend);
-            if (err) throw err;
-            sending_user.update( { $push: { "friend_requests_sent": receiver_user_id } }).exec(function (err, friend_requests_sent) {
-             //   console.log(friend_requests_sent);
+            console.log(potential_friend);
+            if (err) {
+                res.status(500).send({ success: false, msg: "Server error. Please try again." });
+                return;
+            }
+
+            sending_user.update({ $push: { "friend_requests_sent": receiver_user_id } }).exec(function (err, friend_requests_sent) {
+                //   console.log(friend_requests_sent);
                 potential_friend.update({ $push: { "friend_requests": sending_user.member_id } }).exec(function (err, friend_requests) {
                     //console.log(friend_requests);
                     res.send(JSON.stringify({ friendrequests: friend_requests, friend_requests_sent: friend_requests_sent }));
@@ -82,10 +89,10 @@ router.post('/accept-friend-request', authenticateFirst, function (req, res) {
             user[0].update({ $push: { friends: accepted_friend_user[0].member_id }, $pull: { "friend_requests_sent": other_member_id, "friend_requests": other_member_id } }, function (err) {
                 accepted_friend_user[0].update({ $push: { friends: user[0].member_id }, $pull: { "friend_requests_sent": user[0].member_id, "friend_requests": user[0].member_id } }, function (err) {
                     if (err) {
-                        res.status(500).send({success: false, msg: "Unable to accept friend request."});
+                        res.status(500).send({ success: false, msg: "Unable to accept friend request." });
                         return;
                     } else {
-                        res.json({success: true, msg: "Accepted friend request!"});
+                        res.json({ success: true, msg: "Accepted friend request!" });
                         return;
                     }
                 });
@@ -95,20 +102,23 @@ router.post('/accept-friend-request', authenticateFirst, function (req, res) {
 });
 
 // Remove Friend Request
-router.post('/remove-friend-request',authenticateFirst, function (req, res) {    
+router.post('/remove-friend-request', authenticateFirst, function (req, res) {
     var sentUser = req.body.other_member_id
     var member_id = req.user.member_id
     User.findOne({ 'member_id': member_id }, function (err, user) {
-        User.findOne({ 'member_id': sentUser }, function( err, sentuser) {                  
-            user.updateOne({$pull: { "friend_requests": sentUser } }, function (err) {
-                if(err) throw err;
-                sentuser.updateOne({ $pull: { 'friend_requests_sent': member_id } }, function (err) {     
-                    if(err) throw err;           
+        User.findOne({ 'member_id': sentUser }, function (err, sentuser) {
+            user.updateOne({ $pull: { "friend_requests": sentUser } }, function (err) {
+                if (err) {
+                    res.status(500).send({ success: false, msg: "Server error. Please try again." });
+                    return;
+                }
+
+                sentuser.updateOne({ $pull: { 'friend_requests_sent': member_id } }, function (err) {
                     if (err) {
-                        res.status(500).send({success: false, msg: "Unable to remove friend request."});
+                        res.status(500).send({ success: false, msg: "Unable to remove friend request." });
                         return;
                     } else {
-                        res.json({success: true, msg: 'Removed friend successfully'});
+                        res.json({ success: true, msg: 'Removed friend successfully' });
                         return;
                     }
                 });

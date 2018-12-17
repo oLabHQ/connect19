@@ -130,7 +130,7 @@ router.get('/usergroups', authenticateFirst, function (req, res) {
         return;
     }
 
-    Group.find({ users_joined: member_id }).sort({ ispinned: -1 }).exec(function (err, groups) {
+    Group.find({ $or: [{ users_joined: member_id }, { isAdminOnly: true }] }).sort({ ispinned: -1 }).exec(function (err, groups) {
         if (err) {
             res.status(500).json({ success: false, msg: "Server Error: Unable to get groups." });
             return;
@@ -163,6 +163,12 @@ router.post('/creategroup', authenticateFirst, function (req, res) {
     var title = req.body.groupname;
     var description = req.body.description;
     var groupstatus = req.body.isprivate || false;
+    var isAdminOnly = false;
+
+    if (req.user.admin) {
+        isAdminOnly = req.body.isAdminOnly || false;
+    }
+
     var date = new Date();
 
     Group.findOne({ groupname: { "$regex": "^" + title + "\\b", "$options": "i" } }, function (err, groupname) {
@@ -180,7 +186,8 @@ router.post('/creategroup', authenticateFirst, function (req, res) {
                 isprivate: groupstatus,
                 date: date,
                 createdby: req.user.member_id,
-                users_joined: [req.user.member_id]
+                users_joined: [req.user.member_id],
+                isAdminOnly: isAdminOnly
             });
 
             Group.createGroup(newGroup, function (err, group) {
@@ -192,7 +199,6 @@ router.post('/creategroup', authenticateFirst, function (req, res) {
 
                 User.findOne({ member_id: member_id }, function (err, user) {
                     user.update({ $push: { "group_joined": group.group_id } }, function (err, user) {
-                        // if (err) throw err;
                         if (err) {
                             res.status(404).json({ success: false, msg: "Updating user error." });
                             return;
@@ -231,7 +237,6 @@ router.post('/add-user-to-group', authenticateFirst, function (req, res) {
             }
 
             user.update({ $push: { "group_joined": group.group_id } }, function (err, user) {
-                // if (err) throw err;
                 if (err) {
                     res.status(404).json({ success: false, msg: "Updating user error." });
                     return;
@@ -265,7 +270,6 @@ router.post('/pingroup', authenticateFirst, function (req, res) {
     //console.log(pin_value);    
     Group.update({ group_id: group_id }, { $set: { ispinned: pin_value } }, function (err, group_pinned) {
         // console.log(group_pinned);
-        if (err) throw err;
         if (group_pinned && !err) {
             res.json({ success: true, msg: 'Group Pinned', group_pinned: group_pinned });
         } else {
@@ -282,7 +286,6 @@ router.get('/:id/join', authenticateFirst, function (req, res) {
         return;
     }
     User.find({ member_id: { $ne: req.user.member_id } }, { "username": 1, "member_id": 1, "group_joined": 1 }, function (err, user) {
-        if (err) throw err;
         if (user && !err) {
             res.json({ success: true, msg: 'List of Users', user: user });
         } else {
@@ -324,10 +327,17 @@ router.get('/invitations', authenticateFirst, function (req, res) {
     }
     User.findOne({ member_id: member_id }, function (err, user) {
         //console.log(user.group_invitation);
-        if (err) throw err;
+        if (err) {
+            res.status(500).send({ success: false, msg: "Server error. Please try again." });
+            return;
+        }
 
         Group.find({ group_id: user.group_invitation }, { groupname: 1, group_id: 1 }, function (err, group) {
-            if (err) throw err;
+            if (err) {
+                res.status(500).send({ success: false, msg: "Server error. Please try again." });
+                return;
+            }
+
             var groupInvitation = {
                 group_invitaions: user.group_invitation,
                 group_names: group,
@@ -358,10 +368,12 @@ router.post('/invitations', authenticateFirst, function (req, res) {
         Group.findOne({ group_id: user.group_invitation }, function (err, group) {
             console.log(group);
             user.update({ $push: { "group_joined": group.group_id }, $pull: { "group_invitation": group.group_id } }, function (err, user) {
-                if (err) throw err;
+                if (err) {
+                    res.status(500).send({ success: false, msg: "Server error. Please try again." });
+                    return;
+                }
                 //console.log('user updated');
                 group.update({ $push: { "users_joined": user.member_id } }, function (err, group) {
-                    if (err) throw err;
                     var data = {
                         user: user,
                         group: group
@@ -391,7 +403,6 @@ router.post('/pinpost', authenticateFirst, function (req, res) {
     //console.log(pin_value);    
     Groupposts.update({ post_id: post_id }, { $set: { ispinned: pin_value } }, function (err, post_pinned) {
         //console.log(post_pinned);
-        if (err) throw err;
         if (post_pinned && !err) {
             res.json({ success: true, msg: 'Post Pinned', post_pinned: post_pinned });
         } else {
@@ -413,7 +424,6 @@ router.get('/:id/getgrouppost', authenticateFirst, function (req, res) {
     // console.log(group);
     Groupposts.find({ $and: [{ group_id: group_id }, { post_id: post_id }] }, function (err, post) {
         Groupposts.findOne({ post_id: req.query.post_id }, function (err, post) {
-            if (err) throw err;
             if (post && !err) {
                 res.json({ success: true, msg: 'Post', post: post });
             } else {
@@ -442,7 +452,6 @@ router.post('/:id/editgrouppost', function (req, res) {
     }
 
     Groupposts.findOneAndUpdate({ 'post_id': post_id }, { $set: { 'description': description } }, { new: true }, function (err, post) {
-        if (err) throw err;
         if (post && !err) {
             res.json({ success: true, msd: 'Post updated successfully', post: post });
         } else {
@@ -457,7 +466,6 @@ router.post('/:id/editgrouppost', function (req, res) {
 router.post('/:id/deletegrouppost', function (req, res) {
     Groupposts.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
         console.log(deletePost);
-        if (err) throw err;
         if (deletePost && !err) {
             res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost });
         } else {

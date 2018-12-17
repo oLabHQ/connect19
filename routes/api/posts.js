@@ -71,7 +71,6 @@ router.get('/editpost', authenticateFirst, function (req, res) {
         return;
     }
 	Post.findOne({ 'post_id': req.body.post_id }, function (err, editPost) {
-		if(err) throw err;
 		if (editPost && !err) {
 			res.json({ success: true, msg: 'Edit Post', post: editPost });
 		} else {

@@ -17,7 +17,11 @@ var User = require('../../models/user');
 router.get('/', authenticateFirst, function (req, res) {
     User.findOne({ member_id: req.user.member_id }, function (err, user) {
         User.find({ "member_id": { $ne: req.user.member_id } }, { "user_details.email": 1, "friend_requests": 1, "user_profile": 1, "username": 1, "member_id": 1 }, function (err, users) {
-            if (err) throw err;
+            if (err) {
+                res.status(500).send({success: false, msg: "Server error. Please try again."});
+                return;
+            }
+            
             var userData = {
                 user: user,
                 users: users
@@ -90,7 +94,10 @@ router.post('/signin', function (req, res) {
     User.findOne({
         username:  {'$regex': thename,$options:'i'}
     }, function (err, user) {
-        if (err) throw err;
+        if (err) {
+            res.status(500).send({success: false, msg: "Server error. Please try again."});
+            return;
+        }
 
         if (!user) {
             res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
