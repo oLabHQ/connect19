@@ -22,9 +22,13 @@ var GroupSchema = mongoose.Schema({
 		default: Date.now
 	},
 	createdby: {
-		type: String,		
+		type: String,
 	},
 	isprivate: {
+		type: Boolean,
+		default: 'false'
+	},
+	isAdminOnly:{
 		type: Boolean,
 		default: 'false'
 	},

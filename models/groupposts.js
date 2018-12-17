@@ -12,7 +12,7 @@ var GroupPostSchema = mongoose.Schema({
     },
     postimage:{
         type: String
-	},	
+	},
 	date: {
 		type: Date,
 		default: Date.now
@@ -27,7 +27,7 @@ var GroupPostSchema = mongoose.Schema({
 	ispinned:{
 		type: Boolean,
 		default: 'false'
-	},	
+	},
 	trashed: {
 		type: String,
 		default: "N"
