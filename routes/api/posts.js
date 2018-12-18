@@ -31,8 +31,12 @@ router.get('/', authenticateFirst, function (req, res) {
 
 //Get posts for specific time
 //var lastHour = ("2018-12-17T08:20:44.992Z");
-router.get('/latestpost', function (req, res) {
+router.post('/latestpost', function (req, res) {
 	var lastHour = req.body.timestamp;
+	if (!lastHour) {
+        res.status(500).json({ error: "Timestamp not there!" });
+        return;
+    }
 	Post.aggregate([{$match:{"date": {"$gt": new Date(lastHour)}}}, { $sort: { date: -1 } }]).exec(function (err, posts) {
 		console.log(posts);
 		res.send(JSON.stringify({ posts: posts }));
