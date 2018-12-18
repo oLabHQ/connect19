@@ -16,7 +16,7 @@ var User = require('../../models/user');
 // Get Users
 router.get('/', authenticateFirst, function (req, res) {
     User.findOne({ member_id: req.user.member_id }, function (err, user) {
-        User.find({ "member_id": { $ne: req.user.member_id } }, { "user_details.email": 1, "friend_requests": 1, "user_profile": 1, "username": 1, "member_id": 1 }, function (err, users) {
+        User.find({ "member_id": { $ne: req.user.member_id } }, { "user_details.email": 1, "user_details.firstname": 1, "user_details.lastname": 1, "friend_requests": 1, "user_profile": 1, "username": 1, "member_id": 1 }, function (err, users) {
             if (err) {
                 res.status(500).send({success: false, msg: "Server error. Please try again."});
                 return;
