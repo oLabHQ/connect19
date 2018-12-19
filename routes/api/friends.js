@@ -18,7 +18,7 @@ var User = require('../../models/user');
 // });
 
 router.get('/', authenticateFirst, function (req, res) {
-    User.aggregate([{ $unwind: "$friends" }, { $lookup: { from: "users", localField: "friends", foreignField: "member_id", as: "user_details" } }, { $match: { member_id: req.user.member_id } }, { $project: { "user_details.isApproved": 1, "user_details.username": 1, "user_details.member_id": 1, "user_details.user_profile.profilepic": 1, "user_details.user_profile.description": 1, "username": 1, "member_id": 1 } }]).exec(function (err, friends) {
+    User.aggregate([{ $unwind: "$friends" }, { $lookup: { from: "users", localField: "friends", foreignField: "member_id", as: "user_details" } }, { $match: { member_id: req.user.member_id } }, { $project: { "user_details.isApproved": 1, "user_details.username": 1, "user_details.firstname": 1, "user_details.lastname": 1, "user_details.member_id": 1, "user_details.user_profile.profilepic": 1, "user_details.user_profile.description": 1,  "username": 1, "member_id": 1, "firstname": 1, "lastname": 1 } }]).exec(function (err, friends) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "Error Getting Friends." }));
         } else {
@@ -66,7 +66,7 @@ router.post('/send-friend-request', authenticateFirst, function (req, res) {
 router.get('/friend-requests', authenticateFirst, function (req, res) {
     User.findOne({ member_id: req.user.member_id }, function (err, user) {
         //User.findOne({username:req.user.username}, function(err, friendrequests){	
-        User.aggregate([{ $unwind: "$friend_requests" }, { $lookup: { from: "users", localField: "friend_requests", foreignField: "member_id", as: "user_details" } }, { $match: { member_id: req.user.member_id } }, { $project: { "user_details.username": 1, "user_details.member_id": 1, "user_details.user_profile": 1, "user_details.isApproved": 1, } }]).exec(function (err, friendrequests) {
+        User.aggregate([{ $unwind: "$friend_requests" }, { $lookup: { from: "users", localField: "friend_requests", foreignField: "member_id", as: "user_details" } }, { $match: { member_id: req.user.member_id } }, { $project: { "user_details.username": 1, "user_details.firstname": 1, "user_details.lastname": 1, "user_details.member_id": 1, "user_details.user_profile": 1, "user_details.isApproved": 1, } }]).exec(function (err, friendrequests) {
             if (err) {
                 res.status(500).send({ success: false, msg: "Unable to retrieve friend requests. Please try again" });
             } else {

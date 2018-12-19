@@ -37,7 +37,7 @@ router.post('/latestpost', function (req, res) {
         res.status(500).json({ error: "Timestamp not there!" });
         return;
     }
-	Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, {$match:{"date": {"$gt": new Date(lastHour)}}}, { $sort: { date: -1, ispinned: -1 } }, { $project: { 'user_details.lastname': 1, 'user_details.firstname': 1, 'user_details.username': 1, 'user_details.user_profile': 1, 'user_details.member_id': 1  } }]).exec(function (err, posts) {
+	Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, {$match:{"date": {"$gt": new Date(lastHour)}}}, { $sort: { date: -1, ispinned: -1 } }, { $project: { description: 1, postimage: 1, author: 1, date: 1, post_id: 1, ispinned: 1, isFlagged: 1, trashed: 1, 'user_details.lastname': 1, 'user_details.firstname': 1, 'user_details.username': 1, 'user_details.user_profile': 1, 'user_details.member_id': 1  } }]).exec(function (err, posts) {
 		console.log(posts);
 		res.send(JSON.stringify({ posts: posts }));
 	})
