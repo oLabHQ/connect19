@@ -11,21 +11,39 @@ var Groupposts = require('../../models/groupposts');
 var Grouppostflags = require('../../models/grouppostflags');
 
 // Get Wall Post Flags
-router.get('/wallflags', function (req, res) {
-    var member_id = req.query.member_id;
+router.get('/wallflags', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Does not Exists" });
         return;
     }
-    Flag.aggregate([{ $lookup: { from: "posts", localField: "post_id", foreignField: "post_id", as: "flag_details" } }, { $sort: { date: -1 } }, { $lookup: { from: "users", localField: "author_id", foreignField: "member_id", as: "author_details" } }, { $lookup: { from: "users", localField: "flagged_by", foreignField: "member_id", as: "flag_author_details" } }, { $project: { "flag_author_details.username": 1, "flag_author_details.firstname": 1, "flag_author_details.lastname": 1, "flag_details": 1, "author_details.username": 1, "author_details.firstname": 1, "author_details.lastname": 1, "author_details.user_profile": 1 } }]).exec(function (err, flags) {
-        //console.log(posts);
-        var flagData = {
-            posts: flags
-        };
+    Flag.aggregate([{ $lookup: { from: "posts", localField: "post_id", foreignField: "post_id", as: "flag_details" } }, { $lookup: { from: "users", localField: "author_id", foreignField: "member_id", as: "author_details" } }, { $lookup: { from: "users", localField: "flagged_by", foreignField: "member_id", as: "flag_author_details" } }, { $project: { "flag_author_details.username": 1, "flag_author_details.firstname": 1, "flag_author_details.lastname": 1, "flag_details": 1, "author_details.username": 1, "author_details.firstname": 1, "author_details.lastname": 1, "author_details.user_profile": 1, "postimage": 1 } }, { $sort: { "flag_details.date": -1 } }]).exec(function (err, flags) {
         if (err) {
             res.status(500).send({ success: false, msg: "Unable to get Flag posts." });
         } else {
-            res.send(JSON.stringify({ success: true, flagData: flagData }));
+            res.send(JSON.stringify({ success: true, flags: flags }));
+        }
+    });
+});
+
+// Delete Wall Post Flag
+router.post('/delete-flag', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
+    if (!member_id || !req.user.admin) {
+        res.status(404).json({ success: false, msg: "Error: User Does not Exists or not an admin!" });
+        return;
+    }
+
+    if (!req.body.flagId) {
+        res.status(404).json({ success: false, msg: "Error: flagId is empty." });
+        return;
+    }
+
+    Flag.remove({ '_id': req.body.flagId }, function (err, deletedFlag) {
+        if (deletedFlag && !err) {
+            res.json({ success: true, msg: 'Post Deleted', deletedFlag: deletedFlag });
+        } else {
+            res.status(500).send({ success: false, msg: 'Not able to delete flagged post' });
         }
     });
 });
@@ -41,22 +59,44 @@ router.post('/', authenticateFirst, function (req, res) {
     var flagid = req.body.post_id;
     var authorid = req.body.author_id;
     var flaggedBy = req.body.flagged_by;
-    var flaggedValue = req.body.flagVal;
     var newFlag = new Flag({
         post_id: flagid,
         author_id: authorid,
         flagged_by: flaggedBy
     });
-    Post.findOneAndUpdate({ "post_id": flagid }, { $set: { isFlagged: flaggedValue } }, { new: true }, function (err, post) {
-        Flag.createFlag(newFlag, function (err, flag) {
-            if (err) {
-                res.status(500).send({ success: false, msg: "Unable Flag posts." });
-            } else {
-                res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
-            }
-        });
-    });
 
+    Post.findOne({ "post_id": flagid }, function (err, post) {
+        var initialFlaggedValue = post.isFlagged;
+        console.log("POST ISFLAGGED: ", post.isFlagged);
+        if (post) {
+            post.update({ $set: { isFlagged: true } }, { new: true }, function (err, post) {
+                if (initialFlaggedValue == false) { // Only create a new flag if the post is previously unflagged
+                    Flag.createFlag(newFlag, function (err, flag) {
+                        if (err) {
+                            res.status(500).send({ success: false, msg: "Unable Flag posts." });
+                        } else {
+                            res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
+                        }
+                    });
+                }
+            });
+
+            // Post.findOneAndUpdate({ "post_id": flagid }, { $set: { isFlagged: flaggedValue } }, { new: true }, function (err, post) {
+
+            //     if (flaggedValue == true) {
+            //         Flag.createFlag(newFlag, function (err, flag) {
+            //             if (err) {
+            //                 res.status(500).send({ success: false, msg: "Unable Flag posts." });
+            //             } else {
+            //                 res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
+            //             }
+            //         });
+            //     }
+            // });
+        } else {
+            res.status(500).send({ success: false, msg: "Unable find post." });
+        }
+    });
 });
 
 // Undo flag post
@@ -67,8 +107,7 @@ router.post('/undoflag', authenticateFirst, function (req, res) {
         return;
     }
     var flagid = req.body.post_id;
-    var flaggedValue = req.body.flagVal;
-    Post.findOneAndUpdate({ "post_id": flagid }, { $set: { isFlagged: flaggedValue } }, { new: true }, function (err, post) {
+    Post.findOneAndUpdate({ "post_id": flagid }, { $set: { isFlagged: false } }, { new: true }, function (err, post) {
         if (err) {
             res.status(500).send({ success: false, msg: "Server error. Please try again." });
             return;
