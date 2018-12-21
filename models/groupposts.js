@@ -23,7 +23,11 @@ var GroupPostSchema = mongoose.Schema({
 	post_id:{
 		type: String,
 		default: shortid.generate
-    },
+	},
+	isFlagged: {
+		type: Boolean,
+		default: 'false'
+	},
 	ispinned:{
 		type: Boolean,
 		default: 'false'

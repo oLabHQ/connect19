@@ -27,6 +27,7 @@ router.post('/addpost', authenticateFirst, function (req, res) {
         description: req.body.description,
         createdby: member_id,
         group_id: req.body.group_id,
+        isFlagged: false,
         date: new Date()
     }
 
@@ -213,6 +214,58 @@ router.post('/creategroup', authenticateFirst, function (req, res) {
     });
 });
 
+// Update Group
+router.post('/udpate-group', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ success: false, msg: "User Id must not be empty." });
+        return;
+    }
+
+    if (!req.body.groupname || req.body.groupname.trim() === "") {
+        res.status(404).json({ success: false, msg: "Group name is required!" });
+        return;
+    }
+
+    // if (!req.body.description || req.body.description.trim() === "") {
+    //     res.status(404).json({ success: false, msg: "Description is required!" });
+    //     return;
+    // }
+
+    var groupId = req.body.group_id;
+    var title = req.body.groupname;
+    var description = req.body.description || "";
+    var groupstatus = req.body.isprivate || false;
+    var isAdminOnly = false;
+
+    if (req.user.admin) {
+        isAdminOnly = req.body.isAdminOnly || false;
+    }
+
+    Group.findOneAndUpdate({ 'group_id': groupId }, { $set: { 'description': description, 'groupname': title, "isprivate": groupstatus, "isAdminOnly": isAdminOnly } }, { new: true }, function (err, group) {
+        if (group && !err) {
+            res.json({ success: true, msg: 'Group updated successfully', group: group });
+        } else {
+            res.status(500).send({ success: flase, msg: 'Not able to update group' });
+        }
+    })
+
+    // Group.findOne({ groupname: { "$regex": "^" + title + "\\b", "$options": "i" } }, function (err, groupname) {
+    //     //console.log(groupname)
+    //     if (groupname) {
+    //         res.status(400).send({ success: false, msg: 'Group name already taken' });
+    //         return;
+    //     } else {
+    //         Group.findOneAndUpdate({ 'group_id': groupId }, { $set: { 'description': description, 'groupname': title, "isprivate": groupstatus, "isAdminOnly": isAdminOnly} }, { new: true }, function (err, group) {
+    //             if (group && !err) {
+    //                 res.json({ success: true, msg: 'Group updated successfully', group: group });
+    //             } else {
+    //                 res.status(500).send({ success: flase, msg: 'Not able to update group' });
+    //             }
+    //         })
+    //     }
+    // });
+});
 
 // Add User to Group
 router.post('/add-user-to-group', authenticateFirst, function (req, res) {
@@ -258,22 +311,28 @@ router.post('/add-user-to-group', authenticateFirst, function (req, res) {
 
 
 // Pin Groups
-router.post('/pingroup', authenticateFirst, function (req, res) {
+router.post('/update-group-pin', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
-        res.status(404).json({ error: "User Does not Exists" });
+        res.status(404).json({ error: "User id is missing." });
         return;
     }
     var group_id = req.body.group_id;
+
+    if (!group_id) {
+        res.status(404).json({ error: "Group id is missing." });
+        return;
+    }
+
     var pin_value = req.body.pin_value;
     // console.log(group_id);
     //console.log(pin_value);    
     Group.update({ group_id: group_id }, { $set: { ispinned: pin_value } }, function (err, group_pinned) {
         // console.log(group_pinned);
         if (group_pinned && !err) {
-            res.json({ success: true, msg: 'Group Pinned', group_pinned: group_pinned });
+            res.json({ success: true, msg: 'Group Pinned' });
         } else {
-            res.status(500).send({ success: false, msg: 'Something went wrong!!' });
+            res.status(500).send({ success: false, msg: 'Error pinning group, please try again' });
         }
     });
 });
@@ -437,38 +496,38 @@ router.post('/change-pin-status', authenticateFirst, function (req, res) {
 
 // Post Edit Group Post
 router.post('/editpost', authenticateFirst, function (req, res) {
-	var member_id = req.user.member_id;
+    var member_id = req.user.member_id;
     if (!member_id) {
         res.status(404).json({ error: "User Id should not be empty." });
         return;
-	}
+    }
 
-	var description = req.body.description;
-	var post_id = req.body.post_id;
+    var description = req.body.description;
+    var post_id = req.body.post_id;
 
-	if (!post_id) {
-		res.status(404).json({ success: false, msg: 'Post ID undefined or cannot be empty.'});
-		return;
-	}
+    if (!post_id) {
+        res.status(404).json({ success: false, msg: 'Post ID undefined or cannot be empty.' });
+        return;
+    }
 
-	Groupposts.findOneAndUpdate({ 'post_id': post_id}, {$set : { 'description' : description}}, {new: true}, function (err, post) {
-		if(post && !err) {
-			res.json({ success: true, msd: 'Post updated successfully', post: post});
-		} else {
-			res.status(500).send({ success: flase, msg: 'Not able to update post'});
-		}
-	})
+    Groupposts.findOneAndUpdate({ 'post_id': post_id }, { $set: { 'description': description } }, { new: true }, function (err, post) {
+        if (post && !err) {
+            res.json({ success: true, msd: 'Post updated successfully', post: post });
+        } else {
+            res.status(500).send({ success: flase, msg: 'Not able to update post' });
+        }
+    })
 })
 
 // Delete Post
 router.post('/delete-post', authenticateFirst, function (req, res) {
-	Groupposts.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
-		if(deletePost && !err) {
-			res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost});
-		} else {
-			res.status(500).send({ success: false, msg: 'Not able to Delete post'});
-		}
-	});
+    Groupposts.remove({ 'post_id': req.body.post_id }, function (err, deletePost) {
+        if (deletePost && !err) {
+            res.json({ success: true, msg: 'Post Deleted', deletePost: deletePost });
+        } else {
+            res.status(500).send({ success: false, msg: 'Not able to Delete post' });
+        }
+    });
 });
 
 // // Get Edit post

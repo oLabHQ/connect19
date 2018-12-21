@@ -80,19 +80,6 @@ router.post('/', authenticateFirst, function (req, res) {
                     });
                 }
             });
-
-            // Post.findOneAndUpdate({ "post_id": flagid }, { $set: { isFlagged: flaggedValue } }, { new: true }, function (err, post) {
-
-            //     if (flaggedValue == true) {
-            //         Flag.createFlag(newFlag, function (err, flag) {
-            //             if (err) {
-            //                 res.status(500).send({ success: false, msg: "Unable Flag posts." });
-            //             } else {
-            //                 res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
-            //             }
-            //         });
-            //     }
-            // });
         } else {
             res.status(500).send({ success: false, msg: "Unable find post." });
         }
@@ -123,43 +110,17 @@ router.post('/undoflag', authenticateFirst, function (req, res) {
     });
 });
 
-
-// Get Group Post flags
-router.get('/:id/grouppostflags', authenticateFirst, function (req, res) {
+// Group Flags
+router.post('/group-flag-post', authenticateFirst, function (req, res) {
     var member_id = req.user.member_id;
     if (!member_id) {
-        res.status(404).json({ error: "User Does not Exists" });
+        res.status(404).json({ error: "User id should not be empty" });
         return;
     }
-    User.findOne({ member_id: member_id }, function (err, user) {
-        Group.find({ group_id: req.params.id }, function (err, createdby) {
-            //Groupposts.find({group_id: req.params.id}, function(err, posts){
-            Groupposts.aggregate([{ $lookup: { from: "users", localField: "createdby", foreignField: "member_id", as: "user_details" } }, { $match: { group_id: req.params.id } }, { $project: { group_id: 1, flag: 1, user_details: 1 } }]).exec(function (err, posts) {
-                console.log(posts);
-                var grouppostflags = {
-                    posts: posts,
-                }
-                if (err) {
-                    res.status(500).send({ success: false, msg: "Unable to get Group Flag posts." });
-                } else {
-                    res.send(JSON.stringify({ success: true, grouppostflags: grouppostflags }));
-                }
-            });
-        });
-    });
-});
 
-
-// Group Post flags
-router.post('/:id', authenticateFirst, function (req, res) {
-    var member_id = req.user.member_id;
-    if (!member_id) {
-        res.status(404).json({ error: "User Does not Exists" });
-        return;
-    }
     var flagid = req.body.post_id;
     var authorid = req.body.author_id;
-    var groupid = req.params.id;
+    var groupid = req.body.group_id;
 
     var newGroupPostFlag = new Grouppostflags({
         post_id: flagid,
@@ -167,11 +128,91 @@ router.post('/:id', authenticateFirst, function (req, res) {
         group_id: groupid
     });
 
-    Grouppostflags.createGroupPostFlag(newGroupPostFlag, function (err) {
-        if (err) {
-            res.status(500).send({ success: false, msg: "Unable Flag posts." });
+    Groupposts.findOne({ "post_id": flagid }, function (err, post) {
+        var initialFlaggedValue = post.isFlagged;
+        if (post) {
+            post.update({ $set: { 'isFlagged': true } }, { new: true }, function (err, post) {
+                console.log("POST UPDATED!", JSON.stringify(post));
+
+                if (initialFlaggedValue == false || initialFlaggedValue == undefined) { // Only create a new flag if the post is previously unflagged
+                    Grouppostflags.createGroupPostFlag(newGroupPostFlag, function (err, flag) {
+                        if (err) {
+                            res.status(500).send({ success: false, msg: "Unable Flag post." });
+                        } else {
+                            res.send(JSON.stringify({ success: true, msg: "Post Flagged.", flag: flag }));
+                        }
+                    });
+                }
+            });
         } else {
-            res.send(JSON.stringify({ success: true }));
+            res.status(500).send({ success: false, msg: "Unable find post." });
+        }
+    });
+});
+
+// Undo flag group post
+router.post('/group-post-undoflag', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Does not Exists" });
+        return;
+    }
+    var flagid = req.body.post_id;
+    Groupposts.findOneAndUpdate({ "post_id": flagid }, { $set: { 'isFlagged': false } }, { new: true }, function (err, post) {
+        if (err) {
+            res.status(500).send({ success: false, msg: "Server error. Please try again." });
+            return;
+        }
+
+        Grouppostflags.findOneAndDelete({ "post_id": flagid }, function (err, post) {
+            if (err) {
+                res.status(500).send({ success: false, msg: "Unable to UnFlag Group post." });
+            } else {
+                res.send(JSON.stringify({ success: true, msg: "Group post unflagged", post: post }));
+            }
+        });
+    });
+});
+
+
+// Get Group Post flags
+router.get('/group-post-flags', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
+    if (!member_id) {
+        res.status(404).json({ error: "User Id Empty" });
+        return;
+    }
+
+    var groupId = req.query.groupId;
+
+    Groupposts.aggregate([{ "$match": { "group_id": groupId } }, { $lookup: { from: "groupposts", localField: "post_id", foreignField: "post_id", as: "flag_details" } }, { $lookup: { from: "users", localField: "author_id", foreignField: "member_id", as: "author_details" } }, { $project: { "flag_author_details.username": 1, "flag_author_details.firstname": 1, "flag_author_details.lastname": 1, "flag_details": 1, "author_details.username": 1, "author_details.firstname": 1, "author_details.lastname": 1, "author_details.user_profile": 1, "postimage": 1 } }, {$match: {"flag_details.isFlagged": true}}, { $sort: { "flag_details.date": -1 } }]).exec(function (err, posts) {
+        if (err) {
+            res.status(500).send({ success: false, msg: "Unable to get Group Flag posts." });
+        } else {
+            res.send(JSON.stringify({ success: true, grouppostflags: posts }));
+        }
+    });
+});
+
+
+// Delete Wall Post Group Flag
+router.post('/group-delete-flag-post', authenticateFirst, function (req, res) {
+    var member_id = req.user.member_id;
+    if (!member_id || !req.user.admin) {
+        res.status(404).json({ success: false, msg: "Error: User Does not Exists or not an admin!" });
+        return;
+    }
+
+    if (!req.body.flagId) {
+        res.status(404).json({ success: false, msg: "Error: flagId is empty." });
+        return;
+    }
+
+    Grouppostflags.remove({ '_id': req.body.flagId }, function (err, deletedFlag) {
+        if (deletedFlag && !err) {
+            res.json({ success: true, msg: 'Post Deleted', deletedFlag: deletedFlag });
+        } else {
+            res.status(500).send({ success: false, msg: 'Not able to delete flagged post' });
         }
     });
 });
