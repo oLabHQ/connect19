@@ -59,22 +59,22 @@ var UserSchema = new Schema({
 	},
 	friends:[
 		{
-			type: String,		
+			type: String,
 		}
 	],
 	friend_requests_sent: [
 		{
-			type: String,			
+			type: String,
 		}
 	],
 	friend_requests: [
 		{
-			type: String,			
+			type: String,
 		}
 	],
 	group_invitation:[
 		{
-			type: String			
+			type: String
 		}
 	],
 	group_joined:[

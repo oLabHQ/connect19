@@ -40,5 +40,5 @@ PostSchema.plugin(mongoosePaginate);
 var Post = module.exports = mongoose.model('Post', PostSchema);
 
 module.exports.createPost = function(newPost, callback){
-	        newPost.save(callback);	
+	        newPost.save(callback);
 }

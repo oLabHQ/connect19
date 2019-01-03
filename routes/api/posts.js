@@ -18,11 +18,11 @@ router.get('/', authenticateFirst, function (req, res) {
 
 	User.findOne({ member_id: req.user.member_id }, function (err, user) {
 		if (page <= 1) {
-			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { date: -1,  ispinned: -1} }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { ispinned: -1, date: -1, } }, { $limit: POSTS_RETURN_LIMIT }, {$project: { description:1, date: 1, ispinned: 1, isFlagged: 1, post_id: 1, trashed: 1,  "user_details.username": 1, "user_details.firstname": 1, "user_details.lastname": 1, "user_details.member_id": 1, "user_details.user_profile": 1 }}]).exec(function (err, posts) {
 				res.send(JSON.stringify({ posts: posts }));
 			});
 		} else {
-			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: {  date: -1, ispinned: -1 } }, { $skip: ((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT }]).exec(function (err, posts) {
+			Post.aggregate([{ $lookup: { from: "users", localField: "author", foreignField: "member_id", as: "user_details" } }, { $match: { trashed: "N" } }, { $sort: { ispinned: -1, date: -1 } }, { $skip: ((page - 1) * POSTS_RETURN_LIMIT) + (page > 1 ? 1 : 0) }, { $limit: POSTS_RETURN_LIMIT }, , {$project: { description:1, date: 1, ispinned: 1, isFlagged: 1, post_id: 1, trashed: 1,  "user_details.username": 1, "user_details.firstname": 1, "user_details.lastname": 1, "user_details.member_id": 1, "user_details.user_profile": 1 }}]).exec(function (err, posts) {
 				res.send(JSON.stringify({ posts: posts }));
 			});
 		}
