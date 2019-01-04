@@ -18,7 +18,7 @@ router.get('/', authenticateFirst, function (req, res) {
     User.findOne({ member_id: req.user.member_id }, function (err, user) {
         User.find({ "member_id": { $ne: req.user.member_id } }, { "user_details.email": 1, "user_details.firstname": 1, "user_details.lastname": 1, "friend_requests": 1, "user_profile": 1, "username": 1, "member_id": 1 }, function (err, users) {
             if (err) {
-                res.status(500).send({success: false, msg: "Server error. Please try again."});
+                res.status(500).send({ success: false, msg: "Server error. Please try again." });
                 return;
             }
 
@@ -44,6 +44,16 @@ router.get('/username', function (req, res) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "unable to get user from username" }));
         } else {
+            if (!user.user_profile || (user.user_profile && user.user_profile.length < 1)) {
+                console.log("No User Profile");
+                user.user_profile = [];
+                user.user_profile.push({
+                    description: "",
+                    interests: "",
+                    profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
+                });
+            }
+
             res.send(JSON.stringify({ success: true, user: user }));
         }
 
@@ -61,6 +71,15 @@ router.get('/id', function (req, res) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "unable to get user from member_id" }));
         } else {
+            if (!user.user_profile || (user.user_profile && user.user_profile.length < 1)) {
+                console.log("No User Profile");
+                user.user_profile = [];
+                user.user_profile.push({
+                    description: "",
+                    interests: "",
+                    profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
+                });
+            }
             res.send(JSON.stringify({ success: true, user: user }));
         }
 
@@ -76,7 +95,12 @@ router.post('/signup', function (req, res) {
         var newUser = new User({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            user_profile: [{
+                description: "",
+                interests: "",
+                profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
+            }]
         });
         // save the user
         newUser.save(function (err) {
@@ -92,10 +116,10 @@ router.post('/signup', function (req, res) {
 router.post('/signin', function (req, res) {
     var thename = req.body.username;
     User.findOne({
-        username:  {'$regex': thename,$options:'i'}
+        username: { '$regex': thename, $options: 'i' }
     }, function (err, user) {
         if (err) {
-            res.status(500).send({success: false, msg: "Server error. Please try again."});
+            res.status(500).send({ success: false, msg: "Server error. Please try again." });
             return;
         }
 
@@ -105,10 +129,20 @@ router.post('/signin', function (req, res) {
             // check if password matches
             user.comparePassword(req.body.password, function (err, isMatch) {
                 if (isMatch && !err) {
+                    // Check if user_profile is not empty
+                    if (!user.user_profile || (user.user_profile && user.user_profile.length < 1)) {
+                        console.log("No User Profile");
+                        user.user_profile = [];
+                        user.user_profile.push({
+                            description: "",
+                            interests: "",
+                            profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
+                        });
+                    }
                     // if user is found and password is right create a token
                     var token = jwt.sign(user.toJSON(), config.secret);
                     // return the information including token as JSON
-                    res.json({ success: true, token: 'JWT ' + token, user: user.toJSON() });
+                    res.json({ success: true, token: 'JWT ' + token, user: user });
                 } else {
                     res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
                 }
@@ -139,7 +173,7 @@ router.post('/editprofile', authenticateFirst, function (req, res) {
         req.user.user_profile[0].profilepic = profilePicUrl;
     }
 
-    User.findOneAndUpdate({ username: req.user.username }, { $set: { username: username, firstname: firstname, lastname: lastname, "user_profile": req.user.user_profile }, }, {new: true},  function (err, user) {
+    User.findOneAndUpdate({ username: req.user.username }, { $set: { username: username, firstname: firstname, lastname: lastname, "user_profile": req.user.user_profile }, }, { new: true }, function (err, user) {
         //console.log(user);
         if (err) {
             res.status(500).json({ success: false, msg: 'Error Updating User.' });
@@ -161,7 +195,7 @@ router.post('/forgot-password', function (req, res) {
         },
         function (token, done) {
             var theEmail = req.body.email;
-            User.findOne({ email: {'$regex': theEmail,$options:'i'} }, function (err, user) {
+            User.findOne({ email: { '$regex': theEmail, $options: 'i' } }, function (err, user) {
                 if (!user) {
                     res.status(404).send({ success: false, msg: 'No account with that email address exists.' })
                     return;
@@ -169,7 +203,7 @@ router.post('/forgot-password', function (req, res) {
 
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-               // console.log(user);
+                // console.log(user);
 
                 user.save(function (err) {
                     done(err, token, user);
@@ -199,7 +233,7 @@ router.post('/forgot-password', function (req, res) {
                     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
             smtpTransport.sendMail(mailOptions, function (err) {
-               // console.log('mail sent');
+                // console.log('mail sent');
                 // req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
                 done(err, user.email);
             });
@@ -220,7 +254,7 @@ router.post('/reset-password', function (req, res) {
     async.waterfall([
         function (done) {
             User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
-               // console.log(user);
+                // console.log(user);
                 if (!user) {
                     res.status(400).send({ success: false, msg: "Password reset token is invalid or has expired." });
                     return;
