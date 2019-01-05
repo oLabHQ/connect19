@@ -62,6 +62,38 @@ router.get('/username', function (req, res) {
     });
 });
 
+router.get('/fullNameByUsername', function (req, res) {
+    if (!req.query.username) {
+        res.status(404).json({ error: "Username Does not Exists" });
+        return;
+    }
+
+    User.findOne({ member_id: req.query.id }, { "firstname": 1, "lastname": 1}, function (err, user) {
+        if (err) {
+            res.status(500).send(JSON.stringify({ success: false, msg: "Unable to get user from id" }));
+            return;
+        } else {
+            var displayName = "";
+            if (user && user.firstname && user.firstname.trim() !== "") {
+                displayName += user.firstname;
+
+                if (user.lastname && user.lastname.trim() !== "") {
+                    displayName += ` ${user.lastname}`;
+                }
+
+                res.send(JSON.stringify({ success: true, fullName: displayName }));
+                return;
+            } else {
+                res.send(JSON.stringify({ success: true, fullName: req.query.username }));
+                return;
+            }
+
+        }
+
+        //res.render('friends/users', {user_friends: users, users: user, isApproved: user.isApproved, user_id: user.member_id, friend_requests: user.friend_requests, friends: user.friends});	
+    });
+});
+
 router.get('/id', function (req, res) {
     if (!req.query.member_id) {
         res.status(404).json({ error: "Member Id Does not Exists" });
