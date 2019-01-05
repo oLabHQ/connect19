@@ -4,6 +4,7 @@ require('../../config/passport')(passport);
 var config = require('../../config/database');
 var getToken = require('../../utilities/auth').getToken;
 var authenticateFirst = require('../../utilities/auth').authenticateFirst;
+var emailConfigs = require('../../config/email');
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var async = require('async');
@@ -102,7 +103,7 @@ router.post('/signup', function (req, res) {
             }
 
             User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, function (err, userEmail) {
-                if (userEmail && !err ) {
+                if (userEmail && !err) {
                     res.status(400).json({ success: false, msg: 'Email is already taken.' });
                     return;
                 }
@@ -124,7 +125,7 @@ router.post('/signup', function (req, res) {
                         res.status(400).json({ success: false, msg: 'Error Signing Up. Please refresh and try again' });
                         return;
                     }
-                    
+
                     res.json({ success: true, msg: 'Successful created new user.' });
                 });
             });
@@ -235,17 +236,20 @@ router.post('/forgot-password', function (req, res) {
             var smtpTransport = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 auth: {
-                    user: 'connect19test@gmail.com',
-                    pass: 'connect19@123'
+                    user: emailConfigs.appEmail,
+                    pass: emailConfigs.appEmailPassword
                 },
                 tls: {
                     rejectUnauthorized: false
-                }
+                },
+                authentication: 'plain',
+                port: 587,
+                domain: 'gmail.com'
             });
             var site = config.siteUrl;
             var mailOptions = {
                 to: user.email,
-                from: 'connect19test@gmail.com',
+                from: emailConfigs.appEmail,
                 sender: "Connect19",
                 subject: 'Connect19 Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
@@ -261,6 +265,7 @@ router.post('/forgot-password', function (req, res) {
         }
     ], function (err, userEmail) {
         if (err) {
+            console.log(JSON.stringify(err));
             res.status(500).send({ success: false, msg: 'Error resetting account password. Please try again' });
             return;
         } else {
@@ -306,8 +311,8 @@ router.post('/reset-password', function (req, res) {
             var smtpTransport = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 auth: {
-                    user: 'connect19test@gmail.com',
-                    pass: 'connect19@123'
+                    user: emailConfigs.appEmail,
+                    pass: emailConfigs.appEmailPassword
                 },
                 tls: {
                     rejectUnauthorized: false
@@ -315,7 +320,7 @@ router.post('/reset-password', function (req, res) {
             });
             var mailOptions = {
                 to: user.email,
-                from: 'connect19test@gmail.com',
+                from: emailConfigs.appEmail,
                 subject: 'Your password has been changed',
                 text: 'Hello,\n\n' +
                     'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
