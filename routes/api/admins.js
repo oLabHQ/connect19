@@ -16,7 +16,8 @@ router.get('/', authenticateFirst, function (req, res) {
 	}
 
 	User.findOne({ "member_id": req.user.member_id }, function (err, user) {
-		User.find({ "member_id": { $ne: req.user.member_id } }, { "username": 1, "firstname": 1, "lastname": 1, "member_id": 1, "user_profile.profilepic": 1, "user_profile.description": 1, "isApproved": 1, "admin": 1 }, function (err, users) {
+	//	User.find({ "member_id": { $ne: req.user.member_id } }, { "username": 1, "firstname": 1, "lastname": 1, "member_id": 1, "user_profile.profilepic": 1, "user_profile.description": 1, "isApproved": 1, "admin": 1 }, function (err, users) {
+		User.find({}, { "username": 1, "firstname": 1, "lastname": 1, "member_id": 1, "user_profile.profilepic": 1, "user_profile.description": 1, "isApproved": 1, "admin": 1 }, function (err, users) {
 			if (err) {
 				res.status(500).send(JSON.stringify({ success: false, msg: "Error Getting Users." }));
 			} else {
