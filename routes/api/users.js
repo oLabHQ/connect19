@@ -70,6 +70,7 @@ router.get('/id', function (req, res) {
     User.findOne({ member_id: req.query.member_id }, { "password": 0, "group_invitation": 0, "friend_requests": 0 }, function (err, user) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "unable to get user from member_id" }));
+            return;
         } else {
             if (!user.user_profile || (user.user_profile && user.user_profile.length < 1)) {
                 console.log("No User Profile");
@@ -81,6 +82,7 @@ router.get('/id', function (req, res) {
                 });
             }
             res.send(JSON.stringify({ success: true, user: user }));
+            return;
         }
 
         //res.render('friends/users', {user_friends: users, users: user, isApproved: user.isApproved, user_id: user.member_id, friend_requests: user.friend_requests, friends: user.friends});	
@@ -92,24 +94,43 @@ router.post('/signup', function (req, res) {
         res.status(400).json({ success: false, msg: 'Missing Registration Details (Username / Password / Email)' });
         return;
     } else {
-        var newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            user_profile: [{
-                description: "",
-                interests: "",
-                profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
-            }]
-        });
-        // save the user
-        newUser.save(function (err) {
-            if (err) {
-                res.status(400).json({ success: false, msg: 'Username already exists.' });
+
+        User.findOne({ username: { "$regex": "^" + req.body.username + "\\b", "$options": "i" } }, function (err, user) {
+            if (user && !err) {
+                res.status(400).json({ success: false, msg: 'Username is already taken.' });
                 return;
             }
-            res.json({ success: true, msg: 'Successful created new user.' });
+
+            User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, function (err, userEmail) {
+                if (userEmail && !err ) {
+                    res.status(400).json({ success: false, msg: 'Email is already taken.' });
+                    return;
+                }
+
+                var newUser = new User({
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: req.body.password,
+                    user_profile: [{
+                        description: "",
+                        interests: "",
+                        profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
+                    }]
+                });
+
+                // save the user
+                newUser.save(function (err) {
+                    if (err) {
+                        res.status(400).json({ success: false, msg: 'Error Signing Up. Please refresh and try again' });
+                        return;
+                    }
+                    
+                    res.json({ success: true, msg: 'Successful created new user.' });
+                });
+            });
         });
+
+
     }
 });
 

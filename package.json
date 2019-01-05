@@ -48,6 +48,7 @@
     "handlebars-helpers": "^0.10.0",
     "handlebars.moment": "^1.0.4",
     "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
     "mongodb": "*",
     "mongoose": "^5.3.14",
     "mongoose-paginate": "^5.0.3",

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var authenticateFirst = require('../../utilities/auth').authenticateFirst;
 var User = require('../../models/user');
+var _ = require('lodash');
 
 
 
@@ -22,6 +23,7 @@ router.get('/', authenticateFirst, function (req, res) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "Error Getting Friends." }));
         } else {
+            friends = _.uniqBy(friends, "user_details[0].member_id");
             res.send(JSON.stringify({ success: true, friends: friends }));
         }
         //res.render('friends/index',{user:users, users: user, isApproved: user.isApproved})
