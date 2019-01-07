@@ -54,7 +54,6 @@ router.get('/username', function (req, res) {
                     profilepic: "https://i.imgur.com/SK8VYHe.png" // Default
                 });
             }
-
             res.send(JSON.stringify({ success: true, user: user }));
         }
 
