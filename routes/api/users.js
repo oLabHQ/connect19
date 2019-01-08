@@ -61,13 +61,35 @@ router.get('/username', function (req, res) {
     });
 });
 
+// Get Is Username Available
+
+router.get('/username-available', function (req, res) {
+    if (!req.query.username) {
+        res.status(404).json({ error: "Username empty" });
+        return;
+    }
+
+    User.find({ username: req.query.username }).count(function (err, count) {
+        if (err) {
+            res.status(404).send(JSON.stringify({ success: false, msg: "Error Getting Username" }));
+            return;
+        } else {
+            if (count > 0) {
+                res.send(JSON.stringify({ success: true, isAvailable: false }));
+            } else {
+                res.send(JSON.stringify({ success: true, isAvailable: true }));
+            }
+        }
+    })
+});
+
 router.get('/fullNameByUsername', function (req, res) {
     if (!req.query.username) {
         res.status(404).json({ error: "Username Does not Exists" });
         return;
     }
 
-    User.findOne({ member_id: req.query.id }, { "firstname": 1, "lastname": 1}, function (err, user) {
+    User.findOne({ member_id: req.query.id }, { "firstname": 1, "lastname": 1 }, function (err, user) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "Unable to get user from id" }));
             return;
