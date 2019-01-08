@@ -89,7 +89,7 @@ router.get('/fullNameByUsername', function (req, res) {
         return;
     }
 
-    User.findOne({ member_id: req.query.id }, { "firstname": 1, "lastname": 1 }, function (err, user) {
+    User.findOne({ username: req.query.username }, { "firstname": 1, "lastname": 1 }, function (err, user) {
         if (err) {
             res.status(500).send(JSON.stringify({ success: false, msg: "Unable to get user from id" }));
             return;
