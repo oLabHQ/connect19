@@ -41,14 +41,22 @@ router.post('/send-friend-request', authenticateFirst, function (req, res) {
 
     User.findOne({ "member_id": sender_user_id }, function (err, sending_user) {
         if (err) {
-            res.status(500).send({ success: false, msg: "Server error. Please try again." });
+            res.status(500).send({ success: false, msg: "User not found" });
             return;
         }
-        console.log(sending_user);
+        
         User.findOne({ "member_id": receiver_user_id }, function (err, potential_friend) {
             console.log(potential_friend);
             if (err) {
-                res.status(500).send({ success: false, msg: "Server error. Please try again." });
+                res.status(500).send({ success: false, msg: "User not found" });
+                return;
+            }
+
+            // Check if user has sent friend request already to the user
+            var isSentAlready = sending_user.friend_requests_sent.includes(potential_friend);
+
+            if (isSentAlready) {
+                res.send(JSON.stringify({ success: true }));
                 return;
             }
 
