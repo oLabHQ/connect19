@@ -68,6 +68,24 @@ router.post('/revoke-admin', authenticateFirst, function (req, res) {
 });
 
 
+// Approve All Users
+router.post('/approveall', authenticateFirst, function (req, res) {
+	if (!req.user.admin) {
+		res.status(403).send({ success: false, msg: "You are not allowed to access this functionality." });
+		return;
+	}
+	User.updateMany({member_id: {$ne:req.user.member_id}},{$set:{isApproved: 'false'}}, function (err, users) {
+		if (err) {
+			res.status(500).send({ success: false, msg: "Unable to Approve All users." });
+			return;
+		} else {
+			res.send({ success: true });
+			return;
+		}
+	});
+});
+
+
 // Approve User
 router.post('/approve', authenticateFirst, function (req, res) {
 	if (!req.user.admin) {
