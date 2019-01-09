@@ -74,7 +74,7 @@ router.post('/approveall', authenticateFirst, function (req, res) {
 		res.status(403).send({ success: false, msg: "You are not allowed to access this functionality." });
 		return;
 	}
-	User.updateMany({member_id: {$ne:req.user.member_id}},{$set:{isApproved: 'false'}}, function (err, users) {
+	User.updateMany( {member_id: { $ne: req.user.member_id } }, { $set: { isApproved: 'true' } }, function (err, users) {
 		if (err) {
 			res.status(500).send({ success: false, msg: "Unable to Approve All users." });
 			return;
